@@ -26,7 +26,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="splash"
+             initialRouteName="reg"
              >
 
             <Stack.Screen name="splash" component={Splash}   />

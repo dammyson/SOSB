@@ -1,11 +1,11 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, TextInput, BackHandler, StatusBar, ActivityIndicator, Platform, View, Dimensions, WebView, StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
+import { Alert, TextInput, BackHandler, StatusBar, ActivityIndicator, Platform, View, Dimensions, StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Container, Text, Right, Button, Left, } from 'native-base';
 import {
   BarIndicator,
 } from 'react-native-indicators';
-
+import { WebView } from 'react-native-webview';
 import { Icon, } from 'react-native-elements';
 
 import Modal, { SlideAnimation, ModalContent } from 'react-native-modals';
@@ -264,7 +264,7 @@ export default class Home extends Component {
             domStorageEnabled={true}
             decelerationRate="normal"
             onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+           // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
             startInLoadingState={true}
             scalesPageToFit={this.state.scalesPageToFit}
           />

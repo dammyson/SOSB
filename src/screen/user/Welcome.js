@@ -1,12 +1,11 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, TextInput, ImageBackground, View, Dimensions, TouchableOpacity, Image, StyleSheet , AsyncStorage} from 'react-native';
+import { Alert, TextInput, View, Dimensions, TouchableOpacity, Image, StyleSheet , AsyncStorage} from 'react-native';
 import { Container, Content, Text, Icon, Button, Left, } from 'native-base';
-import {
-  BarIndicator,
-} from 'react-native-indicators';
 
-const URL = require("../../component/server");
+import {
+  getLocation,
+} from '../../utilities/locationService';
 
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
@@ -17,73 +16,39 @@ export default class Welcome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
       loading: false,
-      email: '',
-      password: '',
-      GuserInfo: {},
-    };
-  }
-
-  componentDidMount()
-  {
-    
-  }
-
-
-
-
-  processLogin() {
-    const {email, password } = this.state
-    if (email == "" || password == "") {
-      Alert.alert('Validation failed', 'field(s) cannot be empty', [{ text: 'Okay' }])
-      return;
+      email: "",
+      phone: "",
+      uname: "",
+      lname: "",
+      lname: "",
+      password: "",
+      latitude: 6.5244,
+      longitude: 3.3792,
     }
-    this._signInRequest(email, password, false);
-
-  }
-
-  _signInRequest(email, password, social){
-     console.warn(URL.url);
-    this.setState({ loading: true })
-    fetch(URL.url + 'users/authenticate', {
-      method: 'POST', headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }, body: JSON.stringify({
-        Username: email,
-        Password: password,
-        IsSocial: social
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-
-        if (res.status) {
-          this.setState({ loading: false })
-          AsyncStorage.setItem('login', 'true');
-          AsyncStorage.setItem('data', JSON.stringify(res));
-          AsyncStorage.setItem('bal', this.currencyFormat(res.balance));
-          if(social){
-            this._updateProfileRequest(res)
-          }else{
-            AsyncStorage.setItem('user', JSON.stringify(res.user));
-           Action
-          }
-        } else {
-          Alert.alert('Login failed', res.message, [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        this.setState({ loading: false })
-        console.warn(error);
-        alert(error.message);
-      });
 
   }
 
 
 
+  async componentDidMount() {
+   
+
+    var cordinates = getLocation();
+    cordinates.then((result) => {
+        this.setState({
+            latitude: result.latitude,
+            longitude: result.longitude
+        });
+        console.log(result);
+        this.updateProfileRequest()
+    }, err => {
+        console.log(err);
+    });
+}
+
+
+  
 
   
 
@@ -105,7 +70,7 @@ export default class Welcome extends Component {
 
               
                     <View>
-                      <Button onPress={() => this.props.navigation.navigate('login')} style={styles.buttonContainer} block iconLeft>
+                      <Button onPress={() => this.requestLocationPermission()} style={styles.buttonContainer} block iconLeft>
                         <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN IN </Text>
                       </Button>
 
@@ -127,7 +92,7 @@ export default class Welcome extends Component {
   }
 
 
-
+ 
 
 }
 const styles = StyleSheet.create({
