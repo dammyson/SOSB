@@ -105,7 +105,7 @@ checkLogin() {
                 style={styles.logo}
                 source={require('../../assets/logo.png')} />
             </View>
-            <Text style={{ color: colors.primary_color, margin: 20, fontWeight: '900', fontSize: 25, }}>Forget Password </Text>
+            <Text style={{ color: colors.primary_color, margin: 20, fontFamily:"NunitoSans-Bold", fontSize: 20,}}>Forget Password </Text>
             <View style={styles.bottom}>
 
               <TextInput
@@ -205,28 +205,21 @@ const styles = StyleSheet.create({
   body: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    justifyContent: 'center',
   },
   buttonContainer: {
     backgroundColor: colors.primary_color,
     marginLeft: 30,
     marginRight: 30,
-    borderRadius: 20,
-    marginTop: 20,
-  },
-  whiteButtonContainer: {
-    backgroundColor: '#FFFFFF',
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 20,
-    borderRadius: 1,
+    borderRadius: 10,
+    marginTop: 10,
   },
   top: {
-    flex: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottom: {
-    flex: 4,
   },
   input: {
     height: 45,
@@ -237,7 +230,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderColor: '#000000',
     borderWidth: 0.8,
-    borderRadius: 20,
+    borderRadius: 10,
     marginTop: 1
   },
   actionbutton: {
@@ -259,7 +252,7 @@ const styles = StyleSheet.create({
 
   logo: {
     width: 120,
-    height: 170,
+    height: 100,
     justifyContent: 'center',
     resizeMode: 'contain'
   }

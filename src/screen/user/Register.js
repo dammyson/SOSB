@@ -202,8 +202,24 @@ export default class Registration extends Component {
             </View>
             <Text style={{ color: colors.primary_color, margin: 20, fontWeight: '900', fontSize: 25, }}>Sign Up </Text>
             <View style={styles.bottom}>
+              {this.renderFirst()}
 
-              <TextInput
+            </View>
+
+          </View>
+        </Content>
+      </Container>
+    );
+  }
+
+
+
+  renderFirst(){
+    return(
+      <>
+
+
+<TextInput
                 placeholder="Enter your email"
                 placeholderTextColor='#3E3E3E'
                 returnKeyType="next"
@@ -322,12 +338,8 @@ export default class Registration extends Component {
                   <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>Forgot Password </Text>
                 </TouchableOpacity>
               </View>
-            </View>
-
-          </View>
-        </Content>
-      </Container>
-    );
+      </>
+    )
   }
 
 
@@ -364,22 +376,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary_color,
     marginLeft: 30,
     marginRight: 30,
-    borderRadius: 20,
-    marginTop: 20,
+    borderRadius: 10,
+    marginTop: 10,
   },
-  whiteButtonContainer: {
-    backgroundColor: '#FFFFFF',
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 20,
-    borderRadius: 1,
-  },
+
   top: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottom: {
-    flex: 4,
+ 
   },
   input: {
     height: 45,
@@ -390,7 +396,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderColor: '#000000',
     borderWidth: 0.8,
-    borderRadius: 20,
+    borderRadius: 10,
     marginTop: 1
   },
   actionbutton: {

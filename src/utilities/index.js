@@ -1,26 +1,24 @@
 import { AsyncStorage } from 'react-native';
 
 
-export const getSaveRestaurant = async () => {
-  return AsyncStorage.getItem('currentRES')
+export const BaseUrl = () => {
+
+  return 'https://www.ofidy.com/dev-mobile/v1/api.php';
 };
 
-export const getData = async () => {
-  return AsyncStorage.getItem('data')
+export const getUserID = async () => {
+  return AsyncStorage.getItem('user_id')
+};
+
+export const getSessionID = async () => {
+  return AsyncStorage.getItem('session_id')
 };
 
 
-export const getUser = async () => {
-  return AsyncStorage.getItem('user')
+export const getAuth = async () => {
+  return AsyncStorage.getItem('aut')
 };
 
-export const getBalance = async () => {
-  return AsyncStorage.getItem('bal')
-};
-
-export const getToken = async () => {
-  return AsyncStorage.getItem('fcmToken')
-};
 
 
 

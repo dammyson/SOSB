@@ -1,13 +1,13 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, TextInput, BackHandler, StatusBar, ActivityIndicator, Platform, View, Dimensions, StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
+import { Alert, TextInput, StatusBar, Platform, View, Dimensions, StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Container, Text, Right, Button, Left, } from 'native-base';
 import {
   BarIndicator,
 } from 'react-native-indicators';
-import { WebView } from 'react-native-webview';
-import { Icon, } from 'react-native-elements';
 
+import { Icon, } from 'react-native-elements';
+import { WebView } from 'react-native-webview';
 import Modal, { SlideAnimation, ModalContent } from 'react-native-modals';
 import {
   MaterialIndicator,
@@ -19,12 +19,12 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import colors from '../../component/color';
 import GestureView from 'react-native-gesture-view'
-import Utils from './../../component/Utils'
+import Utils from '../../component/Utils'
 
 
 const WEBVIEW_REF = 'webview';
 const TEXT_INPUT_REF = 'urlInput';
-export default class Home extends Component {
+export default class Cart extends Component {
 
   constructor(props) {
     super(props);
@@ -33,8 +33,8 @@ export default class Home extends Component {
     this.state = {
       data: '',
       status: '',
-      currentUrl: Utils.sanitizeUrl('https://m.ofidy.com/shopping-browser.php'),
-      url: Utils.sanitizeUrl('https://m.ofidy.com/shopping-browser.php'),
+      currentUrl: Utils.sanitizeUrl('https://www.google.com/'),
+      url: Utils.sanitizeUrl('https://www.google.com/'),
       backButtonEnabled: false,
       forwardButtonEnabled: false,
       homeButtonEnabled: true,
@@ -133,19 +133,6 @@ export default class Home extends Component {
   }
 
 
-  home() {
-    this.setState({ url: 'https://m.ofidy.com/shopping-browser.php' })
-  }
-  componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.goBack.bind(this))
-  }
-
-  cart() {
-       this.props.navigation.navigate('cart')
-   /* const { user_id, session_id, } = this.state
-    this.setState({ url: 'https://www.ofidy.com/shopping-cart.php?user_id=' + user_id + '&session_id=' + session_id + '&currency=NGN' }) */
-
-  }
 
   reload() {
     this.refs[WEBVIEW_REF].reload();
@@ -162,21 +149,12 @@ export default class Home extends Component {
     this.setState({
       backButtonEnabled: navState.canGoBack,
       forwardButtonEnabled: navState.canGoForward,
-      // currentUrl: navState.url,
+      currentUrl: navState.url,
       status: navState.title,
       loading: navState.loading,
       scalesPageToFit: true,
       data: navState
     });
-
-    if (navState.url.includes('shopping-cart.php?user_id=')) {
-      this.setState({ currentUrl: 'https://www.ofidy.com/'});
-    } else {
-      this.setState({
-        currentUrl: navState.url
-      });
-    }
-
 
   }
 
@@ -229,21 +207,6 @@ export default class Home extends Component {
 
         <View style={{ paddingTop: 2, flex: 1 }}>
           <View style={styles.toolbar}>
-          {this.state.loading ?
-                <View style={{ marginRight:10  }}>
-                  <ActivityIndicator size="small" color="#fff" />
-                </View> :
-                <TouchableOpacity onPress={() => this.reload()} style={{ marginRight: 10 }}>
-                  <Icon
-                    active
-                    name="refresh"
-                    type='material-community'
-                    color='#fff'
-                  />
-
-                </TouchableOpacity>
-              }
-
             <TextInput
               ref={TEXT_INPUT_REF}
               underlineColorAndroid='rgba(0,0,0,0)'
@@ -265,7 +228,7 @@ export default class Home extends Component {
             domStorageEnabled={true}
             decelerationRate="normal"
             onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-           // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
             startInLoadingState={true}
             scalesPageToFit={this.state.scalesPageToFit}
           />
@@ -310,20 +273,17 @@ export default class Home extends Component {
 
 
 
-              {this.state.loading ?
-                <View style={{ marginLeft: 30 }}>
-                  <ActivityIndicator size="small" color="#fff" />
-                </View> :
-                <TouchableOpacity onPress={() => this.reload()} style={{ marginLeft: 30 }}>
-                  <Icon
-                    active
-                    name="refresh"
-                    type='material-community'
-                    color='#fff'
-                  />
 
-                </TouchableOpacity>
-              }
+              <TouchableOpacity onPress={() => this.goReload()} style={{ marginLeft: 30 }}>
+                <Icon
+                  active
+                  name="refresh"
+                  type='material-community'
+                  color='#D3D3D3'
+                />
+
+              </TouchableOpacity>
+
 
 
             </View>

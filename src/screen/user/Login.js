@@ -1,7 +1,7 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
 import { Alert, TextInput, ImageBackground, View, Dimensions, TouchableOpacity, Image, StyleSheet, AsyncStorage } from 'react-native';
-import { Container, Content, Text, Icon, Button, Left, } from 'native-base';
+import { Container, Content, Text, Button, Left, } from 'native-base';
 import {
   BarIndicator,
 } from 'react-native-indicators';
@@ -103,7 +103,7 @@ export default class Login extends Component {
                 style={styles.logo}
                 source={require('../../assets/logo.png')} />
             </View>
-            <Text style={{ color: colors.primary_color, margin: 20, fontWeight: '900', fontSize: 25, }}>Sign In </Text>
+            <Text style={{ color: colors.primary_color, margin: 20, fontFamily:"NunitoSans-Bold", fontSize: 20, }}>Sign In </Text>
             <View style={styles.bottom}>
 
               <TextInput
@@ -203,12 +203,13 @@ const styles = StyleSheet.create({
   body: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    justifyContent: 'center',
   },
   buttonContainer: {
     backgroundColor: colors.primary_color,
     marginLeft: 30,
     marginRight: 30,
-    borderRadius: 20,
+    borderRadius: 10,
     marginTop: 20,
   },
   whiteButtonContainer: {
@@ -219,12 +220,12 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
   top: {
-    flex: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottom: {
-    flex: 4,
+  
   },
   input: {
     height: 45,
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderColor: '#000000',
     borderWidth: 0.8,
-    borderRadius: 20,
+    borderRadius: 10,
     marginTop: 1
   },
   actionbutton: {
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
 
   logo: {
     width: 120,
-    height: 170,
+    height: 80,
     justifyContent: 'center',
     resizeMode: 'contain'
   }
