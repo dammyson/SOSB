@@ -12,6 +12,7 @@ import ForgetPassword from '../../screen/user/ForgetPassword';
 import ChangePassword from '../../screen/user/ChangePassword';
 import Cart from '../../screen/activity/Cart';
 import Order from '../../screen/activity/Order';
+import ConfirmOrder from '../../screen/activity/ConfirmOrder';
 
 class AppStack extends Component {
 
@@ -27,7 +28,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="login"
+             initialRouteName="order"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -39,6 +40,7 @@ class AppStack extends Component {
             <Stack.Screen name="changepass" component={ChangePassword}   />
             <Stack.Screen name="cart" component={Cart}   />
             <Stack.Screen name="order" component={Order}   />
+            <Stack.Screen name="confirm_order" component={ConfirmOrder}   />
           </Stack.Navigator>
          </NavigationContainer>
       );

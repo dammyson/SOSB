@@ -4,10 +4,10 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { ActivityIndicator, Alert, AsyncStorage, StyleSheet, StatusBar , TouchableOpacity} from 'react-native';
+import {Alert, AsyncStorage, StyleSheet, StatusBar , TouchableHighlight, TouchableOpacity} from 'react-native';
 import { Container, Content, Text, View, Picker, Grid, Col, Left, Right, Button, List, ListItem, Body, Radio, Input, Item } from 'native-base';
 import { Icon, } from 'react-native-elements';
-
+import _ from "lodash";
 
 // Our custom files and classes import
 import colors from '../color';
@@ -15,6 +15,17 @@ import Navbar from '../Navbar';
 import SelectAddressType from './SelectAddressType';
 import SelectCountry from './SelectCountry';
 import SelectState from './SelectState';
+import ActivityIndicator from './ActivityIndicator';
+import { BaseUrl, getUserID, getSessionID, showTopNotification } from '../../utilities';
+import {
+  getLocation,
+  geocodeLocationByName,
+  geocodeAddressByName,
+  geocodeLocationByCoords
+} from '../../utilities/locationService';
+
+
+
 
 export default class AddAddress extends Component {
   constructor(props) {
@@ -44,60 +55,131 @@ export default class AddAddress extends Component {
       state_name: 'Select State',
       show_country: false,
       show_state: false,
-
-      delyes: true,
-      delno: false,
-      deval: true,
-
-      colyes: true,
-      colno: false,
-      coval: true,
-
       loading: false,
       aut: '',
       user_id: '',
       session_id: '',
-      countrylist: '',
-      statelist: '',
-      addtypelist: '',
-      typelist: '',
+
+
+      latitude: 6.5244,
+      longitude: 3.3792,
+      locationPredictions: []
+     
 
     };
+
+    this.onChangeDestinationDebounced = _.debounce(
+      this.onChangeDestination,
+      1000
+    );
   }
 
-  componentWillMount() {
-    this.setState({ id: this.props.id });
-    AsyncStorage.getItem('user_id').then((value) => {
-      this.setState({ 'user_id': value.toString() })
-    })
-    AsyncStorage.getItem('session_id').then((value) => {
-      this.setState({ 'session_id': value.toString() })
-    })
-    AsyncStorage.getItem('aut').then((value) => {
-      this.setState({ 'aut': value.toString() })
-    })
-
+  async componentWillMount() {
+    this.setState({
+      user_id: await getUserID(),
+      session_id: await getSessionID()
+    });
   }
 
   componentDidMount() {
-    this.setState({
-      states: state_list, regions: regions_list, addType: addresstype_list, type: type_list
-    })
+    
+    var cordinates = getLocation();
+    cordinates.then((result) => {
+      this.setState({
+        latitude: result.latitude,
+        longitude: result.longitude
+      });
+      console.log(result);
+      this.updateProfileRequest()
+    }, err => {
+      console.log(err);
+    });
+  }
+
+
+
+
+  onChangeDestination = async (venue) => {
+    const { longitude, latitude } = this.state;
+    if (venue.lenght < 4) {
+      return
+    }
+    const apiKey = 'AIzaSyBuEYeKLbJ0xnFwHKT-z2Kq174a3f7u4ac'
+    const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${apiKey}&input=${venue}&location=${latitude},${longitude}&radius=2000`;
+    console.log(apiUrl);
+    try {
+      const result = await fetch(apiUrl);
+      const json = await result.json();
+      this.setState({
+        locationPredictions: json.predictions
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+  onAddressSelected = (location) => {
+    console.warn("Loca"+location)
+    this.setState({ locationPredictions: [], address: location, venue: location.description })
+    geocodeLocationByName(location).then((result) => {
+    
+      this.setState({
+        latitude: result.lat, longitude: result.lng
+
+      })
+      this.getRealDirection(result.lat,result.lng );
+    }, err => {
+      console.log(err);
+    });
+  }
+
+
+  getRealDirection(lat, log){
+    geocodeLocationByCoords(lat, log).then((result) => {
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  renderPrediction = (predictions) => {
+    let cat = [];
+    for (var i = 0; i < predictions.length; i++) {
+      let location = predictions[i]
+      cat.push(
+        <TouchableHighlight
+          onPress={() => this.onAddressSelected(location)}>
+          <View style={{ marginLeft: 10, marginRight: 10 }}>
+            <Text style={{fontFamily: 'NunitoSans-Bold', fontSize: 13,}}>
+              {predictions[i].structured_formatting.main_text}
+            </Text>
+            <Text style={{fontFamily: 'NunitoSans-Bold', fontSize: 12, color:"#00000070"}}>
+              {predictions[i].description}
+            </Text>
+          </View>
+        </TouchableHighlight>
+      );
+    }
+    return cat;
   }
 
   addAddress() {
 
-    const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, addtype, type, coval, deval } = this.state
-    if (coval) { var deladd = 'Y'; } else { var deladd = 'N'; }
-    if (deval) { var colladd = 'Y'; } else { var colladd = 'N'; }
+    const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, addtype, type, is_delivery_add, is_collection_add } = this.state
+    if (is_collection_add) { var deladd = 'Y'; } else { var deladd = 'N'; }
+    if (is_delivery_add) { var colladd = 'Y'; } else { var colladd = 'N'; }
+
     if (addressone == "" || city == "" || state == 0 || country == 0 || postcode == "" || addtype == 0 || type == 0) {
       Alert.alert('Validation failed', 'field(s) with * cannot be empty', [{ text: 'Okay' }])
       return
     }
+
+    
     this.setState({ loading: true })
     const formData = new FormData();
     formData.append('feature', "user");
     formData.append('action', "addAddress");
+
     formData.append('id', user_id);
     formData.append('addr1', addressone);
     formData.append('addr2', addresstwo);
@@ -112,7 +194,9 @@ export default class AddAddress extends Component {
     formData.append('postcode', postcode);
     formData.append('type', 1);
 
-    fetch('https://www.ita-obe.com/mobile/v1/user.php', {
+
+    console.warn(formData);
+    fetch(BaseUrl(), {
       method: 'POST', headers: {
         Accept: 'application/json',
       }, body: formData,
@@ -120,6 +204,7 @@ export default class AddAddress extends Component {
       .then(res => res.json())
       .then(res => {
         console.warn(res);
+        showTopNotification("success", "Address Added")
         if (!res.error) {
           this.setState({
             loading: false,
@@ -138,45 +223,13 @@ export default class AddAddress extends Component {
       
   }
 
-  getStateList(country) {
-    console.warn(country.id);
-    this.setState({ countrylist: country, country: country.id })
-    this.setState({ loading: true, })
-    const formData = new FormData();
-    formData.append('feature', "user");
-    formData.append('action', "getStates");
-    formData.append('region', country.id);
 
-    fetch('https://www.ita-obe.com/mobile/v1/user.php', {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-      }, body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.warn(res);
-         if(!res.error){
-          this.setState({ 
-              loading: false,
-              states: res.data,
-            })
-          }else{
-               Alert.alert('Operation failed', res.message, [{text: 'Okay'}])
-               this.setState({ loading: false})
-          }
-      }).catch((error) => {
-        this.setState({ loading: false })
-        console.warn(error);
-        alert(error.message);
-      });
-  }
 
   render() {
     if (this.state.loading) {
       return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator />
-          <Text>Processing</Text>
+        <View style={{ flex: 1,  alignItems: 'center', justifyContent: 'center', position: "absolute", top: 0, left: 0,bottom: 0,right: 0, }}>
+          <ActivityIndicator  color={colors.primary_color} message={'Adding Address'}  />
         </View>
       );
     }
@@ -203,11 +256,20 @@ export default class AddAddress extends Component {
 
             <View regular style={styles.item}>
               <Text style={{ paddingLeft: 5, marginLeft: 0 }}>*</Text>
-              <Input placeholder='Address 1' onChangeText={(text) => this.setState({ addressone: text })} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='Address 1' 
+              defaultValue={this.state.venue}
+               onChangeText={venue => {
+                  this.setState({ venue });
+                  this.onChangeDestinationDebounced(venue);
+                }} placeholderTextColor="#687373" style={styles.input} />
             </View>
 
+            <View style={{backgroundColor:'#fff'}}>
+                {this.renderPrediction(this.state.locationPredictions)}
+              </View>
+
             <View regular style={styles.item}>
-              <Input placeholder='Address 2' onChangeText={(text) => this.setState({ addresstwo: text })} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='Address 2'  onChangeText={(text) => this.setState({ addresstwo: text })} placeholderTextColor="#687373" style={styles.input} />
             </View>
 
             <View regular style={styles.item}>
@@ -365,7 +427,7 @@ export default class AddAddress extends Component {
           </View>
           <View>
           </View>
-          <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>
+          <View style={{ marginTop: 10, marginBottom: 200, paddingBottom: 7 }}>
             <Button onPress={() => this.addAddress()} style={{ backgroundColor: colors.primary_color }} block iconLeft>
               <Text style={{ color: '#fdfdfd' }}>Add Address</Text>
             </Button>
@@ -394,7 +456,7 @@ export default class AddAddress extends Component {
     )
   }
   onSelectAddressType(item){
-    this.setState({show_address_type: false})
+    this.setState({show_address_type: false, address_type: item.name , type:item.id,})
   } 
 
 
@@ -460,78 +522,7 @@ export default class AddAddress extends Component {
     alert("Check the log");
   }
 
-  renderCountry() {
-
-    let serviceItems = this.state.regions.map((s, i) => {
-      return <Picker.Item key={i} value={s} label={s.name} />
-    });
-    return serviceItems;
-  }
-
-  renderState() {
-
-    let serviceItems = this.state.states.map((s, i) => {
-      return <Picker.Item key={i} value={s} label={s.name} />
-    });
-    return serviceItems;
-  }
-
-  renderAddType() {
-    let serviceItems = this.state.addType.map((s, i) => {
-      return <Picker.Item key={i} value={s} label={s.name} />
-    });
-    return serviceItems;
-  }
-
-  renderType() {
-    let serviceItems = this.state.type.map((s, i) => {
-      return <Picker.Item key={i} value={s} label={s.name} />
-    });
-    return serviceItems;
-  }
-
 }
-
-
-const state_list =
-  [
-    { id: 0, name: 'Select State' },
-    { id: 34, name: 'Kogi' },
-    { id: 35, name: 'Kwara' }
-  ]
-  ;
-
-const regions_list =
-  [
-    { id: 0, name: 'Select Country' },
-    { id: 11, name: 'Nigeria' },
-    { id: 12, name: 'United Kindom' },
-    { id: 13, name: 'United States' }
-  ]
-  ;
-
-
-const addresstype_list =
-  [
-    { id: 0, name: 'Select type' },
-    { id: 1, name: 'Home' },
-    { id: 2, name: 'Office' },
-    { id: 3, name: 'School' },
-    { id: 1, name: 'Shop' },
-    { id: 2, name: 'Church' },
-    { id: 3, name: 'Mosque' },
-  ]
-  ;
-
-const type_list =
-  [
-    { id: 0, name: 'Select type' },
-    { id: 1, name: 'Home' },
-    { id: 2, name: 'Office' },
-    { id: 3, name: 'School' },
-  ]
-  ;
-
 
 
 

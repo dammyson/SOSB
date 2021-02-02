@@ -57,7 +57,6 @@ export default class Registration extends Component {
         longitude: result.longitude
       });
       console.log(result);
-      this.updateProfileRequest()
     }, err => {
       console.log(err);
     });

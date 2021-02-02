@@ -46,7 +46,8 @@ export default class Order extends Component {
       delto: true,
       billadd: '',
       shippadd: '',
-      shipmed: 'Select Method',
+      shipping_method: 'Select Method',
+      shipmed: '',
       shippingmethod: [],
       paymethod: 'bank',
 
@@ -304,7 +305,7 @@ export default class Order extends Component {
                   </View>
                   :
                   <View>
-                    <Button onPress={() => this.checkReg()} style={styles.buttonContainer} block iconLeft>
+                    <Button onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
                       <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Place Order </Text>
                     </Button>
                   </View>
@@ -319,36 +320,17 @@ export default class Order extends Component {
     );
   }
 
-  renderItems() {
-    let items = [];
-    this.state.cartItems.map((item, i) => {
-      items.push(
-        <ListItem
-          key={i}
-          style={{ marginLeft: 0 }}
-        >
-          <Body style={{ paddingLeft: 10 }}>
-            <Text style={{ fontSize: 18 }}>
-              {item.quantity > 1 ? item.quantity + "x " : null}
-              {item.title}
-            </Text>
-            <Text style={{ fontSize: 14, fontStyle: 'italic' }}>Color: {item.color}</Text>
-            <Text style={{ fontSize: 14, fontStyle: 'italic' }}>Size: {item.size}</Text>
-          </Body>
-          <Right>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>{item.price}</Text>
-          </Right>
-        </ListItem>
-      );
-    });
-    return items;
-  }
 
   checkout() {
     const { paymethod, toadd, shipreq, billadd, shippadd, shipmed } = this.state
     const shippingmethod =
       { paymethod: paymethod, toadd: toadd, shipreq: shipreq, billadd: billadd, shippadd: shippadd, shipmed: shipmed }
-    // Actions.payment({ paymentDetails: shippingmethod });
+
+      //console.warn(shippingmethod);
+      this.props.navigation.navigate('confirm_order', { paymentDetails: shippingmethod });
+
+      
+  
 
   }
 
@@ -371,7 +353,8 @@ export default class Order extends Component {
   onSelectBillingAddress(item){
     this.setState({
       billing_address: item.addressLine1+ " "+item.city+ " "+item.state + " "+item.state, 
-      show_billing_address: false
+      show_billing_address: false,
+      billadd: item
     })
  }
 
@@ -387,6 +370,7 @@ export default class Order extends Component {
     this.setState({
       shipping_address: item.addressLine1+ " "+item.city+ " "+item.state + " "+item.state, 
       show_shipping_address: false,
+      shippadd: item,
       cost_add_id:   item.id
     })
  }
@@ -402,7 +386,7 @@ export default class Order extends Component {
 
 
 onSelectMethod(item){
-  this.setState({shipping_method: item.name+ " "+item.price, show_method: false})
+  this.setState({shipping_method: item.name+ " "+item.price, shipmed: item, show_method: false})
 }
 
 renderAddAddress() {
