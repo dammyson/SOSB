@@ -70,7 +70,7 @@ export default class Welcome extends Component {
 
               
                     <View>
-                      <Button onPress={() => this.requestLocationPermission()} style={styles.buttonContainer} block iconLeft>
+                      <Button onPress={() => this.props.navigation.navigate('login')} style={styles.buttonContainer} block iconLeft>
                         <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN IN </Text>
                       </Button>
 

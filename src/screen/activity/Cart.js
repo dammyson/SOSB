@@ -21,7 +21,7 @@ export default class Cart extends Component {
     super(props);
     this.state = {
       cartItems: [],
-      loading: false,
+      loading: true,
       aut: '',
       user_id: '',
       session_id: '',

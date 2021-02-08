@@ -13,6 +13,8 @@ import ChangePassword from '../../screen/user/ChangePassword';
 import Cart from '../../screen/activity/Cart';
 import Order from '../../screen/activity/Order';
 import ConfirmOrder from '../../screen/activity/ConfirmOrder';
+import BankDetails from '../../screen/activity/BankDetails';
+import Confirmation from '../../screen/activity/Confirmation';
 
 class AppStack extends Component {
 
@@ -28,7 +30,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="order"
+             initialRouteName="confirm"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -41,6 +43,8 @@ class AppStack extends Component {
             <Stack.Screen name="cart" component={Cart}   />
             <Stack.Screen name="order" component={Order}   />
             <Stack.Screen name="confirm_order" component={ConfirmOrder}   />
+            <Stack.Screen name="confirm" component={Confirmation}   />
+            <Stack.Screen name="bank_details" component={BankDetails}   />
           </Stack.Navigator>
          </NavigationContainer>
       );

@@ -356,7 +356,7 @@ export default class Home extends Component {
               <Icon
                 active
                 name="cart-plus"
-                type='material-community'
+                type='font-awesome'
                 color='#fff'
                 size={25}
               />

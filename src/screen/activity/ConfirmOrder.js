@@ -105,12 +105,12 @@ export default class ConfirmOrder extends Component {
     const { user_id, session_id, paymentDetails } = this.state
     this.setState({ loading: true })
     const formData = new FormData();
-    formData.append('feature', "order");
+    formData.append('code', "order");
     formData.append('action', "DeliveryVerify");
     formData.append('id', user_id,);
     formData.append('sid', session_id);
 
-    fetch('https://www.ita-obe.com/mobile/v1/order.php', {
+    fetch(BaseUrl(), {
       method: 'POST', headers: {
         Accept: 'application/json',
       }, body: formData,
@@ -225,11 +225,11 @@ export default class ConfirmOrder extends Component {
   checkout() {
     const { paymentDetails, bill } = this.state
     if (paymentDetails.paymethod == 'bank') {
-      Actions.bank({ paymentDetails: paymentDetails });
+      this.props.navigation.navigate('bank_details', { bill: bill });
     } else if (paymentDetails.paymethod == 'delivery') {
       this.deliveryVerification();
     } else {
-      Actions.pay({ paymentDetails: paymentDetails, total: bill });
+      this.props.navigation.navigate('bank_details', { bill: bill });
     }
   }
 
