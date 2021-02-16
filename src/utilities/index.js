@@ -20,6 +20,13 @@ export const getAuth = async () => {
   return AsyncStorage.getItem('aut')
 };
 
+export const setCurrency = (curr) => {
+  AsyncStorage.setItem('curr', curr);
+};
+export const getCurrency = async () => {
+  return AsyncStorage.getItem('curr')
+};
+
 
 export const showTopNotification = (type, message, duration)=> {
   showMessage({

@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Content, View, Text, Header, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
 
-import { BaseUrl, getUserID, getSessionID } from '../../utilities';
+import { BaseUrl, getUserID, getSessionID, getCurrency } from '../../utilities';
 import colors from '../../component/color';
 import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
@@ -21,10 +21,11 @@ export default class Cart extends Component {
     super(props);
     this.state = {
       cartItems: [],
-      loading: true,
+      loading: false,
       aut: '',
       user_id: '',
       session_id: '',
+      currency:''
     };
   }
 
@@ -32,7 +33,8 @@ export default class Cart extends Component {
 
     this.setState({
       user_id: await getUserID(),
-      session_id: await getSessionID()
+      session_id: await getSessionID(),
+      currency: await getCurrency() 
     });
 
 
@@ -50,7 +52,7 @@ export default class Cart extends Component {
         return
       }
       this.setState({ 'aut': value.toString() })
-      this.getCart();
+     // this.getCart();
     })
 
   }
@@ -60,7 +62,7 @@ export default class Cart extends Component {
   }
 
   async getCart() {
-    const { user_id, session_id } = this.state
+    const { user_id, session_id, currency } = this.state
     console.warn(await getUserID(), session_id);
     this.setState({ loading: true })
     const formData = new FormData();
@@ -69,7 +71,7 @@ export default class Cart extends Component {
     formData.append('code', "cart");
     formData.append('id', user_id);
     formData.append('sid', session_id);
-    formData.append('prf', "NGN");
+    formData.append('prf', currency);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {
