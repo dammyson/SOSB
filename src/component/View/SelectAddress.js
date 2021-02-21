@@ -65,7 +65,7 @@ export default class SelectAddress extends Component {
               })
               this.arrayholder = res.data;
             } else {
-              Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
+              Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
              
             }
           }).catch((error) => {

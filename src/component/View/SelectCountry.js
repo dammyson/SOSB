@@ -64,7 +64,7 @@ export default class SelectCountry extends Component {
               })
               this.arrayholder = res.data.regions;
             } else {
-              Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
+              Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
              
             }
           }).catch((error) => {

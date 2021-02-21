@@ -91,7 +91,7 @@ export default class Cart extends Component {
           })
 
         } else {
-          Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
+          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
           this.setState({ loading: false })
         }
       }).catch((error) => {
@@ -218,7 +218,7 @@ export default class Cart extends Component {
           this.getCart();
 
         } else {
-          Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
+          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
           this.setState({ loading: false })
         }
       }).catch((error) => {
@@ -264,7 +264,7 @@ export default class Cart extends Component {
           })
 
         } else {
-          Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
+          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
           this.setState({ loading: false })
         }
       }).catch((error) => {

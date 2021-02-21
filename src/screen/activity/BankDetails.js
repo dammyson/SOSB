@@ -19,42 +19,32 @@ export default class BankDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      payement: {},
+      paymentinfo: {},
       user_id: '',
       session_id: '',
       loading: false,
-      bill:''
+      bill: ''
     };
   }
 
 
   async componentWillMount() {
-    const { paymentDetails } = this.props.route.params;
-    if (paymentDetails) {
-      this.setState({ paymentDetails: paymentDetails });
-      console.warn(paymentDetails.billadd.addressLine1);
-    }
-   
-   
 
-  }
- async componentWillMount() {
-  const { bill } = this.props.route.params;
-  this.setState({ bill: bill });
+    const { paymentinfo } = this.props.route.params;
+    console.warn(paymentinfo)
+    if (paymentinfo) {
+      this.setState({ paymentinfo: paymentinfo });
+    }
+
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID()
     });
 
-    AsyncStorage.getItem('aut').then((value) => {
-      this.setState({ 'aut': value.toString() })
-    })
-
-
   }
 
   bankTransferVerification() {
-    const { user_id, session_id, payement } = this.state
+    const { user_id, session_id, } = this.state
     this.setState({ loading: true })
     const formData = new FormData();
     formData.append('code', "order");
@@ -74,11 +64,14 @@ export default class BankDetails extends Component {
           this.setState({
             loading: false,
           })
+          if(res.message == 'Transaction Failed'){
 
-
+          }else{
+            this.props.navigation.navigate('confirm')
+          }
 
         } else {
-          Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
+          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
           this.setState({ loading: false })
         }
       }).catch((error) => {
@@ -119,35 +112,35 @@ export default class BankDetails extends Component {
     return (
 
       <Container>
-        <Navbar left={left} onCurrencyChange={(text)=> this.setState({currency: text})} title="Bank Details" />
+        <Navbar left={left} onCurrencyChange={(text) => this.setState({ currency: text })} title="Bank Details" />
         <Content padder>
           <View>
             <Text style={{ marginTop: 15, fontSize: 18 }}>Bank Details</Text>
 
-            <View regular style={styles.item}> 
-            <Text style={styles.actionbutton}>Bank Name: </Text>
-            <Text style={styles.actionbuttonText}> Zenith Bank</Text>
+            <View regular style={styles.item}>
+              <Text style={styles.actionbutton}>Bank Name: </Text>
+              <Text style={styles.actionbuttonText}> Zenith Bank</Text>
             </View>
 
 
-            <View regular style={styles.item}> 
-            <Text style={styles.actionbutton}>Account Name: </Text>
-            <Text style={styles.actionbuttonText}>Ofidy Global</Text>
+            <View regular style={styles.item}>
+              <Text style={styles.actionbutton}>Account Name: </Text>
+              <Text style={styles.actionbuttonText}>Ofidy Global</Text>
             </View>
 
-            <View regular style={styles.item}> 
-            <Text style={styles.actionbutton}>Account Number: </Text>
-            <Text style={styles.actionbuttonText}>1234567890</Text>
+            <View regular style={styles.item}>
+              <Text style={styles.actionbutton}>Account Number: </Text>
+              <Text style={styles.actionbuttonText}>1234567890</Text>
             </View>
 
-            <View regular style={styles.item}> 
-            <Text style={styles.actionbutton}>Account Sort Code: </Text>
-            <Text style={styles.actionbuttonText}>1567890</Text>
+            <View regular style={styles.item}>
+              <Text style={styles.actionbutton}>Account Sort Code: </Text>
+              <Text style={styles.actionbuttonText}>1567890</Text>
             </View>
 
-            <View regular style={styles.item}> 
-            <Text style={styles.actionbutton}>Total: </Text>
-            <Text style={styles.actionbuttonText}>{this.currencyFormat(this.state.bill)}</Text>
+            <View regular style={styles.item}>
+              <Text style={styles.actionbutton}>Total: </Text>
+              <Text style={styles.actionbuttonText}>{this.currencyFormat(this.state.paymentinfo.fullBill)}</Text>
             </View>
 
           </View>
@@ -165,7 +158,7 @@ export default class BankDetails extends Component {
 
   currencyFormat(n) {
     return parseFloat(n).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-}
+  }
 
   checkout() {
     this.bankTransferVerification();
@@ -234,7 +227,7 @@ const styles = StyleSheet.create({
   actionbuttonText: {
     opacity: 0.9,
     fontSize: 12,
-    marginBottom:-5,
+    marginBottom: -5,
     color: '#000',
     textAlign: 'left',
     fontFamily: 'NunitoSans-Regular'

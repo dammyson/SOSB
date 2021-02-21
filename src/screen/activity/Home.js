@@ -120,7 +120,7 @@ export default class Home extends Component {
   }
 
 
-  goBack() {
+  gBack() {
     this.refs[WEBVIEW_REF].goBack();
   }
 
@@ -137,7 +137,7 @@ export default class Home extends Component {
     this.setState({ url: 'https://m.ofidy.com/shopping-browser.php' })
   }
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.goBack.bind(this))
+    BackHandler.addEventListener('hardwareBackPress', this.gBack.bind(this))
   }
 
   cart() {
@@ -200,29 +200,6 @@ export default class Home extends Component {
     formdata.append('session_id', '337BFE1E-DEB2-4356-B051-68A9B849E3EC');
     formdata.append('currency', "NGN");
 
-    var left = (
-      <Left style={{ flex: 1 }}>
-        <Button transparent onPress={() =>  this.props.navigation.goBack()}>
-          <Icon
-            active
-            name="ios-arrow-back"
-            type='ionicon'
-            color='#FFF'
-          />
-        </Button>
-      </Left>
-    );
-    var right = (
-      <Right>
-        <Button onpress={() => this.webview.reload()} transparent>
-          <Icon
-            active
-            name="refresh"
-            color='#FFF'
-          />
-        </Button>
-      </Right>
-    );
     return (
       <View style={{ flex: 1 }}>
 
@@ -274,7 +251,7 @@ export default class Home extends Component {
 
 
             <View style={{ alignSelf: "center", marginLeft: 10 }}>
-              <TouchableOpacity onPress={() => this.goBack()}>
+              <TouchableOpacity onPress={() => this.gBack()}>
                 <Icon
                   active
                   name="left"
