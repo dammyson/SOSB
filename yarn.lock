@@ -3386,6 +3386,14 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
+flutterwave-react-native@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/flutterwave-react-native/-/flutterwave-react-native-1.0.2.tgz#aa93719c132a54fc499a21116321277da2f5e82d"
+  integrity sha512-1pWosNE5ozu6mw9KuevzsSj/Q25TXkoLOekSiuQEVObWWqFS1n/AqhVQhiyRQLWF6iteU10+kcDh7pIwHXHr5Q==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-webview ">=6.0.2"
+
 for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -6304,6 +6312,11 @@ react-native-paper@^4.7.1:
     color "^3.1.2"
     react-native-iphone-x-helper "^1.3.1"
 
+react-native-paystack@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-paystack/-/react-native-paystack-3.4.0.tgz#9e2d326dfb465ff99f756708dbf60af8f9bf7ee3"
+  integrity sha512-m/eP/xNHL4drQkWnnoddKBt7EX8dLknAkVRbtIHp2iYVKBCYCrjzoSM/Dl0PDhAZD4HWxM3W2UkbIRGZvVWY9A==
+
 react-native-ratings@^7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-7.3.0.tgz#32e11e4ed944ba8adbbc995d601df3f131619b6f"
@@ -6361,10 +6374,10 @@ react-native-vector-icons@^7.0.0, react-native-vector-icons@^7.1.0:
     prop-types "^15.7.2"
     yargs "^15.0.2"
 
-react-native-webview@^11.2.1:
-  version "11.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.2.1.tgz#abe68c38808f34aeed0a10740b2efba74ac610b8"
-  integrity sha512-dfChyqqWVJe0kdCuDZ4mJt+RgOYNie+rCjCrZ55OW6X7f/rvNVd3Mbnv/1mbYjU8wm5C3/1/oqVJoTB/7GAGjQ==
+react-native-webview@>=6.0.2, react-native-webview@^11.2.3:
+  version "11.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.2.3.tgz#1b82685ab60645d4161f2e25e98286493cdffa5d"
+  integrity sha512-r/K+Lf/O5aij72gRndMX2qsyQ/WLtDPiO75SS57y6JjqSKxedGASVL9Jwl1TM7fCXqUq8dgiwik/LuBHbJXAEg==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"

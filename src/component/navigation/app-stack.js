@@ -15,6 +15,9 @@ import Order from '../../screen/activity/Order';
 import ConfirmOrder from '../../screen/activity/ConfirmOrder';
 import BankDetails from '../../screen/activity/BankDetails';
 import Confirmation from '../../screen/activity/Confirmation';
+import Paystack from '../../screen/pay/Paystack';
+import Rave from '../../screen/pay/Rave';
+import Paypal from '../../screen/pay/PayPal';
 
 class AppStack extends Component {
 
@@ -30,7 +33,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="cart"
+             initialRouteName="login"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -45,6 +48,9 @@ class AppStack extends Component {
             <Stack.Screen name="confirm_order" component={ConfirmOrder}   />
             <Stack.Screen name="confirm" component={Confirmation}   />
             <Stack.Screen name="bank_details" component={BankDetails}   />
+            <Stack.Screen name="paystack" component={Paystack}   />
+            <Stack.Screen name="rave" component={Rave}   />
+            <Stack.Screen name="paypal" component={Paypal}   />
           </Stack.Navigator>
          </NavigationContainer>
       );

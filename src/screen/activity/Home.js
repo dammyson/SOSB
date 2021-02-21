@@ -224,10 +224,10 @@ export default class Home extends Component {
       </Right>
     );
     return (
-      <View style={{ paddingTop: 2, flex: 1 }}>
+      <View style={{ flex: 1 }}>
 
 
-        <View style={{ paddingTop: 2, flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <View style={styles.toolbar}>
           {this.state.loading ?
                 <View style={{ marginRight:10  }}>
@@ -363,11 +363,6 @@ export default class Home extends Component {
             </TouchableOpacity>
 
         }
-
-
-
-
-
 
 
         <Modal

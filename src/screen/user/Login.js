@@ -62,8 +62,9 @@ export default class Login extends Component {
         this.setState({ loading: false })
         console.warn(res);
         if (!res.error) {
+          AsyncStorage.setItem('curr', res.currency);
           AsyncStorage.setItem('aut', "yes");
-          AsyncStorage.setItem('email', email);
+          AsyncStorage.setItem('email',  res.email);
           AsyncStorage.setItem("user_id", res.id);
           AsyncStorage.setItem("session_id", res.sid);
           AsyncStorage.setItem("first", res.id);

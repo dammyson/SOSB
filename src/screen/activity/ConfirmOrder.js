@@ -9,7 +9,7 @@ import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Item } 
 
 
 // Our custom files and classes import
-import { BaseUrl, getUserID, getSessionID } from '../../utilities';
+import { BaseUrl, getUserID, getSessionID, getCurrency } from '../../utilities';
 import colors from '../../component/color';
 import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
@@ -21,21 +21,23 @@ export default class ConfirmOrder extends Component {
     this.state = {
       paymentDetails: '',
       bill: '',
-      loading: true,
+      loading: false,
       user_id: '',
       session_id: '',
+      currency:''
 
 
     };
   }
 
   async componentWillMount() {
-    const { paymentDetails } = this.props.route.params;
+    const { paymentDetails, paymentinfo } = this.props.route.params;
+   
+    console.warn( paymentDetails, paymentinfo)
     if (paymentDetails) {
-      this.setState({ paymentDetails: paymentDetails });
+      this.setState({ paymentDetails: paymentDetails, paymentinfo: paymentinfo });
       console.warn(paymentDetails.billadd.addressLine1);
     }
-   
    
 
   }
@@ -44,17 +46,18 @@ export default class ConfirmOrder extends Component {
   async componentDidMount() {
     this.setState({
       user_id: await getUserID(),
-      session_id: await getSessionID()
+      session_id: await getSessionID(),
+      currency: await getCurrency() 
     });
-
-   this.getBill();
 
 }
 
 
+
+
   getBill() {
     const { user_id, session_id, paymentDetails } = this.state
-    console.warn(user_id, session_id);
+
     this.setState({ loading: true })
 
     const formData = new FormData();
@@ -143,8 +146,10 @@ export default class ConfirmOrder extends Component {
       });
   }
 
+ 
+
   render() {
-    const { paymentDetails, bill } = this.state
+    const { paymentDetails, paymentinfo } = this.state
 
     if (this.state.loading) {
       return (
@@ -172,7 +177,7 @@ export default class ConfirmOrder extends Component {
 
     return (
       <Container>
-      <Navbar left={left} right={right} title="Confirm Order" />
+      <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} right={right} title="Confirm Order" />
       <Content padder>
         <View  style={{marginHorizontal: 10,}}>
           <Text style={{marginTop: 15, fontSize: 14, fontFamily: 'NunitoSans-Bold',}}>Order Details </Text>
@@ -203,7 +208,7 @@ export default class ConfirmOrder extends Component {
 
           <Text style={styles.actionbutton}>Total: </Text>
           <View regular style={styles.item}>          
-          <Text style={styles.actionbuttonText}> NGN { this.currencyFormat(bill)}</Text>               
+          <Text style={styles.actionbuttonText}> {this.state.currency} { this.currencyFormat(paymentinfo.fullBill)}</Text>               
           </View>
 
 
@@ -223,13 +228,17 @@ export default class ConfirmOrder extends Component {
   }
 
   checkout() {
-    const { paymentDetails, bill } = this.state
+    const { paymentDetails, paymentinfo } = this.state
     if (paymentDetails.paymethod == 'bank') {
-      this.props.navigation.navigate('bank_details', { bill: bill });
-    } else if (paymentDetails.paymethod == 'delivery') {
-      this.deliveryVerification();
-    } else {
-      this.props.navigation.navigate('bank_details', { bill: bill });
+      this.props.navigation.navigate('bank_details', { paymentinfo: paymentinfo });
+    }
+    else if (paymentDetails.paymethod == 'paypal') {
+      this.props.navigation.navigate('paypal', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
+    } 
+    else if (paymentDetails.paymethod == 'rave') {
+      this.props.navigation.navigate('rave', { paymentinfo: paymentinfo , paymentDetails: paymentDetails});
+    }else {
+      this.props.navigation.navigate('paystack', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
     }
   }
 

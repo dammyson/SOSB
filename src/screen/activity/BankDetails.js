@@ -119,7 +119,7 @@ export default class BankDetails extends Component {
     return (
 
       <Container>
-        <Navbar left={left} right={right} title="Bank Details" />
+        <Navbar left={left} onCurrencyChange={(text)=> this.setState({currency: text})} title="Bank Details" />
         <Content padder>
           <View>
             <Text style={{ marginTop: 15, fontSize: 18 }}>Bank Details</Text>

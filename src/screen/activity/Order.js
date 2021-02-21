@@ -9,7 +9,7 @@ import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker,
 import { RadioButton } from 'react-native-paper';
 
 // Our custom files and classes import
-import { BaseUrl, getUserID, getSessionID } from '../../utilities';
+import { BaseUrl, getUserID, getSessionID, getCurrency } from '../../utilities';
 import colors from '../../component/color';
 import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
@@ -35,12 +35,12 @@ export default class Order extends Component {
       toadd: 'yes',
       paymethod: 'bank',
       shipping_method: 'Select Method',
-     
+
       show_billing_address: false,
       show_shipping_address: false,
-      show_method:false,
-      show_address:false,
-      cost_add_id:'4',
+      show_method: false,
+      show_address: false,
+      cost_add_id: '4',
 
       selectedSize: '',
       delto: true,
@@ -49,8 +49,9 @@ export default class Order extends Component {
       shipping_method: 'Select Method',
       shipmed: '',
       shippingmethod: [],
-      paymethod: 'bank',
+      paymethod: 'select',
 
+      currency: '',
       shipreq: "null"
     };
   }
@@ -58,7 +59,8 @@ export default class Order extends Component {
   async componentWillMount() {
     this.setState({
       user_id: await getUserID(),
-      session_id: await getSessionID()
+      session_id: await getSessionID(),
+      currency: await getCurrency()
     });
 
     AsyncStorage.getItem('aut').then((value) => {
@@ -70,6 +72,53 @@ export default class Order extends Component {
   }
 
   componentDidMount() {
+
+
+
+
+  }
+
+  onLoadPaymentInfo(paymentDetails) {
+
+    const { session_id, currency } = this.state
+    console.warn(paymentDetails)
+    this.setState({ loading: true })
+    const formData = new FormData();
+    formData.append('code', "order");
+    formData.append('action', "paymentInfo");
+    formData.append('sid', session_id);
+    formData.append('prf', currency);
+    formData.append('bill_addr', paymentDetails.billadd.id);
+    formData.append('ship_addr', paymentDetails.shippadd.id);
+    formData.append('shipmethod', paymentDetails.shipmed.id);
+    formData.append('shipreq', paymentDetails.shipreq);
+    formData.append('paymethod', paymentDetails.paymethod);
+
+
+    console.log(formData)
+    
+    fetch(BaseUrl(), {
+      method: 'POST', headers: {
+        Accept: 'application/json',
+      }, body: formData,
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.warn(res);
+        if (!res.error) {
+          this.setState({
+            loading: false,
+          })
+          this.props.navigation.navigate('confirm_order', { paymentDetails: paymentDetails, paymentinfo: res.data, });
+        } else {
+          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+          this.setState({ loading: false })
+        }
+      }).catch((error) => {
+        console.warn(error);
+        alert(error.message);
+      });
+      
 
   }
 
@@ -101,8 +150,8 @@ export default class Order extends Component {
 
     return (
       <Container style={{ backgroundColor: '#fdfdfd' }}>
-          <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-        <Navbar left={left} right={right} title="CHECKOUT" />
+        <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
+        <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="CHECKOUT" />
         <Content padder>
           <View style={{ marginHorizontal: 20, }}>
             <Text style={styles.actionbutton}>BILLING ADDRESS</Text>
@@ -216,100 +265,132 @@ export default class Order extends Component {
 
 
             <View regular style={{ borderColor: '#8d96a6', borderWidth: 0.6, marginVertical: 5, paddingHorizontal: 10, borderRadius: 5, }}>
-              <View regular style={styles.itemtwo}>
-                <TouchableOpacity
-                  onPress={() => this.setPaymethod('bank')}
-                  style={{
-                    borderRadius: 15,
-                    width: 25,
-                    height: 25,
-                    borderColor: '#8d96a6',
-                    borderWidth: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: 7,
-                    marginRight: 5,
+              {this.state.currency == "NGN" ?
+                <>
+                  <View regular style={styles.itemtwo}>
+                    <TouchableOpacity
+                      onPress={() => this.setPaymethod('bank')}
+                      style={{
+                        borderRadius: 15,
+                        width: 25,
+                        height: 25,
+                        borderColor: '#8d96a6',
+                        borderWidth: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 7,
+                        marginRight: 5,
 
-                  }}
-                >
-                  {this.state.paymethod == 'bank' ?
-                    <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
-                    : null
-                  }
-                </TouchableOpacity>
-                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Bank Transfer</Text>
-              </View>
-
-
-
-
-
-              <View regular style={styles.itemtwo}>
-                <TouchableOpacity
-                  onPress={() => this.setPaymethod('delivery')}
-                  style={{
-                    borderRadius: 15,
-                    width: 25,
-                    height: 25,
-                    borderColor: '#8d96a6',
-                    borderWidth: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: 7,
-                    marginRight: 5,
-
-                  }}
-                >
-                  {this.state.paymethod == 'delivery' ?
-                    <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
-                    : null
-                  }
-                </TouchableOpacity>
-                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Pay on Delivery</Text>
-              </View>
+                      }}
+                    >
+                      {this.state.paymethod == 'bank' ?
+                        <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                        : null
+                      }
+                    </TouchableOpacity>
+                    <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Bank Transfer</Text>
+                  </View>
 
 
 
-              <View regular style={styles.itemtwo}>
-                <TouchableOpacity
-                  onPress={() => this.setPaymethod('rave')}
-                  style={{
-                    borderRadius: 15,
-                    width: 25,
-                    height: 25,
-                    borderColor: '#8d96a6',
-                    borderWidth: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: 7,
-                    marginRight: 5,
 
-                  }}
-                >
-                  {this.state.paymethod == 'rave' ?
-                    <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
-                    : null
-                  }
-                </TouchableOpacity>
-                <Text style={{ fontSize: 15 }}>Card (Rave) - Naira</Text>
-              </View>
+
+                  <View regular style={styles.itemtwo}>
+                    <TouchableOpacity
+                      onPress={() => this.setPaymethod('paystack')}
+                      style={{
+                        borderRadius: 15,
+                        width: 25,
+                        height: 25,
+                        borderColor: '#8d96a6',
+                        borderWidth: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 7,
+                        marginRight: 5,
+
+                      }}
+                    >
+                      {this.state.paymethod == 'paystack' ?
+                        <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                        : null
+                      }
+                    </TouchableOpacity>
+                    <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Card (Paystack) - Naira</Text>
+                  </View>
+
+
+
+                  <View regular style={styles.itemtwo}>
+                    <TouchableOpacity
+                      onPress={() => this.setPaymethod('rave')}
+                      style={{
+                        borderRadius: 15,
+                        width: 25,
+                        height: 25,
+                        borderColor: '#8d96a6',
+                        borderWidth: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 7,
+                        marginRight: 5,
+
+                      }}
+                    >
+                      {this.state.paymethod == 'rave' ?
+                        <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                        : null
+                      }
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 15 }}>Card (Rave) - Naira</Text>
+                  </View>
+                </>
+
+                :
+
+
+                <View regular style={styles.itemtwo}>
+                  <TouchableOpacity
+                    onPress={() => this.setPaymethod('paypal')}
+                    style={{
+                      borderRadius: 15,
+                      width: 25,
+                      height: 25,
+                      borderColor: '#8d96a6',
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: 7,
+                      marginRight: 5,
+
+                    }}
+                  >
+                    {this.state.paymethod == 'paypal' ?
+                      <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                      : null
+                    }
+                  </TouchableOpacity>
+                  <Text style={{ fontSize: 15 }}>PayPal USD</Text>
+                </View>}
+
+
             </View>
           </View>
           <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>
-          {
-                this.state.loading ?
-                  <View>
-                    <Button style={styles.buttonContainer} block iconLeft>
-                      <BarIndicator count={4} color={'#fff'} />
-                    </Button>
-                  </View>
-                  :
-                  <View>
-                    <Button onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
-                      <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Place Order </Text>
-                    </Button>
-                  </View>
-              }
+            {
+              this.state.loading ?
+                <View>
+                  <Button style={styles.buttonContainer} block iconLeft>
+                    <BarIndicator count={4} color={'#fff'} />
+                  </Button>
+                </View>
+                :
+                <View>
+                  <Button onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
+                    <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Place Order </Text>
+                  </Button>
+                </View>
+            }
           </View>
         </Content>
         {this.state.show_billing_address ? this.renderSelectBillingAddress() : null}
@@ -326,11 +407,7 @@ export default class Order extends Component {
     const shippingmethod =
       { paymethod: paymethod, toadd: toadd, shipreq: shipreq, billadd: billadd, shippadd: shippadd, shipmed: shipmed }
 
-      //console.warn(shippingmethod);
-      this.props.navigation.navigate('confirm_order', { paymentDetails: shippingmethod });
-
-      
-  
+    this.onLoadPaymentInfo(shippingmethod);
 
   }
 
@@ -344,58 +421,58 @@ export default class Order extends Component {
   }
 
   renderSelectBillingAddress() {
-    return(
+    return (
       <SelectAddress
-      onSelect={(v) => this.onSelectBillingAddress(v)}
-      onClose={()=> this.setState({show_billing_address: false})} />
+        onSelect={(v) => this.onSelectBillingAddress(v)}
+        onClose={() => this.setState({ show_billing_address: false })} />
     )
   }
-  onSelectBillingAddress(item){
+  onSelectBillingAddress(item) {
     this.setState({
-      billing_address: item.addressLine1+ " "+item.city+ " "+item.state + " "+item.state, 
+      billing_address: item.addressLine1 + " " + item.city + " " + item.state + " " + item.state,
       show_billing_address: false,
       billadd: item
     })
- }
+  }
 
   renderSelectShippingAddress() {
-    return(
+    return (
       <SelectAddress
-      onSelect={(v) => this.onSelectShippingAddress(v)}
-      onClose={()=> this.setState({show_shipping_address: false})} />
+        onSelect={(v) => this.onSelectShippingAddress(v)}
+        onClose={() => this.setState({ show_shipping_address: false })} />
     )
   }
 
-  onSelectShippingAddress(item){
+  onSelectShippingAddress(item) {
     this.setState({
-      shipping_address: item.addressLine1+ " "+item.city+ " "+item.state + " "+item.state, 
+      shipping_address: item.addressLine1 + " " + item.city + " " + item.state + " " + item.state,
       show_shipping_address: false,
       shippadd: item,
-      cost_add_id:   item.id
+      cost_add_id: item.id
     })
- }
+  }
 
- renderSelectMethod() {
-  return(
-    <SelectMethod
-    address={this.state.cost_add_id}
-    onSelect={(v) => this.onSelectMethod(v)}
-    onClose={()=> this.setState({show_method: false})} />
-  )
-}
+  renderSelectMethod() {
+    return (
+      <SelectMethod
+        address={this.state.cost_add_id}
+        onSelect={(v) => this.onSelectMethod(v)}
+        onClose={() => this.setState({ show_method: false })} />
+    )
+  }
 
 
-onSelectMethod(item){
-  this.setState({shipping_method: item.name+ " "+item.price, shipmed: item, show_method: false})
-}
+  onSelectMethod(item) {
+    this.setState({ shipping_method: item.name + " " + item.price, shipmed: item, show_method: false })
+  }
 
-renderAddAddress() {
-  return(
-    <AddAddress
-    onClose={()=> this.setState({show_address: false})} />
-    
-  )
-}
+  renderAddAddress() {
+    return (
+      <AddAddress
+        onClose={() => this.setState({ show_address: false })} />
+
+    )
+  }
 
 
 }

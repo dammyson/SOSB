@@ -96,6 +96,7 @@ export default class Registration extends Component {
         console.warn(res);
         if (!res.error) {
           this.setState({ loading: false })
+          AsyncStorage.setItem('curr', "USD");
           AsyncStorage.setItem("user_id", res.id);
           AsyncStorage.setItem("session_id", res.sid);
           this.props.navigation.replace('home')

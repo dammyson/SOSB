@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Content, View, Text, Header, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
 
-import { BaseUrl, getUserID, getSessionID, getCurrency } from '../../utilities';
+import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail } from '../../utilities';
 import colors from '../../component/color';
 import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
@@ -21,16 +21,15 @@ export default class Cart extends Component {
     super(props);
     this.state = {
       cartItems: [],
-      loading: false,
-      aut: '',
+      loading: true,
+      currency: '',
       user_id: '',
       session_id: '',
-      currency:''
     };
   }
 
   async componentWillMount() {
-
+     console.warn(await getEmail())
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
@@ -52,7 +51,7 @@ export default class Cart extends Component {
         return
       }
       this.setState({ 'aut': value.toString() })
-     // this.getCart();
+      this.getCart();
     })
 
   }
@@ -62,6 +61,7 @@ export default class Cart extends Component {
   }
 
   async getCart() {
+
     const { user_id, session_id, currency } = this.state
     console.warn(await getUserID(), session_id);
     this.setState({ loading: true })
@@ -72,6 +72,9 @@ export default class Cart extends Component {
     formData.append('id', user_id);
     formData.append('sid', session_id);
     formData.append('prf', currency);
+
+
+    console.warn(formData);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {
@@ -116,7 +119,7 @@ export default class Cart extends Component {
     return (
       <Container style={{ backgroundColor: '#fdfdfd' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-        <Navbar left={left} title="MY CART" />
+        <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} title="MY CART" />
         {this.state.cartItems.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Icon name="shoppingcart" type='antdesign' size={38} style={{ fontSize: 38, color: '#95a5a6', marginBottom: 7 }} />

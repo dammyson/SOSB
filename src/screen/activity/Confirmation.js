@@ -29,78 +29,13 @@ export default class Confirmation extends Component {
   }
 
   componentWillMount() {
-
-    this.setState({ id: this.props.id });
-    AsyncStorage.getItem('user_id').then((value) => {
-      this.setState({ 'user_id': value.toString() })
-    })
-    AsyncStorage.getItem('session_id').then((value) => {
-      this.setState({ 'session_id': value.toString() })
-    })
-    AsyncStorage.getItem('aut').then((value) => {
-      this.setState({ 'aut': value.toString() })
-      //  this.registerPayment();
-    })
-
-    if (this.props.paymentDetails) {
-      this.setState({ payement: this.props.paymentDetails });
-      console.warn(this.props.paymentDetails);
-    }
-  }
-
-
-  registerPayment() {
-
-    const { session_id, payement } = this.state
-
-    this.setState({ loading: true })
-    const formData = new FormData();
-    formData.append('feature', "order");
-    formData.append('action', "paymentInfo");
-    formData.append('sid', session_id);
-
-    formData.append('bill_addr', payement.billadd.id);
-    formData.append('ship_addr', payement.shippadd.id);
-    formData.append('shipmethod', payement.shipmed.id);
-    formData.append('shipreq', payement.shipreq);
-    formData.append('paymethod', payement.paymethod);
-
-
-    fetch('https://www.ita-obe.com/mobile/v1/order.php', {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-      }, body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.warn(res);
-        if (!res.error) {
-          this.setState({
-            loading: false,
-          })
-
-        } else {
-          Alert.alert('Registration failed', res.message, [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        console.warn(error);
-        alert(error.message);
-      });
-
+   
   }
 
 
   render() {
-    if (this.state.loading) {
-      return (
-        <ActivityIndicator color={colors.primary_color} message={'placing order'} />
-      );
-    }
-
-
     var left = (
-      <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
+      <TouchableOpacity >
         <Icon
           name="arrowleft"
           size={20}
@@ -119,12 +54,12 @@ export default class Confirmation extends Component {
 
     return (
       <Container>
-        <Navbar left={left} right={right} title="Confirm" />
+        <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} title="Confirm" />
         <Content padder>
 
-          <View style={{ flex: 1,  height: Dimensions.get('window').height, }}>
+          <View style={{ flex: 1, height: Dimensions.get('window').height, }}>
 
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 ,  justifyContent: 'center', alignItems: 'center',}}>
 
               <Text style={{ marginLeft: 20, fontSize: 18, marginRight: 30, marginBottom: 30, textAlign: 'center', fontWeight: '500', }}>
                 Your order has been completed you will get a call from one of our customer representative </Text>
@@ -137,7 +72,7 @@ export default class Confirmation extends Component {
 
 
               <Button onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
-                <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Place Order </Text>
+                <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Go Home </Text>
               </Button>
             </View>
           </View>
@@ -147,7 +82,10 @@ export default class Confirmation extends Component {
   }
 
   checkout() {
-    Actions.home();
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'home' }],
+  });
   }
 
 

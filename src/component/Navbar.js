@@ -28,8 +28,10 @@ export default class Navbar extends Component {
   };
 
   hideMenu = (curr) => {
+    const { onCurrencyChange } = this.props
     this.setState({ currency: curr })
     setCurrency(curr);
+    onCurrencyChange(curr);
     this._menu.hide();
   };
 
