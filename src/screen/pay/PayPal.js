@@ -21,14 +21,12 @@ export default class Paypal extends Component {
 
     constructor(props) {
         super(props);
-        this.handleTextInputChange = this.handleTextInputChange.bind(this);
-        this.onSubmitEditing = this.onSubmitEditing.bind(this);
         this.state = {
             data: '',
             status: '',
             currentUrl: Utils.sanitizeUrl('https://www.google.com/'),
             url: Utils.sanitizeUrl('https://www.google.com/'),
-            loading_addcart: false,
+            loading: false,
             progress: true
         };
         this.inputText = '';
@@ -38,15 +36,15 @@ export default class Paypal extends Component {
 
     async componentDidMount() {
         const { paymentDetails, paymentinfo } = this.props.route.params;
-        console.warn( paymentDetails );
+        console.warn(paymentinfo.fullBill);
         this.setState({
             user_id: await getUserID(),
             session_id: await getSessionID(),
             currency: await getCurrency()
         });
-        var address = paymentinfo.addr1 + paymentinfo.addr2 + paymentinfo.addr3+ paymentinfo.city + paymentDetails.billadd.city +  paymentDetails.billadd.country ;
+        var address = paymentinfo.addr1 + paymentinfo.addr2 + paymentinfo.addr3 + paymentinfo.city + paymentDetails.billadd.city + paymentDetails.billadd.country;
         var postData = "cmd=_xclick" +
-            "&business=" + await getCurrency() =="USD" ? "93KXD9JD8JVZA" : "DGMYBJ9GE6ZVA" +
+            "&business=" + (await getCurrency() == "USD" ? "93KXD9JD8JVZA" : "DGMYBJ9GE6ZVA") +
             "&lc=GB" +
             "&item_name\" value=\"All items in cart\">\n" +
             "&amount=" + paymentinfo.fullBill +
@@ -56,10 +54,9 @@ export default class Paypal extends Component {
             "&no_shipping=1" +
             "&shipping=" + paymentDetails.shippadd.addressLine1 +
             "&bn=PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" +
-            "&custom=" + paymentinfo.invoiceid + "|" + address+ "|" + address +  paymentinfo.shipBill + "&Z3JncnB0=#/checkout/openButton";
+            "&custom=" + paymentinfo.invoiceid + "|" + address + "|" + address + paymentinfo.shipBill + "&Z3JncnB0=#/checkout/openButton";
 
         var url = "https://www.paypal.com/cgi-bin/webscr?";
-
         console.warn(url + postData);
          this.setState({url: url+postData})
 
@@ -67,13 +64,9 @@ export default class Paypal extends Component {
 
 
 
-   
 
 
 
-    reload() {
-        this.refs[WEBVIEW_REF].reload();
-    }
 
     onShouldStartLoadWithRequest(event) {
         return this.props.onShouldStartLoadWithRequest(event);
@@ -82,26 +75,28 @@ export default class Paypal extends Component {
 
 
     _onNavigationStateChange(navState) {
-        
+        console.warn(navState)
+        let instant_array = []
+        if (navState.url.includes('https://www.paypal.com/webapps/hermes?token=')) {
+           
+                this.processPostPayment()
+          
+          } else {
+            
+          }
 
     }
 
-    onSubmitEditing() {
-        var nre = this.state.urlText;
-        this.setState({ url: nre })
-    }
+    processPostPayment() {
 
-
-    paypalVerification() {
-
-        const { session_id, user_id, currency, amount } = this.state
+        const { session_id, user_id, currency } = this.state
         this.setState({ loading: true })
         const formData = new FormData();
         formData.append('code', "order");
         formData.append('action', "paypalVerify");
         formData.append('sid', session_id);
         formData.append('id', user_id);
-    
+
         fetch(BaseUrl(), {
           method: 'POST', headers: {
             Accept: 'application/json',
@@ -114,11 +109,12 @@ export default class Paypal extends Component {
               this.setState({
                 loading: false,
               })
-              if(res.message == 'Transaction Failed'){
-
-            }else{
-              this.props.navigation.navigate('confirm')
-            }
+              if(res.message == 'Transaction reference not found'){
+    
+              }else{
+                this.props.navigation.navigate('confirm')
+              }
+             
             } else {
               Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
               this.setState({ loading: false })
@@ -128,65 +124,44 @@ export default class Paypal extends Component {
             alert(error.message);
           });
         }
+    
+
+
 
     render() {
-        const { user_id, session_id, } = this.state
-        let formdata = new FormData();
-        formdata.append('user_id', "3B19C4EC-4D5F-4FCF-AA35-CE8FF769069B");
-        formdata.append('session_id', '337BFE1E-DEB2-4356-B051-68A9B849E3EC');
-        formdata.append('currency', "NGN");
+
+
+        if (this.state.loading) {
+            return (
+                <ActivityIndicator color={colors.primary_color} message={'Processing payment'} />
+            );
+        }
+
 
         var left = (
-            <Left style={{ flex: 1 }}>
-                <Button transparent onPress={() => this.props.navigation.goBack()}>
-                    <Icon
-                        active
-                        name="ios-arrow-back"
-                        type='ionicon'
-                        color='#FFF'
-                    />
-                </Button>
-            </Left>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
+                <Icon
+                    name="arrowleft"
+                    size={20}
+                    type='antdesign'
+                    color={colors.white}
+                />
+            </TouchableOpacity>
         );
         var right = (
-            <Right>
-                <Button onpress={() => this.webview.reload()} transparent>
-                    <Icon
-                        active
-                        name="refresh"
-                        color='#FFF'
-                    />
-                </Button>
+            <Right style={{ flex: 1 }}>
+
             </Right>
         );
+
         return (
             <View style={{ flex: 1 }}>
 
 
                 <View style={{ flex: 1 }}>
                     <View style={styles.toolbar}>
-                        <View style={{}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
-        <Icon
-          name="arrowleft"
-          size={20}
-          type='antdesign'
-          color={colors.white}
-        />
-      </TouchableOpacity>
-                        </View>
-                        <TextInput
-                            ref={TEXT_INPUT_REF}
-                            underlineColorAndroid='rgba(0,0,0,0)'
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            editable={false}
-                            style={styles.urlinput}
-                            defaultValue={this.state.currentUrl}
-                            onSubmitEditing={this.onSubmitEditing}
-                            onChange={this.handleTextInputChange}
-                            clearButtonMode="while-editing"
-                        />
+                    <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="PAYPAL" />
+
                     </View>
                     <WebView
                         ref={WEBVIEW_REF}
@@ -197,7 +172,6 @@ export default class Paypal extends Component {
                         domStorageEnabled={true}
                         decelerationRate="normal"
                         onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-                        onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
                         startInLoadingState={true}
                         scalesPageToFit={this.state.scalesPageToFit}
                     />

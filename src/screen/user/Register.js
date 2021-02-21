@@ -142,14 +142,14 @@ export default class Registration extends Component {
         latitude: result.lat, longitude: result.lng
 
       })
-      this.getRealDirection(result.lat,result.lng );
+      this.getRealDirection(result.lat, result.lng);
     }, err => {
       console.log(err);
     });
   }
 
 
-  getRealDirection(lat, log){
+  getRealDirection(lat, log) {
     geocodeLocationByCoords(lat, log).then((result) => {
       console.warn(result)
     }, err => {
@@ -214,130 +214,130 @@ export default class Registration extends Component {
 
 
 
-  renderFirst(){
-    return(
+  renderFirst() {
+    return (
       <>
 
 
-<TextInput
-                placeholder="Enter your email"
-                placeholderTextColor='#3E3E3E'
-                returnKeyType="next"
-                onSubmitEditing={() => this.phone.focus()}
-                keyboardType='email-address'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ email: text })}
-              />
-              <TextInput
-                placeholder="Enter your phone number"
-                placeholderTextColor='#3E3E3E'
-                returnKeyType="next"
-                onSubmitEditing={() => this.firstname.focus()}
-                keyboardType='numeric'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ phone: text })}
-                ref={(input) => this.phone = input}
-              />
-              <TextInput
-                placeholder="Enter your first name"
-                placeholderTextColor='#3E3E3E'
-                returnKeyType="next"
-                onSubmitEditing={() => this.lastname.focus()}
-                keyboardType='email-address'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ fname: text })}
-                ref={(input) => this.firstname = input}
-              />
-              <TextInput
-                placeholder="Enter your last name"
-                placeholderTextColor='#3E3E3E'
-                returnKeyType="next"
-                onSubmitEditing={() => this.username.focus()}
-                keyboardType='email-address'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ lname: text })}
-                ref={(input) => this.lastname = input}
-              />
-              <TextInput
-                placeholder="Enter your address"
-                placeholderTextColor='#3E3E3E'
-                returnKeyType="next"
-                onSubmitEditing={() => this.phone.focus()}
-                keyboardType='email-address'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                defaultValue={this.state.address}
-                onChangeText={venue => {
-                  this.setState({ venue });
-                  this.onChangeDestinationDebounced(venue);
-                }}
-              />
-              <View style={{backgroundColor:'#fff'}}>
-                {this.renderPrediction(this.state.locationPredictions)}
-              </View>
-              <TextInput
-                placeholder="Enter your password"
-                placeholderTextColor='#3E3E3E'
-                secureTextEntry
-                returnKeyType="next"
-                onSubmitEditing={() => this.checkReg()}
-                keyboardType='password'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ password: text })}
-                ref={(input) => this.passwordInput = input}
-              />
-              {
-                this.state.loading ?
-                  <View>
-                    <Button style={styles.buttonContainer} block iconLeft>
-                      <BarIndicator count={4} color={'#fff'} />
-                    </Button>
-                  </View>
-                  :
-                  <View>
-                    <Button onPress={() => this.checkReg()} style={styles.buttonContainer} block iconLeft>
-                      <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN UP </Text>
-                    </Button>
-                  </View>
-              }
+        <TextInput
+          placeholder="Enter your email"
+          placeholderTextColor='#3E3E3E'
+          returnKeyType="next"
+          onSubmitEditing={() => this.phone.focus()}
+          keyboardType='email-address'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          onChangeText={text => this.setState({ email: text })}
+        />
+        <TextInput
+          placeholder="Enter your phone number"
+          placeholderTextColor='#3E3E3E'
+          returnKeyType="next"
+          onSubmitEditing={() => this.firstname.focus()}
+          keyboardType='numeric'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          onChangeText={text => this.setState({ phone: text })}
+          ref={(input) => this.phone = input}
+        />
+        <TextInput
+          placeholder="Enter your first name"
+          placeholderTextColor='#3E3E3E'
+          returnKeyType="next"
+          onSubmitEditing={() => this.lastname.focus()}
+          keyboardType='email-address'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          onChangeText={text => this.setState({ fname: text })}
+          ref={(input) => this.firstname = input}
+        />
+        <TextInput
+          placeholder="Enter your last name"
+          placeholderTextColor='#3E3E3E'
+          returnKeyType="next"
+          onSubmitEditing={() => this.username.focus()}
+          keyboardType='email-address'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          onChangeText={text => this.setState({ lname: text })}
+          ref={(input) => this.lastname = input}
+        />
+        <TextInput
+          placeholder="Enter your address"
+          placeholderTextColor='#3E3E3E'
+          returnKeyType="next"
+          onSubmitEditing={() => this.phone.focus()}
+          keyboardType='email-address'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          defaultValue={this.state.address}
+          onChangeText={venue => {
+            this.setState({ venue });
+            this.onChangeDestinationDebounced(venue);
+          }}
+        />
+        <View style={{ backgroundColor: '#fff' }}>
+          {this.renderPrediction(this.state.locationPredictions)}
+        </View>
+        <TextInput
+          placeholder="Enter your password"
+          placeholderTextColor='#3E3E3E'
+          secureTextEntry
+          returnKeyType="next"
+          onSubmitEditing={() => this.checkReg()}
+          keyboardType='password'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          onChangeText={text => this.setState({ password: text })}
+          ref={(input) => this.passwordInput = input}
+        />
+        {
+          this.state.loading ?
+            <View>
+              <Button style={styles.buttonContainer} block iconLeft>
+                <BarIndicator count={4} color={'#fff'} />
+              </Button>
+            </View>
+            :
+            <View>
+              <Button onPress={() => this.checkReg()} style={styles.buttonContainer} block iconLeft>
+                <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN UP </Text>
+              </Button>
+            </View>
+        }
 
 
 
-              <View style={{ flexDirection: 'row', marginTop: 20, marginLeft: 30, marginRight: 30, marginBottom:40 }}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('login')}>
-                  <Text style={{ color: colors.primary_color, fontWeight: '600', fontSize: 13, }}>Login Account  </Text>
-                </TouchableOpacity>
-                <View style={{ flex: 1, justifyContent: 'center', }} />
+        <View style={{ flexDirection: 'row', marginTop: 20, marginLeft: 30, marginRight: 30, marginBottom: 40 }}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('login')}>
+            <Text style={{ color: colors.primary_color, fontWeight: '600', fontSize: 13, }}>Login Account  </Text>
+          </TouchableOpacity>
+          <View style={{ flex: 1, justifyContent: 'center', }} />
 
 
 
-                <View style={{ width: 1, backgroundColor: colors.primary_color }} />
+          <View style={{ width: 1, backgroundColor: colors.primary_color }} />
 
-                <View style={{ flex: 1, justifyContent: 'center', }} />
+          <View style={{ flex: 1, justifyContent: 'center', }} />
 
 
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('forgetpass')}>
-                  <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>Forgot Password </Text>
-                </TouchableOpacity>
-              </View>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('forgetpass')}>
+            <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>Forgot Password </Text>
+          </TouchableOpacity>
+        </View>
       </>
     )
   }
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottom: {
- 
+
   },
   input: {
     height: 45,

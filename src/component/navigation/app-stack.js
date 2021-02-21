@@ -18,6 +18,7 @@ import Confirmation from '../../screen/activity/Confirmation';
 import Paystack from '../../screen/pay/Paystack';
 import Rave from '../../screen/pay/Rave';
 import Paypal from '../../screen/pay/PayPal';
+import PayPalTwo from '../../screen/pay/PayPalTwo';
 
 class AppStack extends Component {
 
@@ -51,6 +52,7 @@ class AppStack extends Component {
             <Stack.Screen name="paystack" component={Paystack}   />
             <Stack.Screen name="rave" component={Rave}   />
             <Stack.Screen name="paypal" component={Paypal}   />
+            <Stack.Screen name="paypal2" component={PayPalTwo}   />
           </Stack.Navigator>
          </NavigationContainer>
       );

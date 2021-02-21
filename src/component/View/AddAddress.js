@@ -120,15 +120,16 @@ export default class AddAddress extends Component {
 
 
   onAddressSelected = (location) => {
-    console.warn("Loca"+location)
-    this.setState({ locationPredictions: [], address: location, venue: location.description })
-    geocodeLocationByName(location).then((result) => {
-    
+    console.warn(location)
+    console.warn(" sels")
+    this.setState({ locationPredictions: [], address: location, venue: location.description, addressone: location.description })
+    geocodeLocationByName(location.structured_formatting.main_text).then((result) => {
+      console.warn(result)
       this.setState({
         latitude: result.lat, longitude: result.lng
 
       })
-      this.getRealDirection(result.lat,result.lng );
+      //this.getRealDirection(result.lat,result.lng );
     }, err => {
       console.log(err);
     });
@@ -136,7 +137,9 @@ export default class AddAddress extends Component {
 
 
   getRealDirection(lat, log){
+    console.warn(lat, log)
     geocodeLocationByCoords(lat, log).then((result) => {
+      console.warn(result)
     }, err => {
       console.log(err);
     });
@@ -164,7 +167,7 @@ export default class AddAddress extends Component {
   }
 
   addAddress() {
-
+    const { onClose, } = this.props;
     const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, addtype, type, is_delivery_add, is_collection_add } = this.state
     if (is_collection_add) { var deladd = 'Y'; } else { var deladd = 'N'; }
     if (is_delivery_add) { var colladd = 'Y'; } else { var colladd = 'N'; }
@@ -210,6 +213,8 @@ export default class AddAddress extends Component {
             loading: false,
             cartItems: res.data
           })
+
+          onClose();
 
         } else {
           Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
