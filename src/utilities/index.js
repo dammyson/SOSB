@@ -10,8 +10,8 @@ const paystack_live_key = 'pk_live_3306d8098964f020dffa793c158560f5e52aa1f0';
 
 export const BaseUrl = () => {
 
-  return 'https://www.ofidy.com/dev-mobile/v1/api.php';
-  //return 'https://ofidyshopping.azurewebsites.net/dev-mobile/v1/api.php'
+  //return 'https://www.ofidy.com/dev-mobile/v1/api.php';
+  return 'https://ofidyshopping.azurewebsites.net/dev-mobile/v1/api.php'
 };
 
 export const getUserID = async () => {

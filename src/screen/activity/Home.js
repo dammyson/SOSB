@@ -96,7 +96,7 @@ export default class Home extends Component {
 
     console.warn(formData)
 
-    fetch('https://www.ofidy.com/asp_files/write_text.php', {
+    fetch('https://ofidyshopping.azurewebsites.net/asp_files/write_text.php', {
       method: 'POST', headers: {
         Accept: 'application/json',
       }, body: formData,

@@ -18,6 +18,7 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
+import { BaseUrl } from '../../utilities';
 
 
 export default class Registration extends Component {
@@ -86,7 +87,7 @@ export default class Registration extends Component {
     formData.append('year', "1990");
     formData.append('gender', "M");
 
-    fetch('https://www.ofidy.com/dev-mobile/v1/api.php', {
+    fetch(BaseUrl(), {
       method: 'POST', headers: {
         Accept: 'application/json',
       }, body: formData,

@@ -11,6 +11,7 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
+import { BaseUrl } from '../../utilities';
 
 
 export default class Login extends Component {
@@ -52,7 +53,7 @@ export default class Login extends Component {
     formData.append('email', email);
     formData.append('password', password);
 
-    fetch('https://www.ofidy.com/dev-mobile/v1/api.php', {
+    fetch(BaseUrl(), {
       method: 'POST', headers: {
         Accept: 'application/json',
       }, body: formData,

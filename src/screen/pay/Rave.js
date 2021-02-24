@@ -97,7 +97,7 @@ export default class Rave extends Component {
         formData.append('action', "ravePayVerify");
         formData.append('sid', session_id);
         formData.append('id', user_id);
-        formData.append('ref', res.reference);
+        formData.append('ref', res.transaction_id);
         formData.append('amount', amount);
         formData.append('prf',currency);
     

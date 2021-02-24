@@ -19,6 +19,8 @@ import Paystack from '../../screen/pay/Paystack';
 import Rave from '../../screen/pay/Rave';
 import Paypal from '../../screen/pay/PayPal';
 import PayPalTwo from '../../screen/pay/PayPalTwo';
+import Transactions from '../../screen/backoffice/Transactions';
+import EditTransactions from '../../screen/backoffice/EditTransaction';
 
 class AppStack extends Component {
 
@@ -34,7 +36,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="login"
+             initialRouteName="splash"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -53,6 +55,9 @@ class AppStack extends Component {
             <Stack.Screen name="rave" component={Rave}   />
             <Stack.Screen name="paypal" component={Paypal}   />
             <Stack.Screen name="paypal2" component={PayPalTwo}   />
+
+            <Stack.Screen name="transactions" component={Transactions}   />
+            <Stack.Screen name="edittransactions" component={EditTransactions}   />
           </Stack.Navigator>
          </NavigationContainer>
       );

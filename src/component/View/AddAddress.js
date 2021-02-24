@@ -168,7 +168,7 @@ export default class AddAddress extends Component {
 
   addAddress() {
     const { onClose, } = this.props;
-    const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, addtype, type, is_delivery_add, is_collection_add } = this.state
+    const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, addtype, type, is_delivery_add, is_collection_add, latitude,longitude } = this.state
     if (is_collection_add) { var deladd = 'Y'; } else { var deladd = 'N'; }
     if (is_delivery_add) { var colladd = 'Y'; } else { var colladd = 'N'; }
 
@@ -196,6 +196,8 @@ export default class AddAddress extends Component {
     formData.append('addrtype', 1);
     formData.append('postcode', postcode);
     formData.append('type', 1);
+    formData.append('long', longitude);
+    formData.append('latitude', latitude);
 
 
     console.warn(formData);
