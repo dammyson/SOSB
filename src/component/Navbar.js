@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Header, Body, Title, Left, Right, Text } from 'native-base';
 import colors from '../component/color';
-import { View, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Dimensions, TouchableOpacity, Platform } from 'react-native';
 import { Icon, Avatar } from 'react-native-elements';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import { setCurrency, getCurrency } from '../utilities';
@@ -92,6 +92,7 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     height: 60,
+    marginTop:Platform.OS === 'ios' ? 15 : 0,
     backgroundColor: colors.primary_color,
   },
   title: {

@@ -18,7 +18,6 @@ import { Toast, } from 'native-base';
 const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import colors from '../../component/color';
-import GestureView from 'react-native-gesture-view'
 import Utils from './../../component/Utils'
 
 

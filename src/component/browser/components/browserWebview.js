@@ -19,7 +19,6 @@ import {
 } from 'react-native-indicators';
 //import ProgressWebView from "react-native-progress-webview";
 import { Toast, } from 'native-base';
-import GestureView from 'react-native-gesture-view'
 import { Icon, } from 'react-native-elements'
 import { PROXY_DOMAIN } from '../constants'
 
@@ -218,10 +217,6 @@ export default class BrowserWebView extends Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
 
-          <GestureView
-            style={_style}
-            onSwipeLeft={this.goForward.bind(this)}
-            onSwipeRight={this.goBack.bind(this)}>
             <WebView
               ref={c => (this.webview = c)}
               source={{ uri: url }}
@@ -235,7 +230,7 @@ export default class BrowserWebView extends Component {
               startInLoadingState={true}
               scalesPageToFit={this.state.scalesPageToFit}
             />
-          </GestureView>
+        
         </View>
 
         <View style={{ backgroundColor: '#004701', flexDirection: 'row', height: 45 }}>

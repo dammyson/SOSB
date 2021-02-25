@@ -41,7 +41,7 @@ export default class EditTransactions extends Component {
       promoCode: '',
       weight: '',
       bulkSize: '',
-      srcRegion: '',
+      srcRegion: '12',
       itemSize: '',
       fragileyn: 'n',
       blacklist: 'n',
@@ -61,7 +61,7 @@ export default class EditTransactions extends Component {
       unitPrice: item.unitPrice,
       prodName: item.itemName,
       prodQty:item.quantity,
-      transID:item.Sid
+      transID:item.cryptTID
     });
 
 
@@ -173,12 +173,9 @@ export default class EditTransactions extends Component {
             </View>
             <Text style={styles.actionbutton}>itemColour</Text>
             <View regular style={styles.item}>
-              <Input placeholder='itemColour' onChangeText={(text) => this.setState({ itemColour: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='itemColour' onChangeText={(text) => this.setState({ itemColour: text })} defaultValue={this.state.itemColour} placeholderTextColor="#687373" style={styles.input} />
             </View>
             <Text style={styles.actionbutton}>priceCurrency</Text>
-            <View regular style={styles.item}>
-              <Input placeholder='priceCurrency' onChangeText={(text) => this.setState({ priceCurrency: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
-            </View>
 
             <View style={{ justifyContent: 'center' }}>
 
@@ -253,11 +250,11 @@ export default class EditTransactions extends Component {
 
             <Text style={styles.actionbutton}>dscntPercent</Text>
             <View regular style={styles.item}>
-              <Input placeholder='dscntPercent' onChangeText={(text) => this.setState({ dscntPercent: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='dscntPercent' onChangeText={(text) => this.setState({ dscntPercent: text })} defaultValue={this.state.dscntPercent} placeholderTextColor="#687373" style={styles.input} />
             </View>
             <Text style={styles.actionbutton}>adminShipping</Text>
             <View regular style={styles.item}>
-              <Input placeholder='adminShipping' onChangeText={(text) => this.setState({ adminShipping: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='adminShipping' onChangeText={(text) => this.setState({ adminShipping: text })} defaultValue={this.state.adminShipping} placeholderTextColor="#687373" style={styles.input} />
             </View>
             <Text style={styles.actionbutton}>promoCode</Text>
             <View regular style={styles.item}>
@@ -265,11 +262,11 @@ export default class EditTransactions extends Component {
             </View>
             <Text style={styles.actionbutton}>weight</Text>
             <View regular style={styles.item}>
-              <Input placeholder='weight' onChangeText={(text) => this.setState({ weight: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='weight' onChangeText={(text) => this.setState({ weight: text })} defaultValue={this.state.weight} placeholderTextColor="#687373" style={styles.input} />
             </View>
             <Text style={styles.actionbutton}>bulkSize</Text>
             <View regular style={styles.item}>
-              <Input placeholder='bulkSize' onChangeText={(text) => this.setState({ bulkSize: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='bulkSize' onChangeText={(text) => this.setState({ bulkSize: text })} defaultValue={this.state.bulkSize} placeholderTextColor="#687373" style={styles.input} />
             </View>
             <Text style={styles.actionbutton}>srcRegion</Text>
             <View regular style={styles.item}>
@@ -433,11 +430,11 @@ export default class EditTransactions extends Component {
             </View>
             <Text style={styles.actionbutton}>packQty</Text>
             <View regular style={styles.item}>
-              <Input placeholder='packQty' onChangeText={(text) => this.setState({ packQty: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='packQty' onChangeText={(text) => this.setState({ packQty: text })} defaultValue={this.state.packQty} placeholderTextColor="#687373" style={styles.input} />
             </View>
             <Text style={styles.actionbutton}>srcShipping</Text>
             <View regular style={styles.item}>
-              <Input placeholder='srcShipping' onChangeText={(text) => this.setState({ srcShipping: text })} defaultValue={this.state.unitPrice} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='srcShipping' onChangeText={(text) => this.setState({ srcShipping: text })} defaultValue={this.state.srcShipping} placeholderTextColor="#687373" style={styles.input} />
             </View>
           </View>
           <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>

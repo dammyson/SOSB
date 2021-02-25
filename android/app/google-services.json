@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389704951143",
+    "project_id": "ofidy-15fac",
+    "storage_bucket": "ofidy-15fac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389704951143:android:8d0f19be9c25e7b6a1fbc2",
+        "android_client_info": {
+          "package_name": "com.ofidyshoppingbrowser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389704951143-c67u57lmb5n8f3g1lgb5sn6t79bgload.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU_NGx_FoMDoJ-ezsDH2XU8w65nPklhJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389704951143-c67u57lmb5n8f3g1lgb5sn6t79bgload.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
