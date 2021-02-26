@@ -36,7 +36,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="splash"
+             initialRouteName="cart"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
