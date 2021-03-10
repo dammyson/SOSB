@@ -21,6 +21,7 @@ import Paypal from '../../screen/pay/PayPal';
 import PayPalTwo from '../../screen/pay/PayPalTwo';
 import Transactions from '../../screen/backoffice/Transactions';
 import EditTransactions from '../../screen/backoffice/EditTransaction';
+import Orders from '../../screen/shopper/Orders';
 
 class AppStack extends Component {
 
@@ -36,7 +37,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="cart"
+             initialRouteName="splash"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -58,6 +59,7 @@ class AppStack extends Component {
 
             <Stack.Screen name="transactions" component={Transactions}   />
             <Stack.Screen name="edittransactions" component={EditTransactions}   />
+            <Stack.Screen name="orders" component={Orders}   />
           </Stack.Navigator>
          </NavigationContainer>
       );

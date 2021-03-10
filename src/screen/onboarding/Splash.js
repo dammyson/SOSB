@@ -53,9 +53,8 @@ export default class Splash extends Component {
         }
 
       }).catch((error) => {
-        console.warn(error);
         this.setState({ loading: false })
-        alert(error.message);
+        this.props.navigation.navigate('welcome')
       });
   }
 

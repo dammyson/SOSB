@@ -15,7 +15,7 @@ import { Icon, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-export default class Transactions extends Component {
+export default class Orders extends Component {
 
   constructor(props) {
     super(props);
@@ -56,9 +56,10 @@ export default class Transactions extends Component {
     console.warn(await getUserID(), session_id);
     this.setState({ loading: true })
     const formData = new FormData();
-
-    formData.append('action', "pendingTrans");
-    formData.append('code', "backoffice");
+    
+    formData.append('code', "shopper");
+    formData.append('action', "viewSales");
+   
 
 
     console.warn(formData);
@@ -74,7 +75,7 @@ export default class Transactions extends Component {
         if (!res.error) {
           this.setState({
             loading: false,
-            cartItems: res.data
+           // cartItems: res.data
           })
 
         } else {
