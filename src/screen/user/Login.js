@@ -11,7 +11,7 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
-import { BaseUrl } from '../../utilities';
+import { BaseUrl,getFmc } from '../../utilities';
 
 
 export default class Login extends Component {
@@ -29,17 +29,14 @@ export default class Login extends Component {
     }
 
   }
-  componentDidMount() { }
+  async componentDidMount() {
+    this.setState({ token: await getFmc() })
 
-  componentWillMount() {
-    if (this.props.email) {
-      //  this.setState({email: this.props.email});
-    }
   }
 
 
   checkLogin() {
-    const { email, password } = this.state
+    const { email, password, token } = this.state
 
     if (password == "" || email == "") {
       Alert.alert('Validation failed', 'Password field cannot be empty', [{ text: 'Okay' }])
@@ -52,6 +49,7 @@ export default class Login extends Component {
     formData.append('action', "login");
     formData.append('email', email);
     formData.append('password', password);
+    formData.append('mobileToken', token);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {
@@ -70,7 +68,12 @@ export default class Login extends Component {
           AsyncStorage.setItem("session_id", res.sid);
           AsyncStorage.setItem("first", res.id);
           AsyncStorage.setItem("last", res.id);
-          this.props.navigation.navigate('home')
+          if(res.accountType == "2"){
+            this.props.navigation.replace('home')
+          }else{
+            this.props.navigation.replace('transactions')
+          }
+          
         } else {
           if (res.message == 'Please update password') {
             this.props.navigation.navigate('changepass')

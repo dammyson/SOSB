@@ -82,7 +82,7 @@ export default class EditTransactions extends Component {
       prodPrice,
       itemColour, priceCurrency, dscntPercent, adminShipping, promoCode, weight, bulkSize, srcRegion, itemSize, fragileyn, blacklist, invalid, packQty,srcShipping  } = this.state
     console.warn(await getUserID(), session_id);
-    this.setState({ loading: true })
+   
     const formData = new FormData();
      
     if (transID == "") {
@@ -110,7 +110,7 @@ export default class EditTransactions extends Component {
       return
     }
 
-
+    this.setState({ loading: true })
     formData.append('action', "updateTrans");
     formData.append('code', "backoffice");
     formData.append('cusID', user_id);

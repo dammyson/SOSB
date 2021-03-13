@@ -112,6 +112,8 @@ export default class Paypal extends Component {
               if(res.message == 'Transaction reference not found'){
     
               }else{
+                var result = res.message.split(":");
+                AsyncStorage.setItem("session_id", result[1]);
                 this.props.navigation.navigate('confirm')
               }
              

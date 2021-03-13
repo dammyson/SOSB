@@ -59,7 +59,8 @@ export default class Splash extends Component {
   }
 
   initPage = () => {
-
+    this.props.navigation.navigate('welcome')
+    /*
     AsyncStorage.getItem('aut').then((value) => {
       if (value == 'yes') {
         this.getUser();
@@ -69,7 +70,7 @@ export default class Splash extends Component {
         this.props.navigation.navigate('welcome')
       }
 
-    })
+    }) */
 
   }
 

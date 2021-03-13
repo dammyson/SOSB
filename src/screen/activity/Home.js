@@ -28,6 +28,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.handleTextInputChange = this.handleTextInputChange.bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.onSubmitEditing = this.onSubmitEditing.bind(this);
     this.state = {
       data: '',
@@ -50,11 +51,38 @@ export default class Home extends Component {
       color: 'default',
       size: 'default',
       loading_addcart: false,
-      progress: true
+      progress: true,
+      can_goBack: false
     };
     this.inputText = '';
 
   }
+
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    if(this.state.backButtonEnabled){
+     this.refs[WEBVIEW_REF].goBack();
+     
+    }else{
+      Platform.OS === 'android' ? 
+      BackHandler.exitApp()
+      :
+      exit(9)
+    }
+    return true;
+  }
+
+  // componentWillMount() {
+  //   BackHandler.addEventListener('hardwareBackPress', this.gBack.bind(this))
+  // }
 
 
   componentDidMount() {
@@ -135,14 +163,12 @@ export default class Home extends Component {
   home() {
     this.setState({ url: 'https://m.ofidy.com/shopping-browser.php' })
   }
-  componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.gBack.bind(this))
-  }
+ 
 
   cart() {
-       this.props.navigation.navigate('cart')
-   /* const { user_id, session_id, } = this.state
-    this.setState({ url: 'https://www.ofidy.com/shopping-cart.php?user_id=' + user_id + '&session_id=' + session_id + '&currency=NGN' }) */
+    this.props.navigation.navigate('cart')
+    /* const { user_id, session_id, } = this.state
+     this.setState({ url: 'https://www.ofidy.com/shopping-cart.php?user_id=' + user_id + '&session_id=' + session_id + '&currency=NGN' }) */
 
   }
 
@@ -169,7 +195,7 @@ export default class Home extends Component {
     });
 
     if (navState.url.includes('shopping-cart.php?user_id=')) {
-      this.setState({ currentUrl: 'https://www.ofidy.com/'});
+      this.setState({ currentUrl: 'https://www.ofidy.com/' });
     } else {
       this.setState({
         currentUrl: navState.url
@@ -205,20 +231,20 @@ export default class Home extends Component {
 
         <View style={{ flex: 1 }}>
           <View style={styles.toolbar}>
-          {this.state.loading ?
-                <View style={{ marginRight:10  }}>
-                  <ActivityIndicator size="small" color="#fff" />
-                </View> :
-                <TouchableOpacity onPress={() => this.reload()} style={{ marginRight: 10 }}>
-                  <Icon
-                    active
-                    name="refresh"
-                    type='material-community'
-                    color='#fff'
-                  />
+            {this.state.loading ?
+              <View style={{ marginRight: 10 }}>
+                <ActivityIndicator size="small" color="#fff" />
+              </View> :
+              <TouchableOpacity onPress={() => this.reload()} style={{ marginRight: 10 }}>
+                <Icon
+                  active
+                  name="refresh"
+                  type='material-community'
+                  color='#fff'
+                />
 
-                </TouchableOpacity>
-              }
+              </TouchableOpacity>
+            }
 
             <TextInput
               ref={TEXT_INPUT_REF}
@@ -241,7 +267,7 @@ export default class Home extends Component {
             domStorageEnabled={true}
             decelerationRate="normal"
             onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-           // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+            // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
             startInLoadingState={true}
             scalesPageToFit={this.state.scalesPageToFit}
           />

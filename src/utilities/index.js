@@ -38,6 +38,10 @@ export const getEmail = async () => {
   return AsyncStorage.getItem('email')
 };
 
+export const getFmc = async () => {
+  return AsyncStorage.getItem('FBToken')
+};
+
 export const getPaystackKey = () => {
   if( stage == 'test')
     return  paystack_test_key;

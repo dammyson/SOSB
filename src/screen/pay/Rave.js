@@ -117,6 +117,8 @@ export default class Rave extends Component {
               if(res.message == 'Transaction Failed'){
 
             }else{
+             var result = res.message.split(":");
+              AsyncStorage.setItem("session_id", result[1]);
               this.props.navigation.navigate('confirm')
             }
             } else {

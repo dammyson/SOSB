@@ -44,6 +44,13 @@ export default class BankDetails extends Component {
   }
 
   bankTransferVerification() {
+
+
+    const message= "We will send you an email when we have confirmed the bank transfer:352DDBE7-02AC-43EA-B7BA-F592F1EB4F7F"
+
+    var res = message.split(":");
+    console.warn(res[1])
+    
     const { user_id, session_id, } = this.state
     this.setState({ loading: true })
     const formData = new FormData();
@@ -67,6 +74,8 @@ export default class BankDetails extends Component {
           if(res.message == 'Transaction Failed'){
 
           }else{
+            var result = res.message.split(":");
+            AsyncStorage.setItem("session_id", result[1]);
             this.props.navigation.navigate('confirm')
           }
 
@@ -78,6 +87,8 @@ export default class BankDetails extends Component {
         console.warn(error);
         alert(error.message);
       });
+
+    
   }
 
 
@@ -85,10 +96,7 @@ export default class BankDetails extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator />
-          <Text>Processing Order</Text>
-        </View>
+         <ActivityIndicator color={colors.primary_color} message={'Processing Order'} />
       );
     }
 
