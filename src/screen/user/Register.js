@@ -1,6 +1,6 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, TextInput, PermissionsAndroid, View, Dimensions, TouchableOpacity, Image, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
+import { Alert, TextInput, ImageBackground, View, Dimensions, TouchableOpacity, Image, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
 import { Container, Content, Text, Icon, Button, Left, } from 'native-base';
 import _ from "lodash";
 import {
@@ -192,24 +192,32 @@ export default class Registration extends Component {
 
 
     return (
-      <Container style={{ backgroundColor: '#fff' }}>
+      <ImageBackground
+        style={{
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height,
+        }}
+        source={require('../../assets/bg.png')}>
 
-        <Content>
-          <View style={styles.body}>
-            <View style={styles.top}>
-              <Image
-                style={styles.logo}
-                source={require('../../assets/logo.png')} />
+        <Container style={{ backgroundColor: 'transparent' }}>
+
+          <Content>
+            <View style={styles.body}>
+              <View style={styles.top}>
+                <Image
+                  style={styles.logo}
+                  source={require('../../assets/logo.png')} />
+              </View>
+              <Text style={{ color: colors.primary_color, margin: 20, fontWeight: '900', fontSize: 25, }}>Sign Up </Text>
+              <View style={styles.bottom}>
+                {this.renderFirst()}
+
+              </View>
+
             </View>
-            <Text style={{ color: colors.primary_color, margin: 20, fontWeight: '900', fontSize: 25, }}>Sign Up </Text>
-            <View style={styles.bottom}>
-              {this.renderFirst()}
-
-            </View>
-
-          </View>
-        </Content>
-      </Container>
+          </Content>
+        </Container>
+      </ImageBackground>
     );
   }
 
@@ -360,7 +368,6 @@ const styles = StyleSheet.create({
   gcontainer: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -395,10 +402,11 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     marginBottom: 20,
-    borderColor: '#000000',
+    borderColor: colors.primary_color,
     borderWidth: 0.8,
     borderRadius: 10,
-    marginTop: 1
+    marginTop: 1,
+    backgroundColor:'#edf3eb'
   },
   actionbutton: {
     marginTop: 2,
@@ -424,7 +432,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   suggestions: {
-    backgroundColor: "#fff",
     padding: 8,
     fontSize: 14,
     marginLeft: 25,

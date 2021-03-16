@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity, AsyncStorage, StyleSheet, ImageBackground } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Item } from 'native-base';
 
 
@@ -104,47 +104,6 @@ export default class ConfirmOrder extends Component {
     return parseFloat(n).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 }
 
-  deliveryVerification() {
-    const { user_id, session_id, paymentDetails } = this.state
-    this.setState({ loading: true })
-    const formData = new FormData();
-    formData.append('code', "order");
-    formData.append('action', "DeliveryVerify");
-    formData.append('id', user_id,);
-    formData.append('sid', session_id);
-
-    fetch(BaseUrl(), {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-      }, body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.warn(res);
-        if (!res.error) {
-          this.setState({
-            loading: false,
-          })
-
-          Alert.alert(
-            'Success',
-            'Order registered succesfully',
-            [
-              { text: 'Cancel', onPress: () => Actions.confirmation({ paymentDetails: paymentDetails }) },
-              { text: 'OK', onPress: () => Actions.confirmation({ paymentDetails: paymentDetails }) },
-            ],
-            { cancelable: false }
-          )
-
-        } else {
-          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        console.warn(error);
-        alert(error.message);
-      });
-  }
 
  
 
@@ -176,7 +135,12 @@ export default class ConfirmOrder extends Component {
 
 
     return (
-      <Container>
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
+      <Container style={{ backgroundColor: 'transparent' }}>
       <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} right={right} title="Confirm Order" />
       <Content padder>
         <View  style={{marginHorizontal: 10,}}>
@@ -223,13 +187,14 @@ export default class ConfirmOrder extends Component {
         </View>
       </Content>
     </Container>
+    </ImageBackground>
      
     );
   }
 
   checkout() {
     const { paymentDetails, paymentinfo } = this.state
-    if (paymentDetails.paymethod == 'bank') {
+    if (paymentDetails.paymethod == 'bank transfer') {
       this.props.navigation.navigate('bank_details', { paymentinfo: paymentinfo });
     }
     else if (paymentDetails.paymethod == 'paypal') {

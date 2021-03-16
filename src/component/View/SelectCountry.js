@@ -38,40 +38,40 @@ export default class SelectCountry extends Component {
 
     }
 
-    
 
-   async getAddress() {
+
+    async getAddress() {
         const { user_id, session_id } = this.state
         this.setState({ loading: true })
-            
+
         const formData = new FormData();
-       
+
         formData.append('action', "load");
         formData.append('code', "env");
 
         fetch(BaseUrl(), {
-          method: 'POST', headers: {
-            Accept: 'application/json',
-          }, body: formData,
+            method: 'POST', headers: {
+                Accept: 'application/json',
+            }, body: formData,
         })
-          .then(res => res.json())
-          .then(res => {
-            this.setState({ loading: false })
-            console.warn(res.data.regions);
-            if (!res.error) {
-              this.setState({
-                address_list: res.data.regions
-              })
-              this.arrayholder = res.data.regions;
-            } else {
-              Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-             
-            }
-          }).catch((error) => {
-            console.warn(error);
-            alert(error.message);
-          });
-      }
+            .then(res => res.json())
+            .then(res => {
+                this.setState({ loading: false })
+                console.warn(res.data.regions);
+                if (!res.error) {
+                    this.setState({
+                        address_list: res.data.regions
+                    })
+                    this.arrayholder = res.data.regions;
+                } else {
+                    Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+
+                }
+            }).catch((error) => {
+                console.warn(error);
+                alert(error.message);
+            });
+    }
 
 
 
@@ -99,9 +99,9 @@ export default class SelectCountry extends Component {
                         left: 0,
                         bottom: 0,
                         right: 0,
-                        backgroundColor:'#00000040'
+                        backgroundColor: '#00000040'
                     }}
-                   
+
                 >
 
                 </View>
@@ -135,50 +135,55 @@ export default class SelectCountry extends Component {
                             </View>
                         </View>
                         <View style={styles.body}>
-                            <View style={{ marginTop: 10, marginLeft: 30, marginRight: 30 }}>
-                                <InputTextField
-                                    Icon={() => {
-                                        return (
-                                            <View style={{ height: 30, width: 30, alignItems: 'center', justifyContent: 'center' }}>
-                                                <Icon
-                                                    name="search"
-                                                    type='font-awesome'
-                                                    size={26}
-                                                    color={colors.secondary_color}
-                                                />
-                                            </View>
-                                        );
-                                    }}
-                                    onChangeText={this.searchFilterFunction}
-                                    keyboardType='default'
-                                    placeholder="search address"
-                                    onBlur={() => console.log('')}
-                                    editable={this.state.type}
-                                    onSubmitEditing={() => {
-                                        this.focusNextField('amountInput');
-                                    }}
-                                />
-
-                            </View>
-                            {this.state.loading ?
-                                <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
-                                    <BarIndicator color={colors.primary_color} count={4}  size={30} />
-                                </View>
-                                :
-                                <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
-                                    <FlatList
-                                        style={{ paddingBottom: 5 }}
-                                        data={this.state.address_list}
-                                        renderItem={this.renderItem}
-                                        keyExtractor={item => item.id}
-                                        ItemSeparatorComponent={this.renderSeparator}
-                                        ListHeaderComponent={this.renderHeader}
+                            <ImageBackground
+                                style={{
+                                    flex: 1,
+                                }}
+                                source={require('../../assets/bg.png')}>
+                                <View style={{ marginTop: 10, marginLeft: 30, marginRight: 30 }}>
+                                    <InputTextField
+                                        Icon={() => {
+                                            return (
+                                                <View style={{ height: 30, width: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Icon
+                                                        name="search"
+                                                        type='font-awesome'
+                                                        size={26}
+                                                        color={colors.secondary_color}
+                                                    />
+                                                </View>
+                                            );
+                                        }}
+                                        onChangeText={this.searchFilterFunction}
+                                        keyboardType='default'
+                                        placeholder="search address"
+                                        onBlur={() => console.log('')}
+                                        editable={this.state.type}
+                                        onSubmitEditing={() => {
+                                            this.focusNextField('amountInput');
+                                        }}
                                     />
+
                                 </View>
+                                {this.state.loading ?
+                                    <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
+                                        <BarIndicator color={colors.primary_color} count={4} size={30} />
+                                    </View>
+                                    :
+                                    <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
+                                        <FlatList
+                                            style={{ paddingBottom: 5 }}
+                                            data={this.state.address_list}
+                                            renderItem={this.renderItem}
+                                            keyExtractor={item => item.id}
+                                            ItemSeparatorComponent={this.renderSeparator}
+                                            ListHeaderComponent={this.renderHeader}
+                                        />
+                                    </View>
 
-                            }
+                                }
 
-
+                            </ImageBackground>
                         </View>
                     </Animatable.View>
 

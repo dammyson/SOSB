@@ -96,7 +96,14 @@ checkLogin() {
 
 
     return (
+      <ImageBackground
+      style={{
+        flex: 1
+      }}
+      source={require('../../assets/bg.png')}>
+
       <Container style={{ backgroundColor: 'transparent' }}>
+
 
         <Content>
           <View style={styles.body}>
@@ -172,6 +179,7 @@ checkLogin() {
           </View>
         </Content>
       </Container>
+      </ImageBackground>
     );
   }
 
@@ -228,10 +236,11 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     marginBottom: 20,
-    borderColor: '#000000',
+    borderColor: colors.primary_color,
     borderWidth: 0.8,
     borderRadius: 10,
-    marginTop: 1
+    marginTop: 1,
+    backgroundColor:'#edf3eb'
   },
   actionbutton: {
     marginTop: 2,

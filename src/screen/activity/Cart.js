@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Container, Content, View, Text, Header, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
 
 import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail } from '../../utilities';
@@ -117,7 +117,12 @@ export default class Cart extends Component {
       </TouchableOpacity>
     );
     return (
-      <Container style={{ backgroundColor: '#fdfdfd' }}>
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
+      <Container style={{ backgroundColor: 'transparent' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
         <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} title="MY CART" />
         {this.state.cartItems.length <= 0 ?
@@ -147,6 +152,7 @@ export default class Cart extends Component {
           </View>
         }
       </Container>
+      </ImageBackground>
     );
   }
 

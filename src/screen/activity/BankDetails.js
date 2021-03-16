@@ -8,7 +8,7 @@ import { ImageBackground, AsyncStorage, StyleSheet, Dimensions, TouchableOpacity
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
 
 
-import { BaseUrl, getUserID, getSessionID } from '../../utilities';
+import { BaseUrl, getUserID, showTopNotification, getSessionID, getCurrency } from '../../utilities';
 import colors from '../../component/color';
 import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
@@ -38,18 +38,14 @@ export default class BankDetails extends Component {
 
     this.setState({
       user_id: await getUserID(),
-      session_id: await getSessionID()
+      session_id: await getSessionID(),
+      currency: await getCurrency() 
+
     });
 
   }
 
   bankTransferVerification() {
-
-
-    const message= "We will send you an email when we have confirmed the bank transfer:352DDBE7-02AC-43EA-B7BA-F592F1EB4F7F"
-
-    var res = message.split(":");
-    console.warn(res[1])
     
     const { user_id, session_id, } = this.state
     this.setState({ loading: true })
@@ -58,6 +54,7 @@ export default class BankDetails extends Component {
     formData.append('action', "bankVerify");
     formData.append('id', user_id,);
     formData.append('sid', session_id);
+    console.warn(formData);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {
@@ -74,6 +71,7 @@ export default class BankDetails extends Component {
           if(res.message == 'Transaction Failed'){
 
           }else{
+            showTopNotification("success", "Transaction successfully")
             var result = res.message.split(":");
             AsyncStorage.setItem("session_id", result[1]);
             this.props.navigation.navigate('confirm')
@@ -118,8 +116,13 @@ export default class BankDetails extends Component {
 
 
     return (
-
-      <Container>
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
+      <Container style={{ backgroundColor: 'transparent' }}>
+ 
         <Navbar left={left} onCurrencyChange={(text) => this.setState({ currency: text })} title="Bank Details" />
         <Content padder>
           <View>
@@ -148,7 +151,7 @@ export default class BankDetails extends Component {
 
             <View regular style={styles.item}>
               <Text style={styles.actionbutton}>Total: </Text>
-              <Text style={styles.actionbuttonText}>{this.currencyFormat(this.state.paymentinfo.fullBill)}</Text>
+              <Text style={styles.actionbuttonText}>{this.state.currency}{this.currencyFormat(this.state.paymentinfo.fullBill)}</Text>
             </View>
 
           </View>
@@ -160,6 +163,8 @@ export default class BankDetails extends Component {
           </View>
         </Content>
       </Container>
+      </ImageBackground>
+      
     );
   }
 
@@ -200,11 +205,11 @@ const styles = StyleSheet.create({
   actionbutton: {
     marginTop: 7,
     marginBottom: 2,
-    opacity: 0.5,
-    fontSize: 10,
-    color: '#0F0E43',
+    opacity: 0.8,
+    fontSize: 11,
+    color: colors.primary_color,
     textAlign: 'left',
-    fontFamily: 'NunitoSans-Regular'
+    fontFamily: 'NunitoSans-SemiBold'
   },
   buttonContainer: {
     backgroundColor: colors.primary_color,
@@ -238,7 +243,7 @@ const styles = StyleSheet.create({
     marginBottom: -5,
     color: '#000',
     textAlign: 'left',
-    fontFamily: 'NunitoSans-Regular'
+    fontFamily: 'NunitoSans-Bold'
   },
 
 })

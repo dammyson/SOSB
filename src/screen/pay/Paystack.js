@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage, StyleSheet, StatusBar, Alert } from 'react-native';
+import { TouchableOpacity, AsyncStorage, StyleSheet, StatusBar, Alert, ImageBackground } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
 import { RadioButton } from 'react-native-paper';
 
@@ -16,7 +16,7 @@ import ActivityIndicator from '../../component/View/ActivityIndicator';
 import { Icon, Avatar } from 'react-native-elements';
 
 import RNPaystack from 'react-native-paystack';
-RNPaystack.init({ publicKey: getPaystackKey()});
+RNPaystack.init({ publicKey: getPaystackKey() });
 
 
 
@@ -34,16 +34,16 @@ export default class Paystack extends Component {
             cn: '',
             currency: '',
             shipreq: "null",
-            amount:10,
-            data:'',
-            email:''
-            
+            amount: 10,
+            data: '',
+            email: ''
+
         };
     }
 
     async componentWillMount() {
         const { paymentDetails, paymentinfo } = this.props.route.params;
-        console.warn( paymentDetails );
+        console.warn(paymentDetails);
         this.setState({
             user_id: await getUserID(),
             session_id: await getSessionID(),
@@ -101,7 +101,7 @@ export default class Paystack extends Component {
             Alert.alert('Operation failed', 'Invalide card cvv', [{ text: 'Okay' }])
             return
         }
-    
+
         var res = ex.split("/");
         this.setState({ loading: true })
         RNPaystack.chargeCard({
@@ -127,45 +127,45 @@ export default class Paystack extends Component {
 
     processPostPayment(res) {
 
-    const { session_id, user_id, currency } = this.state
-    this.setState({ loading: true })
-    const formData = new FormData();
-    formData.append('code', "order");
-    formData.append('action', "paystackVerify");
-    formData.append('sid', session_id);
-    formData.append('id', user_id);
-    formData.append('ref', res.reference);
-    formData.append('prf',currency);
+        const { session_id, user_id, currency } = this.state
+        this.setState({ loading: true })
+        const formData = new FormData();
+        formData.append('code', "order");
+        formData.append('action', "paystackVerify");
+        formData.append('sid', session_id);
+        formData.append('id', user_id);
+        formData.append('ref', res.reference);
+        formData.append('prf', currency);
 
 
-    fetch(BaseUrl(), {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-      }, body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.warn(res);
-        if (!res.error) {
-          this.setState({
-            loading: false,
-          })
-          if(res.message == 'Transaction reference not found'){
+        fetch(BaseUrl(), {
+            method: 'POST', headers: {
+                Accept: 'application/json',
+            }, body: formData,
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.warn(res);
+                if (!res.error) {
+                    this.setState({
+                        loading: false,
+                    })
+                    if (res.message == 'Transaction reference not found') {
 
-          }else{
-            var result = res.message.split(":");
-            AsyncStorage.setItem("session_id", result[1]);
-            this.props.navigation.navigate('confirm')
-          }
-         
-        } else {
-          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        console.warn(error);
-        alert(error.message);
-      });
+                    } else {
+                        var result = res.message.split(":");
+                        AsyncStorage.setItem("session_id", result[1]);
+                        this.props.navigation.navigate('confirm')
+                    }
+
+                } else {
+                    Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+                    this.setState({ loading: false })
+                }
+            }).catch((error) => {
+                console.warn(error);
+                alert(error.message);
+            });
     }
 
 
@@ -195,41 +195,47 @@ export default class Paystack extends Component {
 
 
         return (
-            <Container style={{ backgroundColor: '#fdfdfd' }}>
-                <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-                <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="PAYSTACK" />
-                <Content padder>
-                    <View style={{ flex: 1, marginHorizontal: 20, marginTop: 20, }}>
+            <ImageBackground
+                style={{
+                    flex: 1
+                }}
+                source={require('../../assets/bg.png')}>
+                <Container style={{ backgroundColor: 'transparent' }}>
+                    <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
+                    <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="PAYSTACK" />
+                    <Content padder>
+                        <View style={{ flex: 1, marginHorizontal: 20, marginTop: 20, }}>
 
-                        <Text style={styles.actionbutton}>CARD NUMBER</Text>
-                        <View regular style={styles.item}>
-                            <Input placeholder='CARD NUMBER' keyboardType='numeric' onChangeText={text => this.setState({ cn: text })} placeholderTextColor="#687373" style={styles.input} />
+                            <Text style={styles.actionbutton}>CARD NUMBER</Text>
+                            <View regular style={styles.item}>
+                                <Input placeholder='CARD NUMBER' keyboardType='numeric' onChangeText={text => this.setState({ cn: text })} placeholderTextColor="#687373" style={styles.input} />
+                            </View>
+
+                            <Text style={styles.actionbutton}>EXP</Text>
+                            <View regular style={styles.item}>
+                                <Input placeholder='01/01' keyboardType='numeric' onChangeText={this.handleChange} defaultValue={this.state.ex} maxLength={5} placeholderTextColor="#687373" style={styles.input} />
+                            </View>
+
+                            <Text style={styles.actionbutton}>CVV</Text>
+                            <View regular style={styles.item}>
+                                <Input placeholder='CVV' keyboardType='numeric' onChangeText={text => this.setState({ cv: text })} placeholderTextColor="#687373" style={styles.input} />
+                            </View>
+
+
                         </View>
+                        <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>
 
-                        <Text style={styles.actionbutton}>EXP</Text>
-                        <View regular style={styles.item}>
-                            <Input placeholder='01/01' keyboardType='numeric' onChangeText={this.handleChange} defaultValue={this.state.ex} maxLength={5} placeholderTextColor="#687373" style={styles.input} />
+                            <View>
+                                <Button onPress={() => this.chargeCard()} style={styles.buttonContainer} block iconLeft>
+                                    <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Pay NGN {this.currencyFormat(this.state.amount)} </Text>
+                                </Button>
+                            </View>
+
                         </View>
+                    </Content>
 
-                        <Text style={styles.actionbutton}>CVV</Text>
-                        <View regular style={styles.item}>
-                            <Input placeholder='CVV' keyboardType='numeric' onChangeText={text => this.setState({ cv: text })} placeholderTextColor="#687373" style={styles.input} />
-                        </View>
-
-
-                    </View>
-                    <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>
-
-                        <View>
-                            <Button onPress={() => this.chargeCard()} style={styles.buttonContainer} block iconLeft>
-                                <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Pay NGN {this.currencyFormat(this.state.amount)} </Text>
-                            </Button>
-                        </View>
-
-                    </View>
-                </Content>
-
-            </Container>
+                </Container>
+            </ImageBackground>
         );
     }
 
@@ -240,14 +246,17 @@ export default class Paystack extends Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 38,
-        borderColor: '#3E3E3E',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        backgroundColor: 'red',
-        backgroundColor: colors.grey,
-        fontFamily: 'NunitoSans-Regular',
-        fontSize: 12,
+        height: 45,
+        color: '#3E3E3E',
+        paddingLeft: 15,
+        marginLeft: 25,
+        marginRight: 25,
+        marginBottom: 20,
+        borderColor: colors.primary_color,
+        borderWidth: 0.8,
+        borderRadius: 10,
+        marginTop: 1,
+        backgroundColor: '#edf3eb'
     },
     actionbutton: {
         marginTop: 7,

@@ -138,6 +138,11 @@ export default class SelectMethod extends Component {
                             </View>
                         </View>
                         <View style={styles.body}>
+                        <ImageBackground
+                                style={{
+                                    flex: 1,
+                                }}
+                                source={require('../../assets/bg.png')}>
                             <View style={{ marginTop: 10, marginLeft: 30, marginRight: 30 }}>
 
                             </View>
@@ -162,7 +167,7 @@ export default class SelectMethod extends Component {
 
                             }
 
-
+</ImageBackground>
                         </View>
                     </Animatable.View>
 

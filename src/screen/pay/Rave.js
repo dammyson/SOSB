@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage, StyleSheet, StatusBar, Alert } from 'react-native';
+import { TouchableOpacity, AsyncStorage, ImageBackground, StyleSheet, StatusBar, Alert } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
 import { RadioButton } from 'react-native-paper';
 
@@ -29,16 +29,16 @@ export default class Rave extends Component {
             session_id: '',
             currency: '',
             shipreq: "null",
-            amount:10,
-            data:'',
-            email:''
-            
+            amount: 10,
+            data: '',
+            email: ''
+
         };
     }
 
     async componentWillMount() {
         const { paymentDetails, paymentinfo } = this.props.route.params;
-        console.warn( paymentDetails, paymentinfo );
+        console.warn(paymentDetails, paymentinfo);
         this.setState({
             user_id: await getUserID(),
             session_id: await getSessionID(),
@@ -48,7 +48,7 @@ export default class Rave extends Component {
         });
     }
 
-   
+
 
 
     componentDidMount() {
@@ -56,8 +56,8 @@ export default class Rave extends Component {
     }
 
 
- onSuccess = (data) => {
-      
+    onSuccess = (data) => {
+
 
     }
 
@@ -70,9 +70,9 @@ export default class Rave extends Component {
 
     onRedirect = (data) => {
         console.warn(data);
-        if(data.status=='cancelled'){
+        if (data.status == 'cancelled') {
             this.setState({ pay: false })
-        }else{
+        } else {
             this.raveVerification(data)
         }
 
@@ -88,7 +88,7 @@ export default class Rave extends Component {
         return result;
     }
 
-      raveVerification(res) {
+    raveVerification(res) {
 
         const { session_id, user_id, currency, amount } = this.state
         this.setState({ loading: true })
@@ -99,37 +99,37 @@ export default class Rave extends Component {
         formData.append('id', user_id);
         formData.append('ref', res.transaction_id);
         formData.append('amount', amount);
-        formData.append('prf',currency);
-    
-    
-        fetch(BaseUrl(), {
-          method: 'POST', headers: {
-            Accept: 'application/json',
-          }, body: formData,
-        })
-          .then(res => res.json())
-          .then(res => {
-            console.warn(res);
-            if (!res.error) {
-              this.setState({
-                loading: false,
-              })
-              if(res.message == 'Transaction Failed'){
+        formData.append('prf', currency);
 
-            }else{
-             var result = res.message.split(":");
-              AsyncStorage.setItem("session_id", result[1]);
-              this.props.navigation.navigate('confirm')
-            }
-            } else {
-              Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-              this.setState({ loading: false })
-            }
-          }).catch((error) => {
-            console.warn(error);
-            alert(error.message);
-          });
-        }
+
+        fetch(BaseUrl(), {
+            method: 'POST', headers: {
+                Accept: 'application/json',
+            }, body: formData,
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.warn(res);
+                if (!res.error) {
+                    this.setState({
+                        loading: false,
+                    })
+                    if (res.message == 'Transaction Failed') {
+
+                    } else {
+                        var result = res.message.split(":");
+                        AsyncStorage.setItem("session_id", result[1]);
+                        this.props.navigation.navigate('confirm')
+                    }
+                } else {
+                    Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+                    this.setState({ loading: false })
+                }
+            }).catch((error) => {
+                console.warn(error);
+                alert(error.message);
+            });
+    }
 
 
     render() {
@@ -158,19 +158,26 @@ export default class Rave extends Component {
 
 
         return (
-            <Container style={{ backgroundColor: '#fdfdfd' }}>
-                <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-                <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="Rave" />
-                <Content padder>
-                    <View style={{ flex: 1, marginHorizontal: 20, marginTop: 20, }}>
+            <ImageBackground
+                style={{
+                    flex: 1
+                }}
+                source={require('../../assets/bg.png')}>
+                <Container style={{ backgroundColor: 'transparent' }}>
 
-                       {this.renderPay()}
+                    <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
+                    <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="Rave" />
+                    <Content padder>
+                        <View style={{ flex: 1, marginHorizontal: 20, marginTop: 20, }}>
 
-                    </View>
-                
-                </Content>
+                            {this.renderPay()}
 
-            </Container>
+                        </View>
+
+                    </Content>
+
+                </Container>
+            </ImageBackground>
         );
     }
 
@@ -181,12 +188,12 @@ export default class Rave extends Component {
             <>
                 <View style={{ marginRight: 30, marginTop: 20, marginLeft: 30 }}>
                     <PayWithFlutterwave
-                        onComplete={()=>this.onSuccess()}
+                        onComplete={() => this.onSuccess()}
                         onRedirect={(params) => this.onRedirect(params)}
                         options={{
                             tx_ref: makeOrderId(8),
                             redirect_url: 'https://www.google.com/',
-                            authorization: 'FLWPUBK_TEST-22d34551ee18e239ebc5352e72aee939-X',
+                            authorization: 'FLWSECK-426825ba86cc78cd7b4e7377c28d1f08-X',
                             customer: {
                                 email: email
                             },
@@ -196,7 +203,7 @@ export default class Rave extends Component {
                         }}
                     />
                 </View>
-               
+
             </>
 
         )

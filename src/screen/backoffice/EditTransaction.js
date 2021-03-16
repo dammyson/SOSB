@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity, } from 'react-native';
+import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity,ImageBackground } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
 
 import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail, showTopNotification } from '../../utilities';
@@ -179,7 +179,13 @@ export default class EditTransactions extends Component {
       </TouchableOpacity>
     );
     return (
-      <Container style={{ backgroundColor: '#fdfdfd' }}>
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
+
+      <Container style={{ backgroundColor: 'transparent' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
         <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} title="Edit Transaction" />
         <Content padder>
@@ -474,6 +480,7 @@ export default class EditTransactions extends Component {
         </Content>
         {this.state.show_country ? this.renderSelectCountry() : null}
       </Container>
+      </ImageBackground>
     );
   }
 
@@ -642,10 +649,10 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginBottom: 2,
     opacity: 0.7,
-    fontSize: 10,
+    fontSize: 12,
     color: '#0F0E43',
     textAlign: 'left',
-    fontFamily: 'NunitoSans-Regular'
+    fontFamily: 'NunitoSans-Bold'
   },
   buttonContainer: {
     backgroundColor: colors.primary_color,
@@ -657,12 +664,13 @@ const styles = StyleSheet.create({
   item: {
     height: 45,
     flexDirection: 'row',
-    borderColor: '#8d96a6',
+    borderColor:  colors.primary_color,
     borderWidth: 0.6,
     alignItems: 'center',
     marginVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
+    backgroundColor: '#edf3eb'
 
   },
   itemtwo: {

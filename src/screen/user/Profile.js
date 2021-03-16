@@ -43,24 +43,24 @@ export default class Profile extends Component {
     }
 
 
-    logOut(){
+    logOut() {
         try {
 
-           this.setState({ visible_log_merchant: false })
-           AsyncStorage.removeItem('login');
-           AsyncStorage.removeItem('data');
-           AsyncStorage.removeItem('bal');
-           AsyncStorage.removeItem('user');
-           setTimeout(() => {
-            this.props.navigation.replace('intro')
-                }, 2000);
-          
+            this.setState({ visible_log_merchant: false })
+            AsyncStorage.removeItem('login');
+            AsyncStorage.removeItem('data');
+            AsyncStorage.removeItem('bal');
+            AsyncStorage.removeItem('user');
+            setTimeout(() => {
+                this.props.navigation.replace('intro')
+            }, 2000);
+
             return true;
         }
-        catch(exception) {
+        catch (exception) {
             return false;
         }
-   
+
     }
 
     render() {
@@ -92,185 +92,192 @@ export default class Profile extends Component {
         );
 
         return (
-            <Container style={{ backgroundColor: color.secondary_color }}>
-                <Navbar left={left} right={right} title="Profile" bg='#5f5c7f' />
-                <Content>
-                    <View style={styles.container}>
-                        <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" />
-                        <View style={styles.header}>
+            <ImageBackground
+                style={{
+                    width: Dimensions.get('window').width,
+                    height: Dimensions.get('window').height,
+                }}
+                source={require('../../assets/bg.png')}>
+                <Container style={{ backgroundColor: color.secondary_color }}>
+                    <Navbar left={left} right={right} title="Profile" bg='#5f5c7f' />
+                    <Content>
+                        <View style={styles.container}>
+                            <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" />
+                            <View style={styles.header}>
 
-                            <View>
+                                <View>
 
-                                <Avatar
-                                    rounded
-                                    source={{
-                                        uri: user.profilePicture,
-                                    }}
-                                    showEditButton={true}
-                                    size="large"
-                                    icon={{ name: 'user-circle', color: 'black', type: 'font-awesome' }}
-                                    overlayContainerStyle={{ backgroundColor: 'white', borderColor: color.primary_color, borderWidth: 2 }}
+                                    <Avatar
+                                        rounded
+                                        source={{
+                                            uri: user.profilePicture,
+                                        }}
+                                        showEditButton={true}
+                                        size="large"
+                                        icon={{ name: 'user-circle', color: 'black', type: 'font-awesome' }}
+                                        overlayContainerStyle={{ backgroundColor: 'white', borderColor: color.primary_color, borderWidth: 2 }}
 
-                                    editButton={{ name: 'pluscircle', type: 'antdesign', color: color.primary_color, underlayColor: '#000' }}
-                                />
+                                        editButton={{ name: 'pluscircle', type: 'antdesign', color: color.primary_color, underlayColor: '#000' }}
+                                    />
+
+                                </View>
+                                <Text style={{ fontSize: 14, margin: 15, marginTop: 10, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}>{user.userName}</Text>
 
                             </View>
-                            <Text style={{ fontSize: 14, margin: 15, marginTop: 10, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}>{user.userName}</Text>
+
+
+                            <View style={styles.body}>
+                                <View>
+                                    <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
+                                        <Avatar
+                                            rounded
+                                            size="small"
+                                            icon={{ name: 'edit-2', type: 'feather', color: '#000' }}
+                                            overlayContainerStyle={{ backgroundColor: color.primary_color }}
+                                            onPress={() => console.log("Works!")}
+                                            activeOpacity={0.7}
+                                            containerStyle={{}}
+                                        />
+                                        <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}> Change Password</Text>
+
+                                        <View style={{ alignSelf: "center", }}>
+                                            <Icon
+                                                active
+                                                name="right"
+                                                type='antdesign'
+                                                color='#D3D3D3'
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.lineStyle} />
+                                </View>
+
+                                <View style={{ marginTop: 20 }}>
+                                    <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
+                                        <Avatar
+                                            rounded
+                                            size="small"
+                                            icon={{ name: 'ticket', type: 'entypo', color: '#FFF' }}
+                                            overlayContainerStyle={{ backgroundColor: color.red }}
+                                            onPress={() => console.log("Works!")}
+                                            activeOpacity={0.7}
+                                            containerStyle={{}}
+                                        />
+                                        <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}> My Event Statistics</Text>
+
+                                        <View style={{ alignSelf: "center", }}>
+                                            <Icon
+                                                active
+                                                name="right"
+                                                type='antdesign'
+                                                color='#D3D3D3'
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.lineStyle} />
+                                </View>
+
+                                <View style={{ marginTop: 20 }}>
+                                    <TouchableOpacity onPress={() => this.setState({ visible_log_merchant: true })} style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
+                                        <Avatar
+                                            rounded
+                                            size="small"
+                                            icon={{ name: 'log-out', type: 'feather', color: '#FFF' }}
+                                            overlayContainerStyle={{ backgroundColor: '#0974ed' }}
+                                            onPress={() => console.log("Works!")}
+                                            activeOpacity={0.7}
+                                            containerStyle={{}}
+                                        />
+                                        <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}>Logout</Text>
+
+                                        <View style={{ alignSelf: "center", }}>
+                                            <Icon
+                                                active
+                                                name="right"
+                                                type='antdesign'
+                                                color='#D3D3D3'
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.lineStyle} />
+                                </View>
+
+                                <View style={{ marginTop: 20 }}>
+                                    <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
+                                        <Avatar
+                                            rounded
+                                            size="small"
+                                            icon={{ name: 'delete', type: 'antdesign', color: '#FFF' }}
+                                            overlayContainerStyle={{ backgroundColor: '#05356b' }}
+                                            onPress={() => console.log("Works!")}
+                                            activeOpacity={0.7}
+                                            containerStyle={{}}
+                                        />
+                                        <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}>Deactivate Account</Text>
+
+                                        <View style={{ alignSelf: "center", }}>
+                                            <Icon
+                                                active
+                                                name="right"
+                                                type='antdesign'
+                                                color='#D3D3D3'
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+
+
+                            </View>
+
 
                         </View>
 
+                        <Modal
+                            visible={this.state.visible_log_merchant}
+                        >
+                            <ModalContent style={styles.modal}>
+                                <View>
 
-                        <View style={styles.body}>
-                            <View>
-                                <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
-                                    <Avatar
-                                        rounded
-                                        size="small"
-                                        icon={{ name: 'edit-2', type: 'feather', color: '#000' }}
-                                        overlayContainerStyle={{ backgroundColor: color.primary_color }}
-                                        onPress={() => console.log("Works!")}
-                                        activeOpacity={0.7}
-                                        containerStyle={{}}
-                                    />
-                                    <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}> Change Password</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingTop: 1, paddingBottom: 10 }}>
+                                        <TouchableOpacity onPress={() => this.setState({ visible_log_merchant: false })} style={{ marginLeft: 10, backgroundColor: '#000' }}>
+                                            <Icon
+                                                name="close"
+                                                size={20}
+                                                type='antdesign'
+                                                color="#fff"
+                                            />
+                                        </TouchableOpacity>
 
-                                    <View style={{ alignSelf: "center", }}>
-                                        <Icon
-                                            active
-                                            name="right"
-                                            type='antdesign'
-                                            color='#D3D3D3'
+                                    </View>
+                                    <View style={styles.delavartar}>
+                                        <Avatar
+                                            size="large"
+                                            icon={{ name: 'log-out', type: 'feather', color: '#FFF' }}
+                                            overlayContainerStyle={{ backgroundColor: '#0974ed' }}
+                                            onPress={() => console.log("Works!")}
+                                            activeOpacity={0.7}
+                                            containerStyle={{}}
                                         />
                                     </View>
-                                </TouchableOpacity>
-                                <View style={styles.lineStyle} />
-                            </View>
 
-                            <View style={{ marginTop: 20 }}>
-                                <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
-                                    <Avatar
-                                        rounded
-                                        size="small"
-                                        icon={{ name: 'ticket', type: 'entypo', color: '#FFF' }}
-                                        overlayContainerStyle={{ backgroundColor: color.red }}
-                                        onPress={() => console.log("Works!")}
-                                        activeOpacity={0.7}
-                                        containerStyle={{}}
-                                    />
-                                    <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}> My Event Statistics</Text>
 
-                                    <View style={{ alignSelf: "center", }}>
-                                        <Icon
-                                            active
-                                            name="right"
-                                            type='antdesign'
-                                            color='#D3D3D3'
-                                        />
+                                    <Text style={{ fontFamily: 'Montserrat-Bold', fontSize: 17, textAlign: 'center', paddingBottom: 10, marginTop: 25, }}>Leavingso soon ?</Text>
+                                    <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: 13, textAlign: 'center', paddingBottom: 10, marginLeft: 10, marginRight: 10, }}>Are you sure you want to log out</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                        <Button onPress={() => this.logOut()} style={styles.modalbuttonContainer} block iconLeft>
+                                            <Text style={{ color: '#fdfdfd', fontWeight: '400' }}>Yes </Text>
+                                        </Button>
+                                        <Button onPress={() => this.setState({ visible_log_merchant: false })} style={styles.modalTansButtonContainer} block iconLeft>
+                                            <Text style={{ color: color.button_blue, fontWeight: '400' }}>No </Text>
+                                        </Button>
                                     </View>
-                                </TouchableOpacity>
-                                <View style={styles.lineStyle} />
-                            </View>
 
-                            <View style={{ marginTop: 20 }}>
-                                <TouchableOpacity onPress={() => this.setState({ visible_log_merchant: true })}  style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
-                                    <Avatar
-                                        rounded
-                                        size="small"
-                                        icon={{ name: 'log-out', type: 'feather', color: '#FFF' }}
-                                        overlayContainerStyle={{ backgroundColor: '#0974ed' }}
-                                        onPress={() => console.log("Works!")}
-                                        activeOpacity={0.7}
-                                        containerStyle={{}}
-                                    />
-                                    <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}>Logout</Text>
-
-                                    <View style={{ alignSelf: "center", }}>
-                                        <Icon
-                                            active
-                                            name="right"
-                                            type='antdesign'
-                                            color='#D3D3D3'
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={styles.lineStyle} />
-                            </View>
-
-                            <View style={{ marginTop: 20 }}>
-                                <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'center', marginRight: 20, marginLeft: 20, }}>
-                                    <Avatar
-                                        rounded
-                                        size="small"
-                                        icon={{ name: 'delete', type: 'antdesign', color: '#FFF' }}
-                                        overlayContainerStyle={{ backgroundColor: '#05356b' }}
-                                        onPress={() => console.log("Works!")}
-                                        activeOpacity={0.7}
-                                        containerStyle={{}}
-                                    />
-                                    <Text style={{ flex: 1, fontSize: 14, alignSelf: "center", marginLeft: 15, textAlign: 'left', fontWeight: '800', color: "#ffffff", }}>Deactivate Account</Text>
-
-                                    <View style={{ alignSelf: "center", }}>
-                                        <Icon
-                                            active
-                                            name="right"
-                                            type='antdesign'
-                                            color='#D3D3D3'
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-
-
-                        </View>
-
-
-                    </View>
-
-                    <Modal
-          visible={this.state.visible_log_merchant}
-        >
-          <ModalContent style={styles.modal}>
-            <View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingTop: 1, paddingBottom: 10 }}>
-                <TouchableOpacity onPress={() => this.setState({ visible_log_merchant: false })} style={{ marginLeft: 10, backgroundColor: '#000' }}>
-                  <Icon
-                    name="close"
-                    size={20}
-                    type='antdesign'
-                    color="#fff"
-                  />
-                </TouchableOpacity>
-
-              </View>
-              <View style={styles.delavartar}>
-                <Avatar
-                  size="large"
-                  icon={{ name: 'log-out', type: 'feather', color: '#FFF' }}
-                  overlayContainerStyle={{ backgroundColor: '#0974ed' }}
-                    onPress={() => console.log("Works!")}
-                    activeOpacity={0.7}
-                    containerStyle={{}}
-                />
-              </View>
-
-
-              <Text style={{ fontFamily: 'Montserrat-Bold', fontSize: 17, textAlign: 'center', paddingBottom: 10, marginTop: 25, }}>Leavingso soon ?</Text>
-              <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: 13, textAlign: 'center', paddingBottom: 10, marginLeft: 10, marginRight: 10, }}>Are you sure you want to log out</Text>
-              <View style={{ flexDirection: 'row', justifyContent:'center' }}>
-                <Button onPress={() => this.logOut()} style={styles.modalbuttonContainer} block iconLeft>
-                  <Text style={{ color: '#fdfdfd', fontWeight: '400' }}>Yes </Text>
-                </Button>
-                <Button onPress={() => this.setState({ visible_log_merchant: false })}  style={styles.modalTansButtonContainer} block iconLeft>
-                  <Text style={{ color: color.button_blue, fontWeight: '400' }}>No </Text>
-                </Button>
-              </View>
-
-            </View>
-          </ModalContent>
-        </Modal>
-                </Content>
-            </Container>
+                                </View>
+                            </ModalContent>
+                        </Modal>
+                    </Content>
+                </Container>
+            </ImageBackground>
         );
     }
 }
@@ -315,35 +322,35 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: Dimensions.get('window').width - 60,
-      
-      },
-      modalbuttonContainer: {
+
+    },
+    modalbuttonContainer: {
         backgroundColor: color.slide_color_dark,
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 15,
         marginTop: 15,
         marginBottom: 30,
-        flex:1
-      },
-      modalTansButtonContainer: {
-       borderColor: color.button_blue,
-       borderWidth:1,
+        flex: 1
+    },
+    modalTansButtonContainer: {
+        borderColor: color.button_blue,
+        borderWidth: 1,
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 15,
         marginTop: 15,
         marginBottom: 30,
-        backgroundColor:'transparent',
-        flex:1
-      },
-      
-      borderStyleHighLighted: {
+        backgroundColor: 'transparent',
+        flex: 1
+    },
+
+    borderStyleHighLighted: {
         borderColor: "red",
-      },
-      delavartar: {
+    },
+    delavartar: {
         justifyContent: 'center',
         alignItems: 'center',
         margin: 10,
-      },
+    },
 });

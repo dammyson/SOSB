@@ -11,7 +11,7 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
-import { BaseUrl,getFmc } from '../../utilities';
+import { BaseUrl, getFmc } from '../../utilities';
 
 
 export default class Login extends Component {
@@ -63,17 +63,17 @@ export default class Login extends Component {
         if (!res.error) {
           AsyncStorage.setItem('curr', res.currency);
           AsyncStorage.setItem('aut', "yes");
-          AsyncStorage.setItem('email',  res.email);
+          AsyncStorage.setItem('email', res.email);
           AsyncStorage.setItem("user_id", res.id);
           AsyncStorage.setItem("session_id", res.sid);
           AsyncStorage.setItem("first", res.id);
           AsyncStorage.setItem("last", res.id);
-          if(res.accountType == "2"){
+          if (res.accountType == "2") {
             this.props.navigation.replace('home')
-          }else{
+          } else {
             this.props.navigation.replace('transactions')
           }
-          
+
         } else {
           if (res.message == 'Please update password') {
             this.props.navigation.navigate('changepass')
@@ -81,10 +81,7 @@ export default class Login extends Component {
             Alert.alert('Login failed', "Check your email and password", [{ text: 'Okay' }])
             this.setState({ loading: false })
           }
-
-
         }
-
 
       }).catch((error) => {
         console.log("Api call error");
@@ -99,84 +96,93 @@ export default class Login extends Component {
 
 
     return (
-      <Container style={{ backgroundColor: 'transparent' }}>
-
-        <Content>
-          <View style={styles.body}>
-            <View style={styles.top}>
-              <Image
-                style={styles.logo}
-                source={require('../../assets/logo.png')} />
-            </View>
-            <Text style={{ color: colors.primary_color, margin: 20, fontFamily:"NunitoSans-Bold", fontSize: 20, }}>Sign In </Text>
-            <View style={styles.bottom}>
-
-              <TextInput
-                placeholder="Enter your email address"
-                placeholderTextColor='#3E3E3E'
-                returnKeyType="next"
-                onSubmitEditing={() => this.passwordInput.focus()}
-                keyboardType='email-address'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ email: text })}
-              />
-              <TextInput
-                placeholder="Enter your password"
-                placeholderTextColor='#3E3E3E'
-                secureTextEntry
-                returnKeyType="next"
-                onSubmitEditing={() => this.checkLogin()}
-                keyboardType='password'
-                autoCapitalize="none"
-                autoCorrect={false}
-                style={styles.input}
-                inlineImageLeft='ios-call'
-                onChangeText={text => this.setState({ password: text })}
-                ref={(input) => this.passwordInput = input}
-              />
-              {
-                this.state.loading ?
-                  <View>
-                    <Button style={styles.buttonContainer} block iconLeft>
-                      <BarIndicator count={4} color={'#fff'} />
-                    </Button>
-                  </View>
-                  :
-                  <View>
-                    <Button onPress={() => this.checkLogin()} style={styles.buttonContainer} block iconLeft>
-                      <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN IN </Text>
-                    </Button>
-                  </View>
-              }
+      <ImageBackground
+        style={{
+          flex: 1
+        }}
+        source={require('../../assets/bg.png')}>
+        <Container style={{ backgroundColor: 'transparent' }}>
 
 
-
-              <View style={{ flexDirection: 'row', marginTop: 20, marginLeft: 30, marginRight: 30 }}>
-                <TouchableOpacity onPress={() =>this.props.navigation.navigate('reg')}>
-                  <Text style={{ color: colors.primary_color, fontWeight: '600', fontSize: 13, }}>Create New Account  </Text>
-                </TouchableOpacity>
-                <View style={{ flex: 1, justifyContent: 'center', }} />
-
-
-
-                <View style={{ width: 1, backgroundColor: colors.primary_color }} />
-
-                <View style={{ flex: 1, justifyContent: 'center', }} />
-
-
-
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('forgetpass')}>
-                  <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>Forgot Password </Text>
-                </TouchableOpacity>
+          <Content>
+            <View style={styles.body}>
+              <View style={styles.top}>
+                <Image
+                  style={styles.logo}
+                  source={require('../../assets/logo.png')} />
               </View>
-            </View>
+              <Text style={{ color: colors.primary_color, margin: 20, fontFamily: "NunitoSans-Bold", fontSize: 20, }}>Sign In </Text>
+              <View style={styles.bottom}>
 
-          </View>
-        </Content>
-      </Container>
+                <TextInput
+                  placeholder="Enter your email address"
+                  placeholderTextColor='#3E3E3E'
+                  returnKeyType="next"
+                  onSubmitEditing={() => this.passwordInput.focus()}
+                  keyboardType='email-address'
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={styles.input}
+                  inlineImageLeft='ios-call'
+                  onChangeText={text => this.setState({ email: text })}
+                />
+                <TextInput
+                  placeholder="Enter your password"
+                  placeholderTextColor='#3E3E3E'
+                  secureTextEntry
+                  returnKeyType="next"
+                  onSubmitEditing={() => this.checkLogin()}
+                  keyboardType='password'
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={styles.input}
+                  inlineImageLeft='ios-call'
+                  onChangeText={text => this.setState({ password: text })}
+                  ref={(input) => this.passwordInput = input}
+                />
+                {
+                  this.state.loading ?
+                    <View>
+                      <Button style={styles.buttonContainer} block iconLeft>
+                        <BarIndicator count={4} color={'#fff'} />
+                      </Button>
+                    </View>
+                    :
+                    <View>
+                      <Button onPress={() => this.checkLogin()} style={styles.buttonContainer} block iconLeft>
+                        <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN IN </Text>
+                      </Button>
+                    </View>
+                }
+
+
+
+                <View style={{ flexDirection: 'row', marginTop: 20, marginLeft: 30, marginRight: 30 }}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('reg')}>
+                    <Text style={{ color: colors.primary_color, fontWeight: '600', fontSize: 13, }}>Create New Account  </Text>
+                  </TouchableOpacity>
+                  <View style={{ flex: 1, justifyContent: 'center', }} />
+
+
+
+                  <View style={{ width: 1, backgroundColor: colors.primary_color }} />
+
+                  <View style={{ flex: 1, justifyContent: 'center', }} />
+
+
+
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('forgetpass')}>
+                    <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>Forgot Password </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+            </View>
+          </Content>
+
+        </Container>
+      </ImageBackground>
+
     );
   }
 
@@ -196,7 +202,7 @@ const styles = StyleSheet.create({
   gcontainer: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    backgroundColor: '#fff',
+
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottom: {
-  
+
   },
   input: {
     height: 45,
@@ -239,10 +245,11 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     marginBottom: 20,
-    borderColor: '#000000',
+    borderColor: colors.primary_color,
     borderWidth: 0.8,
     borderRadius: 10,
-    marginTop: 1
+    marginTop: 1,
+    backgroundColor: '#edf3eb'
   },
   actionbutton: {
     marginTop: 2,

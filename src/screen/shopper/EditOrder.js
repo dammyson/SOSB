@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, StatusBar, StyleSheet, TouchableOpacity, } from 'react-native';
+import { Alert, ImageBackground, StatusBar, StyleSheet, TouchableOpacity, } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
 
 import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail, showTopNotification } from '../../utilities';
@@ -179,7 +179,12 @@ export default class EditTransactions extends Component {
       </TouchableOpacity>
     );
     return (
-      <Container style={{ backgroundColor: '#fdfdfd' }}>
+      <ImageBackground
+      style={{
+        flex: 1
+      }}
+      source={require('../../assets/bg.png')}>
+      <Container style={{ backgroundColor: 'transparent' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
         <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} title="Edit Transaction" />
         <Content padder>
@@ -474,6 +479,7 @@ export default class EditTransactions extends Component {
         </Content>
         {this.state.show_country ? this.renderSelectCountry() : null}
       </Container>
+      </ImageBackground>
     );
   }
 

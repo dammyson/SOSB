@@ -4,8 +4,8 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage, StyleSheet, StatusBar } from 'react-native';
-import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
+import { TouchableOpacity, AsyncStorage, StyleSheet, StatusBar,ImageBackground } from 'react-native';
+import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item,  } from 'native-base';
 import { RadioButton } from 'react-native-paper';
 
 // Our custom files and classes import
@@ -33,7 +33,7 @@ export default class Order extends Component {
       shipping_address: 'Select address',
       billing_address: 'Select address',
       toadd: 'yes',
-      paymethod: 'bank',
+      paymethod: 'bank transfer',
       shipping_method: 'Select Method',
 
       show_billing_address: false,
@@ -49,8 +49,6 @@ export default class Order extends Component {
       shipping_method: 'Select Method',
       shipmed: '',
       shippingmethod: [],
-      paymethod: 'select',
-
       currency: '',
       shipreq: "null"
     };
@@ -149,7 +147,12 @@ export default class Order extends Component {
 
 
     return (
-      <Container style={{ backgroundColor: '#fdfdfd' }}>
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
+      <Container style={{ backgroundColor: 'transparent' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
         <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="CHECKOUT" />
         <Content padder>
@@ -269,7 +272,7 @@ export default class Order extends Component {
                 <>
                   <View regular style={styles.itemtwo}>
                     <TouchableOpacity
-                      onPress={() => this.setPaymethod('bank')}
+                      onPress={() => this.setPaymethod('bank transfer')}
                       style={{
                         borderRadius: 15,
                         width: 25,
@@ -283,7 +286,7 @@ export default class Order extends Component {
 
                       }}
                     >
-                      {this.state.paymethod == 'bank' ?
+                      {this.state.paymethod == 'bank transfer' ?
                         <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
                         : null
                       }
@@ -294,7 +297,7 @@ export default class Order extends Component {
 
 
 
-
+              {/**
                   <View regular style={styles.itemtwo}>
                     <TouchableOpacity
                       onPress={() => this.setPaymethod('paystack')}
@@ -319,7 +322,7 @@ export default class Order extends Component {
                     <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Card (Paystack) - Naira</Text>
                   </View>
 
-
+                */}
 
                   <View regular style={styles.itemtwo}>
                     <TouchableOpacity
@@ -398,6 +401,7 @@ export default class Order extends Component {
         {this.state.show_method ? this.renderSelectMethod() : null}
         {this.state.show_address ? this.renderAddAddress() : null}
       </Container>
+      </ImageBackground>
     );
   }
 
@@ -491,11 +495,11 @@ const styles = StyleSheet.create({
   actionbutton: {
     marginTop: 7,
     marginBottom: 2,
-    opacity: 0.5,
+    opacity: 0.8,
     fontSize: 10,
-    color: '#0F0E43',
+    color: colors.primary_color,
     textAlign: 'left',
-    fontFamily: 'NunitoSans-Regular'
+    fontFamily: 'NunitoSans-Bold'
   },
   buttonContainer: {
     backgroundColor: colors.primary_color,

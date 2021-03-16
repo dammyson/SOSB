@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         height: 40,
         marginTop: 15,
         marginBottom: 10,
-        backgroundColor:'#F4F7FA'
+        backgroundColor: '#edf3eb'
 
 
     },
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#272065',
         fontFamily: 'Proxima-nova-Regular',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+
     },
 
 });

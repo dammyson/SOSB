@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import {Alert, AsyncStorage, StyleSheet, StatusBar , TouchableHighlight, TouchableOpacity} from 'react-native';
+import {Alert, ImageBackground, StyleSheet, StatusBar , TouchableHighlight, TouchableOpacity} from 'react-native';
 import { Container, Content, Text, View, Picker, Grid, Col, Left, Right, Button, List, ListItem, Body, Radio, Input, Item } from 'native-base';
 import { Icon, } from 'react-native-elements';
 import _ from "lodash";
@@ -254,7 +254,13 @@ export default class AddAddress extends Component {
     );
     
     return (
-      <Container style={{ backgroundColor: '#fdfdfd' , position: "absolute", top: 0, left: 0,bottom: 0,right: 0,}}>
+      <ImageBackground
+      style={{
+        flex: 1, position: "absolute", top: 0, left: 0,bottom: 0,right: 0,
+      }}
+      source={require('../../assets/bg.png')}>
+    
+      <Container style={{ backgroundColor: 'transparent' , }}>
          <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
         <Navbar left={left} title="New Address" />
         <Content padder>
@@ -444,6 +450,7 @@ export default class AddAddress extends Component {
         {this.state.show_country ? this.renerSelectCountry() : null}
         {this.state.show_state ? this.renerSelectState() : null}
       </Container>
+      </ImageBackground>
     );
   }
 

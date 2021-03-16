@@ -4,7 +4,7 @@
 
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { AsyncStorage, Image, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
+import { AsyncStorage, Image, TouchableOpacity, StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Picker, ListItem, Body, Radio, Input, Item } from 'native-base';
 
 
@@ -53,7 +53,12 @@ export default class Confirmation extends Component {
 
 
     return (
-      <Container>
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
+      <Container style={{ backgroundColor: 'transparent' }}>
         <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} title="Confirm" />
         <Content padder>
 
@@ -78,6 +83,7 @@ export default class Confirmation extends Component {
           </View>
         </Content>
       </Container>
+      </ImageBackground>
     );
   }
 

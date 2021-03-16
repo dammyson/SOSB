@@ -136,6 +136,11 @@ export default class SelectAddress extends Component {
                             </View>
                         </View>
                         <View style={styles.body}>
+                        <ImageBackground
+                                style={{
+                                    flex: 1,
+                                }}
+                                source={require('../../assets/bg.png')}>
                             <View style={{ marginTop: 10, marginLeft: 30, marginRight: 30 }}>
                                 <InputTextField
                                     Icon={() => {
@@ -179,7 +184,7 @@ export default class SelectAddress extends Component {
 
                             }
 
-
+</ImageBackground>
                         </View>
                     </Animatable.View>
 
@@ -278,7 +283,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#d1d1d1',
-        paddingLeft: 12
+        paddingLeft: 12,
+        backgroundColor: '#edf3eb'
     },
 
     nameList: {
@@ -313,7 +319,8 @@ const styles = StyleSheet.create({
         marginRight: 40,
         borderColor: '#000',
         borderWidth: 0.8,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: '#edf3eb'
 
     },
 });

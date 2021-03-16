@@ -10,6 +10,7 @@ import {
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
+import { ImageBackground } from 'react-native';
 
 
 export default class Welcome extends Component {
@@ -56,6 +57,12 @@ export default class Welcome extends Component {
   
   
     return (
+      <ImageBackground
+      style={{
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+      }}
+      source={require('../../assets/bg.png')}>
         <Container style={{ backgroundColor: 'transparent' }}>
         
           <Content>
@@ -88,6 +95,7 @@ export default class Welcome extends Component {
             </View>
           </Content>
         </Container>
+        </ImageBackground>
     );
   }
 

@@ -115,6 +115,11 @@ export default class Splash extends Component {
   }
   render() {
     return (
+      <ImageBackground
+      style={{
+       flex:1
+      }}
+      source={require('../../assets/bg.png')}>
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" />
         <Image
@@ -126,6 +131,7 @@ export default class Splash extends Component {
 
         </View>
       </View>
+      </ImageBackground>
     );
   }
 }
