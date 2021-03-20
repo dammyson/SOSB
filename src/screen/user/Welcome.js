@@ -77,11 +77,11 @@ export default class Welcome extends Component {
 
               
                     <View>
-                      <Button onPress={() => this.props.navigation.navigate('login')} style={styles.buttonContainer} block iconLeft>
+                      <Button onPress={() => this.props.navigation.replace('login')} style={styles.buttonContainer} block iconLeft>
                         <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>SIGN IN </Text>
                       </Button>
 
-                      <Button onPress={() =>this.props.navigation.navigate('reg')}  style={styles.whiteButtonContainer} block iconLeft>
+                      <Button onPress={() =>this.props.navigation.replace('reg')}  style={styles.whiteButtonContainer} block iconLeft>
                         <Text style={{ color: colors.primary_color,fontWeight: '600' }}>SIGN UP </Text>
                       </Button>
                     </View>

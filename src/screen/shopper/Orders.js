@@ -29,20 +29,20 @@ export default class Orders extends Component {
   }
 
   async componentWillMount() {
-     console.warn(await getEmail())
+    console.warn(await getEmail())
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
-      currency: await getCurrency() 
+      currency: await getCurrency()
     });
 
 
-   
+
+    this.getCart();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.getCart();
-      this._unsubscribe = this.props.navigation.addListener('focus', () => {
-        this.getCart();
     });
-  
+
 
   }
 
@@ -56,10 +56,10 @@ export default class Orders extends Component {
     console.warn(await getUserID(), session_id);
     this.setState({ loading: true })
     const formData = new FormData();
-    
+
     formData.append('code', "shopper");
     formData.append('action', "viewSales");
-   
+
 
 
     console.warn(formData);
@@ -75,7 +75,7 @@ export default class Orders extends Component {
         if (!res.error) {
           this.setState({
             loading: false,
-           // cartItems: res.data
+            // cartItems: res.data
           })
 
         } else {
@@ -95,38 +95,37 @@ export default class Orders extends Component {
       );
     }
     var left = (
-      <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
+      <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
         <Icon
-          name="arrowleft"
-          size={20}
-          type='antdesign'
-          color={colors.white}
+          name="menu"
+          type='entypo'
+          color='#fff'
         />
       </TouchableOpacity>
     );
     return (
       <ImageBackground
-      style={{
-        flex: 1
-      }}
-      source={require('../../assets/bg.png')}>
-      <Container style={{ backgroundColor: 'transparent' }}>
+        style={{
+          flex: 1
+        }}
+        source={require('../../assets/bg.png')}>
+        <Container style={{ backgroundColor: 'transparent' }}>
 
-        <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-        <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} title="Transaction" />
-        {this.state.cartItems.length <= 0 ?
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Icon name="shoppingcart" type='antdesign' size={38} style={{ fontSize: 38, color: '#95a5a6', marginBottom: 7 }} />
-            <Text style={{ color: '#95a5a6' }}>Your transaction is empty</Text>
-          </View>
-          :
-          <View style={{ flex: 1, }}>
-            <ScrollView style={{ flex: 1, }}>
-              {this.renderItems()}
-            </ScrollView>
-          </View>
-        }
-      </Container>
+          <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
+          <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} title="Transaction" />
+          {this.state.cartItems.length <= 0 ?
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <Icon name="shoppingcart" type='antdesign' size={38} style={{ fontSize: 38, color: '#95a5a6', marginBottom: 7 }} />
+              <Text style={{ color: '#95a5a6' }}>Your transaction is empty</Text>
+            </View>
+            :
+            <View style={{ flex: 1, }}>
+              <ScrollView style={{ flex: 1, }}>
+                {this.renderItems()}
+              </ScrollView>
+            </View>
+          }
+        </Container>
       </ImageBackground>
     );
   }
@@ -160,7 +159,7 @@ export default class Orders extends Component {
   }
 
   editItemPressed(item) {
-   this.props.navigation.navigate('edittransactions', { item: item })
+    this.props.navigation.navigate('edittransactions', { item: item })
   }
 
 

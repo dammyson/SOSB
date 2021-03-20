@@ -14,6 +14,8 @@ import ActivityIndicator from '../../component/View/ActivityIndicator';
 import { Icon, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import SelectCountry from '../../component/View/SelectCountry';
+import SelectBulkSize from '../../component/View/SelectBulkSize';
+import ShowPage from '../../component/View/ShowPage';
 
 
 export default class EditTransactions extends Component {
@@ -28,8 +30,10 @@ export default class EditTransactions extends Component {
       session_id: '',
       item: '',
       show_country: false,
+      show_page: false,
+      show_bulk: false,
       country_name: 'Select Region',
-
+      bulksize_name:'Select Bulk Size',
       transID: '',
       prodName: '',
       prodQty: '',
@@ -191,9 +195,10 @@ export default class EditTransactions extends Component {
         <Content padder>
           <View style={{ marginHorizontal: 20, }}>
             <Text style={styles.actionbutton}>prodName</Text>
-            <View regular style={styles.item}>
-              <Input placeholder='' onChangeText={(text) => this.setState({ prodName: text })} defaultValue={this.state.prodName} placeholderTextColor="#687373" style={styles.input} />
-            </View>
+
+            <TouchableOpacity onPress={() => this.setState({ show_page: true })} regular style={styles.item}>
+              <Input placeholder='' onChangeText={(text) => this.setState({ prodName: text })} editable={false} defaultValue={this.state.prodName} placeholderTextColor="#687373" style={styles.input} />
+            </TouchableOpacity>
             <Text style={styles.actionbutton}>prodQty</Text>
             <View regular style={styles.item}>
               <Input placeholder='prodQty' onChangeText={(text) => this.setState({ prodQty: text })} defaultValue={this.state.prodQty} placeholderTextColor="#687373" style={styles.input} />
@@ -297,8 +302,13 @@ export default class EditTransactions extends Component {
             </View>
             <Text style={styles.actionbutton}>bulkSize</Text>
             <View regular style={styles.item}>
-              <Input placeholder='bulkSize' onChangeText={(text) => this.setState({ bulkSize: text })} defaultValue={this.state.bulkSize} placeholderTextColor="#687373" style={styles.input} />
+              <TouchableOpacity onPress={() => this.setState({ show_bulk: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
+                <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.bulksize_name == 'Select Bulk Size' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.bulksize_name}</Text>
+              </TouchableOpacity>
             </View>
+
+
+
             <Text style={styles.actionbutton}>srcRegion</Text>
             <View regular style={styles.item}>
               <TouchableOpacity onPress={() => this.setState({ show_country: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
@@ -479,12 +489,20 @@ export default class EditTransactions extends Component {
           </View>
         </Content>
         {this.state.show_country ? this.renderSelectCountry() : null}
+        {this.state.show_bulk ? this.renderBulkSize() : null}
+        {this.state.show_page ? this.renderShowPage() : null}
       </Container>
       </ImageBackground>
     );
   }
 
-
+  renderShowPage() {
+    return (
+      <ShowPage
+        url={this.state.prodName}
+        onClose={() => this.setState({ show_page: false })} />
+    )
+  }
 
   renderSelectCountry() {
     return (
@@ -495,6 +513,18 @@ export default class EditTransactions extends Component {
   }
   onSelectCountry(item) {
     this.setState({ show_country: false, srcRegion: item.id, country_name: item.name })
+  }
+
+
+  renderBulkSize() {
+    return (
+      <SelectBulkSize
+        onSelect={(v) => this.onSelectCountry(v)}
+        onClose={() => this.setState({ show_bulk: false })} />
+    )
+  }
+  onSelectBulk(item) {
+    this.setState({ show_bulk: false, bulkSize: item.id, bulksize_name: item.name })
   }
 
   removeItemPressed(item) {

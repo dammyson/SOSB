@@ -47,19 +47,19 @@ export default class Splash extends Component {
         if (!res.error) {
           this.setState({ loading: false })
           AsyncStorage.setItem("session_id", res.sid);
-          this.props.navigation.navigate('home')
+          this.props.navigation.replace('home')
         } else {
-          this.props.navigation.navigate('home')
+          this.props.navigation.replace('home')
         }
 
       }).catch((error) => {
         this.setState({ loading: false })
-        this.props.navigation.navigate('welcome')
+        this.props.navigation.replace('welcome')
       });
   }
 
   initPage = () => {
-    this.props.navigation.navigate('welcome')
+    this.props.navigation.replace('welcome')
     /*
     AsyncStorage.getItem('aut').then((value) => {
       if (value == 'yes') {

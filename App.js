@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Provider } from 'react-redux'
 import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import Main from './src/component/navigation/app-stack';
+import Main from './src/component/navigation/auth-stack';
 import FlashMessage from "react-native-flash-message";
 
 import { Platform } from 'react-native';
- // console.disableYellowBox = true;
+// console.disableYellowBox = true;
 
 function App() {
 	const TransitionPreset = Platform.OS === 'ios' ? TransitionPresets.ModalSlideFromBottomIOS : {}
@@ -20,8 +20,8 @@ function App() {
 	return (
 		<>
 			<Main />
-			<FlashMessage position="top"/> 
-			</>
+			<FlashMessage position="top" />
+		</>
 	)
 }
 export default App;

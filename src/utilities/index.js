@@ -50,6 +50,16 @@ export const getPaystackKey = () => {
 };
 
 
+export const getAccountType = async () => {
+  return AsyncStorage.getItem('account_type')
+};
+
+
+export const getUser = async () => {
+  return AsyncStorage.getItem('user')
+};
+
+
 export const showTopNotification = (type, message, duration)=> {
   showMessage({
     message: message,

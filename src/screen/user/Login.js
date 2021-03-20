@@ -66,8 +66,8 @@ export default class Login extends Component {
           AsyncStorage.setItem('email', res.email);
           AsyncStorage.setItem("user_id", res.id);
           AsyncStorage.setItem("session_id", res.sid);
-          AsyncStorage.setItem("first", res.id);
-          AsyncStorage.setItem("last", res.id);
+          AsyncStorage.setItem("user", JSON.stringify(res));
+          AsyncStorage.setItem("account_type", res.accountType);
           if (res.accountType == "2") {
             this.props.navigation.replace('home')
           } else {

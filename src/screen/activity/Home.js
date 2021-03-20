@@ -68,14 +68,14 @@ export default class Home extends Component {
   }
 
   handleBackButtonClick() {
-    if(this.state.backButtonEnabled){
-     this.refs[WEBVIEW_REF].goBack();
-     
-    }else{
-      Platform.OS === 'android' ? 
-      BackHandler.exitApp()
-      :
-      exit(9)
+    if (this.state.backButtonEnabled) {
+      this.refs[WEBVIEW_REF].goBack();
+
+    } else {
+      Platform.OS === 'android' ?
+        BackHandler.exitApp()
+        :
+        exit(9)
     }
     return true;
   }
@@ -163,7 +163,7 @@ export default class Home extends Component {
   home() {
     this.setState({ url: 'https://m.ofidy.com/shopping-browser.php' })
   }
- 
+
 
   cart() {
     this.props.navigation.navigate('cart')
@@ -231,20 +231,17 @@ export default class Home extends Component {
 
         <View style={{ flex: 1 }}>
           <View style={styles.toolbar}>
-            {this.state.loading ?
-              <View style={{ marginRight: 10 }}>
-                <ActivityIndicator size="small" color="#fff" />
-              </View> :
-              <TouchableOpacity onPress={() => this.reload()} style={{ marginRight: 10 }}>
+            <View style={{ height: 36, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
                 <Icon
-                  active
-                  name="refresh"
-                  type='material-community'
+                  name="menu"
+                  type='entypo'
                   color='#fff'
                 />
 
               </TouchableOpacity>
-            }
+            </View>
+
 
             <TextInput
               ref={TEXT_INPUT_REF}
@@ -257,6 +254,22 @@ export default class Home extends Component {
               onChange={this.handleTextInputChange}
               clearButtonMode="while-editing"
             />
+            <View style={{ height: 36, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+              {this.state.loading ?
+                <View style={{ marginLeft: 10, }}>
+                  <ActivityIndicator size="small" color="#fff" />
+                </View> :
+                <TouchableOpacity onPress={() => this.reload()} style={{ marginLeft: 10 }}>
+                  <Icon
+                    active
+                    name="refresh"
+                    type='material-community'
+                    color='#fff'
+                  />
+
+                </TouchableOpacity>
+              }
+            </View>
           </View>
           <WebView
             ref={WEBVIEW_REF}
@@ -579,7 +592,7 @@ const styles = StyleSheet.create({
   },
   toolbar: {
     height: 80,
-    padding: 14,
+    padding: 5,
     backgroundColor: '#004701',
     flexDirection: 'row',
     alignItems: 'center',
@@ -599,13 +612,11 @@ const styles = StyleSheet.create({
     height: 45,
     color: '#3E3E3E',
     paddingLeft: 15,
-    marginLeft: 25,
-    marginRight: 25,
+    marginHorizontal: 25,
     marginBottom: 20,
     borderColor: '#000000',
     borderWidth: 0.8,
     borderRadius: 20,
-    marginTop: 1
   },
   proceed_btn: {
     padding: 15,

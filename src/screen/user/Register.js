@@ -28,7 +28,7 @@ export default class Registration extends Component {
       loading: false,
       email: "",
       phone: "",
-      uname: "Default",
+      uname: "",
       address: "",
       lname: "",
       lname: "",
@@ -244,7 +244,7 @@ export default class Registration extends Component {
           placeholder="Enter your phone number"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
-          onSubmitEditing={() => this.firstname.focus()}
+          onSubmitEditing={() => this.uname.focus()}
           keyboardType='numeric'
           autoCapitalize="none"
           autoCorrect={false}
@@ -252,6 +252,19 @@ export default class Registration extends Component {
           inlineImageLeft='ios-call'
           onChangeText={text => this.setState({ phone: text })}
           ref={(input) => this.phone = input}
+        />
+         <TextInput
+          placeholder="Username"
+          placeholderTextColor='#3E3E3E'
+          returnKeyType="next"
+          onSubmitEditing={() => this.uname.focus()}
+          keyboardType='email-address'
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.input}
+          inlineImageLeft='ios-call'
+          onChangeText={text => this.setState({ uname: text })}
+          ref={(input) => this.firstname = input}
         />
         <TextInput
           placeholder="Enter your first name"

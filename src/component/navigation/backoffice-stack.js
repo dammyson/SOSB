@@ -36,18 +36,12 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="home"
+             initialRouteName="transactions"
              >
-            <Stack.Screen name="home" component={Home}   />
-            <Stack.Screen name="cart" component={Cart}   />
-            <Stack.Screen name="order" component={Order}   />
-            <Stack.Screen name="confirm_order" component={ConfirmOrder}   />
-            <Stack.Screen name="confirm" component={Confirmation}   />
-            <Stack.Screen name="bank_details" component={BankDetails}   />
-            <Stack.Screen name="paystack" component={Paystack}   />
-            <Stack.Screen name="rave" component={Rave}   />
-            <Stack.Screen name="paypal" component={Paypal}   />
-            <Stack.Screen name="paypal2" component={PayPalTwo}   />
+           
+
+            <Stack.Screen name="transactions" component={Transactions}   />
+            <Stack.Screen name="edittransactions" component={EditTransactions}   />
           </Stack.Navigator>
       );
   }

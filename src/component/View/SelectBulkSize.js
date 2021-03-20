@@ -9,23 +9,22 @@ import InputTextField from './CustomInputTextField'
 import { BaseUrl, getUserID, getSessionID } from '../../utilities/index';
 
 
-export default class SelectCountry extends Component {
+export default class SelectBulkSize extends Component {
     constructor(props) {
         super(props);
         this.state = {
             progress: new Animated.Value(0),
             merchant: 'ay345',
-            card_list: [],
-            address_list: [],
-            visible: false,
-            view_balance: false,
-            loading: true,
-            auth: '',
-            card_name: '',
-            selected_category: 0,
-            search: '',
+            shippingmethod: [
+                { id: "Small", name: 'HoSmallme' },
+                { id: "Medium", name: 'Medium' },
+                { id: "Large", name: 'Large' },
+                { id: "Truck Large", name: 'Truck Large' },
+              ],
+           
+            
         };
-        this.arrayholder = [];
+       
     }
 
     componentDidMount() {
@@ -34,51 +33,17 @@ export default class SelectCountry extends Component {
             duration: 2000,
             easing: Easing.linear,
         }).start();
-        this.getAddress()
 
     }
 
 
-
-    async getAddress() {
-        const { user_id, session_id } = this.state
-        this.setState({ loading: true })
-
-        const formData = new FormData();
-
-        formData.append('action', "load");
-        formData.append('code', "env");
-
-        fetch(BaseUrl(), {
-            method: 'POST', headers: {
-                Accept: 'application/json',
-            }, body: formData,
-        })
-            .then(res => res.json())
-            .then(res => {
-                this.setState({ loading: false })
-                console.warn(res.data.regions);
-                if (!res.error) {
-                    this.setState({
-                        address_list: res.data.regions
-                    })
-                    this.arrayholder = res.data.regions;
-                } else {
-                    Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-
-                }
-            }).catch((error) => {
-                console.warn(error);
-                alert(error.message);
-            });
-    }
 
 
 
     searchFilterFunction = search => {
         this.setState({ search });
         const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.name.toUpperCase()}`;
+            const itemData = `${item.addressLine1.toUpperCase()} ${item.city.toUpperCase()}`;
             const textData = search.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
@@ -112,7 +77,7 @@ export default class SelectCountry extends Component {
                     </View>
 
 
-                    <Animatable.View style={{ height: Dimensions.get('window').height - 100, alignItems: 'center', justifyContent: 'center', }} animation="fadeInUpBig" >
+                    <Animatable.View style={{ height: Dimensions.get('window').height / 2, alignItems: 'center', justifyContent: 'center', }} animation="fadeInUpBig" >
                         <View style={styles.body_top}>
                             <View style={{ justifyContent: 'center', alignItems: 'center', width: 40 }}>
                                 <TouchableOpacity onPress={() => onClose()}>
@@ -121,7 +86,7 @@ export default class SelectCountry extends Component {
                                 </TouchableOpacity>
                             </View>
 
-                            <Text style={{ fontSize: 14, margin: 7, flex: 1, fontFamily: 'Proxima-nova-Light', fontStyle: 'italic', color: '#fff', textAlign: 'center', marginRight: 10 }}>Select Country</Text>
+                            <Text style={{ fontSize: 14, margin: 7, flex: 1, fontFamily: 'NunitoSans-Light', fontStyle: 'italic', color: '#fff', textAlign: 'center', marginRight: 10 }}>Select address type</Text>
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 25 }}>
                                 <TouchableOpacity onPress={() => onClose()}>
                                     <Icon
@@ -135,55 +100,27 @@ export default class SelectCountry extends Component {
                             </View>
                         </View>
                         <View style={styles.body}>
-                            <ImageBackground
+                        <ImageBackground
                                 style={{
                                     flex: 1,
                                 }}
                                 source={require('../../assets/bg.png')}>
-                                <View style={{ marginTop: 10, marginLeft: 30, marginRight: 30 }}>
-                                    <InputTextField
-                                        Icon={() => {
-                                            return (
-                                                <View style={{ height: 30, width: 30, alignItems: 'center', justifyContent: 'center' }}>
-                                                    <Icon
-                                                        name="search"
-                                                        type='font-awesome'
-                                                        size={26}
-                                                        color={colors.secondary_color}
-                                                    />
-                                                </View>
-                                            );
-                                        }}
-                                        onChangeText={this.searchFilterFunction}
-                                        keyboardType='default'
-                                        placeholder="search address"
-                                        onBlur={() => console.log('')}
-                                        editable={this.state.type}
-                                        onSubmitEditing={() => {
-                                            this.focusNextField('amountInput');
-                                        }}
+                            <View style={{ marginTop: 10, marginLeft: 30, marginRight: 30 }}>
+
+                            </View>
+                         
+                                <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
+                                    <FlatList
+                                        style={{ paddingBottom: 5 }}
+                                        data={this.state.shippingmethod}
+                                        renderItem={this.renderItem}
+                                        keyExtractor={item => item.id}
+                                        ItemSeparatorComponent={this.renderSeparator}
+                                        ListHeaderComponent={this.renderHeader}
                                     />
-
                                 </View>
-                                {this.state.loading ?
-                                    <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
-                                        <BarIndicator color={colors.primary_color} count={4} size={30} />
-                                    </View>
-                                    :
-                                    <View style={{ paddingTop: 1, paddingBottom: 10, flex: 1, }}>
-                                        <FlatList
-                                            style={{ paddingBottom: 5 }}
-                                            data={this.state.address_list}
-                                            renderItem={this.renderItem}
-                                            keyExtractor={item => item.id}
-                                            ItemSeparatorComponent={this.renderSeparator}
-                                            ListHeaderComponent={this.renderHeader}
-                                        />
-                                    </View>
 
-                                }
-
-                            </ImageBackground>
+                          </ImageBackground>
                         </View>
                     </Animatable.View>
 
@@ -208,7 +145,7 @@ export default class SelectCountry extends Component {
                 onPress={() => this._handleCategorySelect(item)} underlayColor="red">
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={{ flex: 1, }}>
-                        <Text style={styles.nameList}>{item.name} </Text>
+                        <Text style={styles.nameList}>{item.name}  </Text>
 
                     </View>
                 </View>
@@ -222,7 +159,7 @@ export default class SelectCountry extends Component {
 }
 
 
-SelectCountry;
+SelectBulkSize;
 
 const styles = StyleSheet.create({
     container: {
