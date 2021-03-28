@@ -16,7 +16,7 @@ export default class SelectBulkSize extends Component {
             progress: new Animated.Value(0),
             merchant: 'ay345',
             shippingmethod: [
-                { id: "Small", name: 'HoSmallme' },
+                { id: "Small", name: 'Small' },
                 { id: "Medium", name: 'Medium' },
                 { id: "Large", name: 'Large' },
                 { id: "Truck Large", name: 'Truck Large' },

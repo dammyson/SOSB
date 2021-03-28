@@ -112,7 +112,7 @@ export default class Transactions extends Component {
       <Container style={{ backgroundColor: 'transparent' }}>
 
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-        <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} title="Transaction" />
+        <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} title="Backoffice Transaction" />
         {this.state.cartItems.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Icon name="shoppingcart" type='antdesign' size={38} style={{ fontSize: 38, color: '#95a5a6', marginBottom: 7 }} />

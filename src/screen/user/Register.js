@@ -18,7 +18,7 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
-import { BaseUrl } from '../../utilities';
+import { BaseUrl , showTopNotification} from '../../utilities';
 
 
 export default class Registration extends Component {
@@ -97,11 +97,8 @@ export default class Registration extends Component {
         console.warn(res);
         if (!res.error) {
           this.setState({ loading: false })
-          AsyncStorage.setItem('curr', "USD");
-          AsyncStorage.setItem("user_id", res.id);
-          AsyncStorage.setItem("session_id", res.sid);
-          this.props.navigation.replace('home')
-
+          showTopNotification("success", "Registration  successful, Welcome To Ofidy")
+          this.props.navigation.replace('login')
         } else {
           Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
           this.setState({ loading: false })
@@ -229,7 +226,7 @@ export default class Registration extends Component {
 
 
         <TextInput
-          placeholder="Enter your email"
+          placeholder="Email"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
           onSubmitEditing={() => this.phone.focus()}
@@ -241,7 +238,7 @@ export default class Registration extends Component {
           onChangeText={text => this.setState({ email: text })}
         />
         <TextInput
-          placeholder="Enter your phone number"
+          placeholder="Phone number"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
           onSubmitEditing={() => this.uname.focus()}
@@ -267,7 +264,7 @@ export default class Registration extends Component {
           ref={(input) => this.firstname = input}
         />
         <TextInput
-          placeholder="Enter your first name"
+          placeholder="First name"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
           onSubmitEditing={() => this.lastname.focus()}
@@ -280,7 +277,7 @@ export default class Registration extends Component {
           ref={(input) => this.firstname = input}
         />
         <TextInput
-          placeholder="Enter your last name"
+          placeholder="Last name"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
           onSubmitEditing={() => this.username.focus()}
@@ -293,7 +290,7 @@ export default class Registration extends Component {
           ref={(input) => this.lastname = input}
         />
         <TextInput
-          placeholder="Enter your address"
+          placeholder="Address"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
           onSubmitEditing={() => this.phone.focus()}
@@ -312,7 +309,7 @@ export default class Registration extends Component {
           {this.renderPrediction(this.state.locationPredictions)}
         </View>
         <TextInput
-          placeholder="Enter your password"
+          placeholder="Password"
           placeholderTextColor='#3E3E3E'
           secureTextEntry
           returnKeyType="next"

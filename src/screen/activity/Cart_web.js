@@ -172,10 +172,6 @@ export default class Cart extends Component {
 
   render() {
     const { user_id, session_id, } = this.state
-    let formdata = new FormData();
-    formdata.append('user_id', "3B19C4EC-4D5F-4FCF-AA35-CE8FF769069B");
-    formdata.append('session_id', '337BFE1E-DEB2-4356-B051-68A9B849E3EC');
-    formdata.append('currency', "NGN");
 
     var left = (
       <Left style={{ flex: 1 }}>

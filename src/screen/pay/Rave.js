@@ -36,9 +36,9 @@ export default class Rave extends Component {
         };
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         const { paymentDetails, paymentinfo } = this.props.route.params;
-        console.warn(paymentDetails, paymentinfo);
+        console.warn(await getEmail());
         this.setState({
             user_id: await getUserID(),
             session_id: await getSessionID(),
@@ -184,6 +184,7 @@ export default class Rave extends Component {
 
     renderPay() {
         const { data, amount, email } = this.state
+        console.warn(amount, email  )
         return (
             <>
                 <View style={{ marginRight: 30, marginTop: 20, marginLeft: 30 }}>

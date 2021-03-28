@@ -56,7 +56,7 @@ export default class ConfirmOrder extends Component {
 
 
   getBill() {
-    const { user_id, session_id, paymentDetails } = this.state
+    const { user_id, session_id,currency, paymentDetails } = this.state
 
     this.setState({ loading: true })
 
@@ -65,7 +65,7 @@ export default class ConfirmOrder extends Component {
     formData.append('action', "getBill");
     formData.append('sid', session_id);
     formData.append('id', user_id);
-    formData.append('prf', "NGN");
+    formData.append('prf', currency);
 
 
     console.warn(formData)

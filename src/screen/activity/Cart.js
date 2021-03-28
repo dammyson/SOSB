@@ -29,7 +29,7 @@ export default class Cart extends Component {
   }
 
   async componentWillMount() {
-     console.warn(await getEmail())
+     console.warn("Thi is strange"+await getEmail())
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
@@ -197,7 +197,7 @@ export default class Cart extends Component {
 
   removeItem(itemToRemove) {
     console.warn(itemToRemove)
-    const { user_id, session_id } = this.state
+    const { user_id, session_id, currency } = this.state
 
     this.setState({ loading: true })
     const formData = new FormData();
@@ -208,7 +208,7 @@ export default class Cart extends Component {
     formData.append('id', user_id);
     formData.append('sid', session_id);
     formData.append('tid', itemToRemove.id);
-    formData.append('prf', "NGN");
+    formData.append('prf', currency);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {
@@ -246,7 +246,7 @@ export default class Cart extends Component {
 
   removeAll() {
     this.setState({ cartItems: [] })
-    const { user_id, session_id } = this.state
+    const { user_id, currency, session_id } = this.state
 
     this.setState({ loading: true })
     const formData = new FormData();
@@ -254,7 +254,7 @@ export default class Cart extends Component {
     formData.append('code', "cart");
     formData.append('id', user_id);
     formData.append('sid', session_id);
-    formData.append('prf', "NGN");
+    formData.append('prf', currency);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {

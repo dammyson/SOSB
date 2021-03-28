@@ -58,7 +58,7 @@ export default class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        this.setState({ loading: false })
+       
         console.warn(res);
         if (!res.error) {
           AsyncStorage.setItem('curr', res.currency);
@@ -68,11 +68,11 @@ export default class Login extends Component {
           AsyncStorage.setItem("session_id", res.sid);
           AsyncStorage.setItem("user", JSON.stringify(res));
           AsyncStorage.setItem("account_type", res.accountType);
-          if (res.accountType == "2") {
+          setTimeout(() => {
+            this.setState({ loading: false })
             this.props.navigation.replace('home')
-          } else {
-            this.props.navigation.replace('transactions')
-          }
+          }, 1000);
+           
 
         } else {
           if (res.message == 'Please update password') {

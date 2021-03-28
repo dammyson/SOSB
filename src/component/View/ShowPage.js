@@ -27,8 +27,6 @@ export default class ShowPage extends Component {
 
   constructor(props) {
     super(props);
-    this.handleTextInputChange = this.handleTextInputChange.bind(this);
-    this.onSubmitEditing = this.onSubmitEditing.bind(this);
     this.state = {
       data: '',
       status: '',
@@ -59,19 +57,7 @@ export default class ShowPage extends Component {
 
   componentDidMount() {
     this.setState({ id: this.props.id });
-    AsyncStorage.getItem('user_id').then((value) => {
-      this.setState({ 'user_id': value.toString() })
-    })
-    AsyncStorage.getItem('session_id').then((value) => {
-      this.setState({ 'session_id': value.toString() })
-    })
-    AsyncStorage.getItem('aut').then((value) => {
-      this.setState({ 'aut': value.toString() })
-    })
-
-    setTimeout(() => {
-      this.setState({ progress: false })
-    }, 9000);
+   
   }
 
 
@@ -114,18 +100,6 @@ export default class ShowPage extends Component {
 
   }
 
-  handleTextInputChange(event) {
-    const url = Utils.sanitizeUrl(event.nativeEvent.text);
-    //this.inputText = url;
-    this.setState({ urlText: url })
-  }
-
-  onSubmitEditing() {
-    var nre = this.state.urlText;
-    this.setState({ url: nre })
-  }
-
-
 
   render() {
     const { url, onClose } = this.props
@@ -155,8 +129,6 @@ export default class ShowPage extends Component {
             javaScriptEnabled={true}
             domStorageEnabled={true}
             decelerationRate="normal"
-            onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
             startInLoadingState={true}
             scalesPageToFit={this.state.scalesPageToFit}
           />

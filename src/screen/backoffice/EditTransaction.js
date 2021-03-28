@@ -29,6 +29,7 @@ export default class EditTransactions extends Component {
       user_id: '',
       session_id: '',
       item: '',
+      url:'',
       show_country: false,
       show_page: false,
       show_bulk: false,
@@ -65,7 +66,8 @@ export default class EditTransactions extends Component {
       unitPrice: item.unitPrice,
       prodName: item.itemName,
       prodQty:item.quantity,
-      transID:item.cryptTID
+      transID:item.cryptTID,
+      url:item.url,
     });
 
 
@@ -499,7 +501,7 @@ export default class EditTransactions extends Component {
   renderShowPage() {
     return (
       <ShowPage
-        url={this.state.prodName}
+        url={this.state.url}
         onClose={() => this.setState({ show_page: false })} />
     )
   }
@@ -519,7 +521,7 @@ export default class EditTransactions extends Component {
   renderBulkSize() {
     return (
       <SelectBulkSize
-        onSelect={(v) => this.onSelectCountry(v)}
+        onSelect={(v) => this.onSelectBulk(v)}
         onClose={() => this.setState({ show_bulk: false })} />
     )
   }
@@ -527,102 +529,7 @@ export default class EditTransactions extends Component {
     this.setState({ show_bulk: false, bulkSize: item.id, bulksize_name: item.name })
   }
 
-  removeItemPressed(item) {
-    Alert.alert(
-      'Remove ' + item.title,
-      'Are you sure you want this item from your cart ?',
-      [
-        { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => this.removeItem(item) },
-      ]
-    )
-  }
-
-  removeItem(itemToRemove) {
-    console.warn(itemToRemove)
-    const { user_id, session_id } = this.state
-
-    this.setState({ loading: true })
-    const formData = new FormData();
-
-
-    formData.append('action', "delete");
-    formData.append('code', "cart");
-    formData.append('id', user_id);
-    formData.append('sid', session_id);
-    formData.append('tid', itemToRemove.id);
-    formData.append('prf', "NGN");
-
-    fetch(BaseUrl(), {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-      }, body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (!res.error) {
-          this.setState({
-            loading: false,
-          })
-          this.getCart();
-
-        } else {
-          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        console.warn(error);
-        alert(error.message);
-      });
-  }
-
-  removeAllPressed() {
-    Alert.alert(
-      'Empty cart',
-      'Are you sure you want to empty your cart ?',
-      [
-        { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => this.removeAll() }
-      ]
-    )
-  }
-
-  removeAll() {
-    this.setState({ cartItems: [] })
-    const { user_id, session_id } = this.state
-
-    this.setState({ loading: true })
-    const formData = new FormData();
-    formData.append('action', "empty");
-    formData.append('code', "cart");
-    formData.append('id', user_id);
-    formData.append('sid', session_id);
-    formData.append('prf', "NGN");
-
-    fetch(BaseUrl(), {
-      method: 'POST', headers: {
-        Accept: 'application/json',
-      }, body: formData,
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (!res.error) {
-          this.setState({
-            loading: false,
-            cartItems: []
-          })
-
-        } else {
-          Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
-          this.setState({ loading: false })
-        }
-      }).catch((error) => {
-        console.warn(error);
-        alert(error.message);
-      });
-
-
-  }
+ 
 
 
 

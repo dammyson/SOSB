@@ -6,7 +6,7 @@ import { Icon } from 'react-native-elements'
 import colors from '../color';
 import * as Animatable from 'react-native-animatable';
 import InputTextField from './CustomInputTextField'
-import { BaseUrl, getUserID, getSessionID } from '../../utilities/index';
+import { BaseUrl, getCurrency, getSessionID } from '../../utilities/index';
 
 
 export default class SelectMethod extends Component {
@@ -24,16 +24,20 @@ export default class SelectMethod extends Component {
             card_name: '',
             selected_category: 0,
             search: '',
+            currency: '',
         };
         this.arrayholder = [];
     }
 
-    componentDidMount() {
+   async componentDidMount() {
         Animated.timing(this.state.progress, {
             toValue: 1,
             duration: 2000,
             easing: Easing.linear,
         }).start();
+        this.setState({
+            currency: await getCurrency() 
+          });
         this.getAddress()
 
     }
@@ -42,13 +46,14 @@ export default class SelectMethod extends Component {
 
     async getAddress() {
         const { address, session_id } = this.props;
+        const { currency } = this.state;
         this.setState({ loading: true })
         console.warn(address)
         const formData = new FormData();
         formData.append('code', "order");
         formData.append('action', "getCost");
         formData.append('sid', await getSessionID());
-        formData.append('prf', 'NGN');
+        formData.append('prf', currency);
         formData.append('dest', address);
 
         fetch(BaseUrl(), {

@@ -167,9 +167,7 @@ export default class Home extends Component {
 
   cart() {
     this.props.navigation.navigate('cart')
-    /* const { user_id, session_id, } = this.state
-     this.setState({ url: 'https://www.ofidy.com/shopping-cart.php?user_id=' + user_id + '&session_id=' + session_id + '&currency=NGN' }) */
-
+    
   }
 
   reload() {
@@ -220,10 +218,6 @@ export default class Home extends Component {
 
   render() {
     const { user_id, session_id, } = this.state
-    let formdata = new FormData();
-    formdata.append('user_id', "3B19C4EC-4D5F-4FCF-AA35-CE8FF769069B");
-    formdata.append('session_id', '337BFE1E-DEB2-4356-B051-68A9B849E3EC');
-    formdata.append('currency', "NGN");
 
     return (
       <View style={{ flex: 1 }}>

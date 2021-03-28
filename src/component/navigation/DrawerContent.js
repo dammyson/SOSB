@@ -98,12 +98,12 @@ const renderSettingsMenu = (props, level) => {
                     />
                 </View>
                 <View style={{ flex: 1, marginLeft: 15, justifyContent: 'center' }}>
-                    <Text style={{ color: colors.primary_color, fontSize: 15, fontFamily: 'NunitoSans-Bold', }}>Homel</Text>
+                    <Text style={{ color: colors.primary_color, fontSize: 15, fontFamily: 'NunitoSans-Bold', }}>Home</Text>
                 </View>
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={() => props.navigation.navigate('DefaultCard')} style={styles.drawerMenuItem}>
+            <TouchableOpacity onPress={() =>console.warn('k')} style={styles.drawerMenuItem}>
                 <View style={{}}>
                     <Icon
                         name={'user'}
@@ -137,7 +137,7 @@ const renderSettingsMenu = (props, level) => {
                 </View>
             </TouchableOpacity>
 
-            {level == '3' || level == '4' ?
+            {level == '3' || level == '4'  || level == '5' || level == '6' ?
                 <TouchableOpacity onPress={() => props.navigation.navigate('Shoppers')} style={styles.drawerMenuItem}>
                     <View style={{}}>
                         <Icon
@@ -155,7 +155,7 @@ const renderSettingsMenu = (props, level) => {
                 null
             }
 
-            {level == '4' ?
+            {level == '3' || level == '4'  || level == '5' ?
                 <TouchableOpacity onPress={() => props.navigation.navigate('Backoffice')} style={styles.drawerMenuItem}>
                     <View style={{}}>
                         <Icon

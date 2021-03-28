@@ -27,7 +27,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="transaction"
+             initialRouteName="splash"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -37,8 +37,8 @@ class AppStack extends Component {
             <Stack.Screen name="forgetpass" component={ForgetPassword}   />
             <Stack.Screen name="changepass" component={ChangePassword}   />
             <Stack.Screen name="home" component={Home}   />
-            <Stack.Screen name="transaction" component={Transactions} />
-            <Stack.Screen name="edittransactions" component={EditTransactions}   />
+            <Stack.Screen name="transaction_" component={Transactions} />
+            <Stack.Screen name="edittransactions_" component={EditTransactions}   />
 
           </Stack.Navigator>
          </NavigationContainer>

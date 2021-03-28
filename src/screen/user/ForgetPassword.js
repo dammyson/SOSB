@@ -77,7 +77,7 @@ checkLogin() {
             this.setState({ loading: false })
             console.warn(res);
             if (!res.error) {
-              Alert.alert('Success', res.data, [{ text: 'Okay' }])
+              Alert.alert('Success', "Please check your email futher instruction has been sent to you to help you reset your password", [{ text: 'Okay' }])
             } else {
                 Alert.alert('Operatiob failed', res.message, [{ text: 'Okay' }])
                 this.setState({ loading: false })
