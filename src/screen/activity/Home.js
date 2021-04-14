@@ -222,7 +222,7 @@ export default class Home extends Component {
     return (
       <View style={{ flex: 1 }}>
 
-
+      <StatusBar backgroundColor={colors.primary_color   } barStyle="light-content" />
         <View style={{ flex: 1 }}>
           <View style={styles.toolbar}>
             <View style={{ height: 36, width: 30, justifyContent: 'center', alignItems: 'center' }}>

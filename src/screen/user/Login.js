@@ -12,6 +12,7 @@ import Navbar from '../../component/Navbar';
 import color from '../../component/color';
 import colors from '../../component/color';
 import { BaseUrl, getFmc } from '../../utilities';
+import { StatusBar } from 'react-native';
 
 
 export default class Login extends Component {
@@ -58,7 +59,7 @@ export default class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
-       
+
         console.warn(res);
         if (!res.error) {
           AsyncStorage.setItem('curr', res.currency);
@@ -72,7 +73,7 @@ export default class Login extends Component {
             this.setState({ loading: false })
             this.props.navigation.replace('home')
           }, 1000);
-           
+
 
         } else {
           if (res.message == 'Please update password') {
@@ -103,7 +104,7 @@ export default class Login extends Component {
         source={require('../../assets/bg.png')}>
         <Container style={{ backgroundColor: 'transparent' }}>
 
-
+          <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
           <Content>
             <View style={styles.body}>
               <View style={styles.top}>

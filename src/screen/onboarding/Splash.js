@@ -121,7 +121,7 @@ export default class Splash extends Component {
       }}
       source={require('../../assets/bg.png')}>
       <View style={styles.container}>
-        <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" />
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
         <Image
           style={styles.logo}
           source={require('../../assets/logo.png')} />

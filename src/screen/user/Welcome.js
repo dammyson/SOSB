@@ -1,6 +1,6 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, TextInput, View, Dimensions, TouchableOpacity, Image, StyleSheet , AsyncStorage} from 'react-native';
+import { Alert, TextInput, View, Dimensions, StatusBar, Image, StyleSheet , AsyncStorage} from 'react-native';
 import { Container, Content, Text, Icon, Button, Left, } from 'native-base';
 
 import {
@@ -64,7 +64,7 @@ export default class Welcome extends Component {
       }}
       source={require('../../assets/bg.png')}>
         <Container style={{ backgroundColor: 'transparent' }}>
-        
+        <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
           <Content>
             <View style={styles.body}>
             <View style={{justifyContent:'center', alignItems:'center'}}>
