@@ -12,6 +12,7 @@ import ForgetPassword from '../../screen/user/ForgetPassword';
 import ChangePassword from '../../screen/user/ChangePassword';
 import Transactions from '../../screen/backoffice/Transactions';
 import EditTransactions from '../../screen/backoffice/EditTransaction';
+import Intro from '../../screen/onboarding/Intro';
 
 class AppStack extends Component {
 
@@ -27,12 +28,13 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="splash"
+             initialRouteName="intro"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
             <Stack.Screen name="login" component={Login}   />
             <Stack.Screen name="reg" component={Register}   />
+            <Stack.Screen name="intro" component={Intro}   />
             <Stack.Screen name="welcome" component={Welcome}   />
             <Stack.Screen name="forgetpass" component={ForgetPassword}   />
             <Stack.Screen name="changepass" component={ChangePassword}   />

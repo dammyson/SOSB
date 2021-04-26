@@ -1,8 +1,11 @@
 //Mark:- Images
-import bg from './drop.png';
+import home from './home.png';
+import complete from './complete.png';
+import search from './search.png';
 
 export {
-  bg,
- 
+  search,
+ complete,
+ home,
 
 };

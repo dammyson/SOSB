@@ -13,6 +13,7 @@ import color from '../../component/color';
 import colors from '../../component/color';
 import { BaseUrl, getFmc } from '../../utilities';
 import { StatusBar } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 
 export default class Login extends Component {
@@ -59,7 +60,7 @@ export default class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
-
+        this.setState({ loading: false })
         console.warn(res);
         if (!res.error) {
           AsyncStorage.setItem('curr', res.currency);
@@ -70,7 +71,6 @@ export default class Login extends Component {
           AsyncStorage.setItem("user", JSON.stringify(res));
           AsyncStorage.setItem("account_type", res.accountType);
           setTimeout(() => {
-            this.setState({ loading: false })
             this.props.navigation.replace('home')
           }, 1000);
 
@@ -79,8 +79,9 @@ export default class Login extends Component {
           if (res.message == 'Please update password') {
             this.props.navigation.navigate('changepass')
           } else {
-            Alert.alert('Login failed', "Check your email and password", [{ text: 'Okay' }])
-            this.setState({ loading: false })
+            showMessage('info',res.message )
+           
+           
           }
         }
 
