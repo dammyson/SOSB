@@ -10,7 +10,7 @@ export default class EnterSize extends Component {
         super(props);
         this.state = {
             progress: new Animated.Value(0),
-            value: "Default",
+            value: "Regular (one size)",
 
 
         };

@@ -45,6 +45,7 @@ export default class Navbar extends Component {
       <View style={{ backgroundColor: colors.primary_color }}>
         <View style={styles.header}>
           <View style={{
+            marginTop:35,
             flexDirection: 'row',
             alignItems: 'center',
             marginRight: 10,
@@ -91,7 +92,7 @@ const styles = {
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 60,
+    height: 80,
     marginTop:Platform.OS === 'ios' ? 15 : 0,
     backgroundColor: colors.primary_color,
   },
