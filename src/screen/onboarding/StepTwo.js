@@ -55,7 +55,7 @@ export default class StepOne extends React.Component {
           </View>
           <View style={{ height: 70, alignItems: 'flex-end' }}>
             <TouchableOpacity onPress={() => onSkip()} style={styles.skipRegion}>
-              <Text style={styles.skipText}>Skip</Text>
+              <Text style={styles.skipText}>Next</Text>
 
             </TouchableOpacity>
           </View>

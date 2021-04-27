@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View } from 'react-native'
+import { AppRegistry, StyleSheet, Text, AsyncStorage, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import StepOne from './StepOne';
@@ -63,11 +63,13 @@ export default class Intro extends Component {
   }
 
   onSignIn() {
-    this.props.navigation.navigate('SignIn')
+    AsyncStorage.setItem('first_time', "No");
+    this.props.navigation.navigate('login')
   }
 
   onStarted() {
-    this.props.navigation.navigate('SignIn')
+    AsyncStorage.setItem('first_time', "No");
+    this.props.navigation.navigate('login')
   }
 }
 

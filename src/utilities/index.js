@@ -48,7 +48,9 @@ export const getPaystackKey = () => {
   else 
     return  paystack_live_key;
 };
-
+export const getIsFirstTime = async () => {
+  return AsyncStorage.getItem('first_time')
+};
 
 export const getAccountType = async () => {
   return AsyncStorage.getItem('account_type')

@@ -231,6 +231,7 @@ export default class Home extends Component {
                   name="menu"
                   type='entypo'
                   color='#fff'
+                  size={20}
                 />
 
               </TouchableOpacity>
@@ -238,6 +239,7 @@ export default class Home extends Component {
 
 
             <TextInput
+              selectTextOnFocus
               ref={TEXT_INPUT_REF}
               underlineColorAndroid='rgba(0,0,0,0)'
               autoCapitalize='none'
@@ -576,18 +578,20 @@ const styles = StyleSheet.create({
   },
   urlinput: {
     height: 36,
-    marginTop: 10,
+    
     padding: 6,
     flex: 1,
     backgroundColor: 'white',
     borderRadius: 5,
     textAlign: 'left',
-    fontSize: 16
+    fontSize: 14
   },
   toolbar: {
     height: 80,
     padding: 5,
+    paddingTop:25,
     backgroundColor: '#004701',
+
     flexDirection: 'row',
     alignItems: 'center',
   },

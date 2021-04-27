@@ -8,6 +8,7 @@ import {
   MaterialIndicator,
 } from 'react-native-indicators';
 import firebase from 'react-native-firebase'
+import {getIsFirstTime} from '../../utilities'
 
 export default class Splash extends Component {
 
@@ -21,11 +22,23 @@ export default class Splash extends Component {
     };
   }
   async componentDidMount() {
-    this.checkPermission();  
+    this.checkPermission();
     setTimeout(() => {
-      this.initPage();
+      this.lunch();
     }, 3000);
   }
+  async lunch() {
+
+    if (await getIsFirstTime() == "No") {
+      this.initPage();
+    } else {
+      this.props.navigation.replace('intro')
+     
+    }
+
+  }
+
+
   getUser() {
     AsyncStorage.getItem('user_id').then((value) => {
       this.getSessionId(value)
@@ -59,18 +72,18 @@ export default class Splash extends Component {
   }
 
   initPage = () => {
-    this.props.navigation.replace('welcome')
-    /*
+    
     AsyncStorage.getItem('aut').then((value) => {
       if (value == 'yes') {
-        this.getUser();
+        //this.getUser();
+        this.props.navigation.navigate('home')
       } else if (value == null) {
         this.props.navigation.navigate('welcome')
       } else {
         this.props.navigation.navigate('welcome')
       }
 
-    }) */
+    }) 
 
   }
 
@@ -116,21 +129,21 @@ export default class Splash extends Component {
   render() {
     return (
       <ImageBackground
-      style={{
-       flex:1
-      }}
-      source={require('../../assets/bg.png')}>
-      <View style={styles.container}>
-      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logo.png')} />
+        style={{
+          flex: 1
+        }}
+        source={require('../../assets/bg.png')}>
+        <View style={styles.container}>
+          <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+          <Image
+            style={styles.logo}
+            source={require('../../assets/logo.png')} />
 
-        <View style={{ height: 50 }}>
-          {this.state.loading ? <MaterialIndicator color='#004701' /> : null}
+          <View style={{ height: 50 }}>
+            {this.state.loading ? <MaterialIndicator color='#004701' /> : null}
 
+          </View>
         </View>
-      </View>
       </ImageBackground>
     );
   }

@@ -71,11 +71,11 @@ export default class Orders extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.warn(res);
+        this.setState({ loading: false, })
+        console.warn(res.data.length);
         if (!res.error) {
           this.setState({
-            loading: false,
-            // cartItems: res.data
+            //cartItems: res.data
           })
 
         } else {
@@ -121,7 +121,7 @@ export default class Orders extends Component {
             :
             <View style={{ flex: 1, }}>
               <ScrollView style={{ flex: 1, }}>
-                {this.renderItems()}
+                {this.renderItems(this.state.cartItems)}
               </ScrollView>
             </View>
           }
@@ -130,9 +130,9 @@ export default class Orders extends Component {
     );
   }
 
-  renderItems() {
+  renderItems(cartItems) {
     let items = [];
-    this.state.cartItems.map((item, i) => {
+     cartItems.map((item, i) => {
       items.push(
         <ListItem
           key={i}
