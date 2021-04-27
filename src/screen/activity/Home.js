@@ -19,6 +19,9 @@ const URL = require("../../component/server");
 import Navbar from '../../component/Navbar';
 import colors from '../../component/color';
 import Utils from './../../component/Utils'
+import EnterQuantity from '../../component/View/EnterQuantity';
+import EnterColor from '../../component/View/EnterColor';
+import EnterSize from '../../component/View/EnterSize';
 
 
 const WEBVIEW_REF = 'webview';
@@ -44,15 +47,15 @@ export default class Home extends Component {
       aut: '',
       user_id: '',
       session_id: '',
-      is_visible_choose_color: false,
-      is_visible_choose_qty: false,
-      is_visible_choose_size: false,
       qty: 1,
       color: 'default',
       size: 'default',
       loading_addcart: false,
       progress: true,
-      can_goBack: false
+      can_goBack: false,
+      show_quantity: false,
+      show_color: false,
+      show_sizeL: true
     };
     this.inputText = '';
 
@@ -167,7 +170,7 @@ export default class Home extends Component {
 
   cart() {
     this.props.navigation.navigate('cart')
-    
+
   }
 
   reload() {
@@ -217,12 +220,10 @@ export default class Home extends Component {
 
 
   render() {
-    const { user_id, session_id, } = this.state
-
     return (
       <View style={{ flex: 1 }}>
 
-      <StatusBar backgroundColor={colors.primary_color   } barStyle="light-content" />
+        <StatusBar backgroundColor={colors.primary_color} barStyle="light-content" />
         <View style={{ flex: 1 }}>
           <View style={styles.toolbar}>
             <View style={{ height: 36, width: 30, justifyContent: 'center', alignItems: 'center' }}>
@@ -363,7 +364,7 @@ export default class Home extends Component {
               <MaterialIndicator color='white' />
             </TouchableOpacity>
             :
-            <TouchableOpacity onPress={() => this.setState({ is_visible_choose_qty: true })} style={styles.fabButton} >
+            <TouchableOpacity onPress={() => this.setState({ show_quantity: true })} style={styles.fabButton} >
               <Icon
                 active
                 name="cart-plus"
@@ -374,166 +375,10 @@ export default class Home extends Component {
             </TouchableOpacity>
 
         }
-
-
-        <Modal
-          visible={this.state.is_visible_choose_qty}
-          modalAnimation={new SlideAnimation({
-            slideFrom: 'right',
-          })}
-        >
-          <ModalContent style={styles.modal}>
-            <View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingTop: 1, }}>
-                <TouchableOpacity onPress={() => this.setState({ is_visible_choose_qty: false })} style={{ marginLeft: 10, backgroundColor: '#000' }}>
-                  <Icon
-                    name="close"
-                    size={20}
-                    type='antdesign'
-                    color="#fff"
-                  />
-                </TouchableOpacity>
-
-              </View>
-              <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 1, paddingBottom: 10 }}>
-                <Text style={styles.modal_title}>Quantity? </Text>
-                <Text style={styles.modal_text}>Enter the quantity you want  </Text>
-
-
-              </View>
-              <View style={{ paddingTop: 1, paddingBottom: 10, }}>
-                <TextInput
-                  placeholder="Enter your quantity"
-                  placeholderTextColor='#3E3E3E'
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.setState({ is_visible_choose_qty: false, is_visible_choose_size: true, })}
-                  keyboardType='numeric'
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  style={styles.input}
-                  inlineImageLeft='ios-call'
-                  onChangeText={text => this.setState({ gty: text })}
-                  ref={(input) => this.passwordInput = input}
-                />
-
-              </View>
-              <TouchableOpacity onPress={() => this.setState({ is_visible_choose_qty: false, is_visible_choose_size: true, })} style={styles.proceed_btn}    >
-
-
-                <Text style={{ color: '#fdfdfd', fontWeight: '400' }}>Proceed </Text>
-
-              </TouchableOpacity>
-            </View>
-          </ModalContent>
-        </Modal>
-
-        <Modal
-          visible={this.state.is_visible_choose_size}
-          modalAnimation={new SlideAnimation({
-            slideFrom: 'right',
-          })}
-        >
-          <ModalContent style={styles.modal}>
-            <View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingTop: 1, }}>
-                <TouchableOpacity onPress={() => this.setState({ is_visible_choose_size: false })} style={{ marginLeft: 10, backgroundColor: '#000' }}>
-                  <Icon
-                    name="close"
-                    size={20}
-                    type='antdesign'
-                    color="#fff"
-                  />
-                </TouchableOpacity>
-
-              </View>
-              <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 1, paddingBottom: 10 }}>
-                <Text style={styles.modal_title}>Size? </Text>
-                <Text style={styles.modal_text}>If size applies to your item please choose the size you want. Else click cancel  </Text>
-
-
-              </View>
-              <View style={{ paddingTop: 1, paddingBottom: 10, }}>
-                <TextInput
-                  placeholder="Enter your Size"
-                  placeholderTextColor='#3E3E3E'
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.setState({ is_visible_choose_size: false, is_visible_choose_color: true, })}
-                  keyboardType='default'
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  style={styles.input}
-                  inlineImageLeft='ios-call'
-                  onChangeText={text => this.setState({ size: text })}
-                  ref={(input) => this.passwordInput = input}
-                />
-
-              </View>
-              <TouchableOpacity onPress={() => this.setState({ is_visible_choose_size: false, is_visible_choose_color: true, })} style={styles.proceed_btn}  >
-
-
-                <Text style={{ color: '#fdfdfd', fontWeight: '400' }}>Proceed </Text>
-
-              </TouchableOpacity>
-            </View>
-          </ModalContent>
-        </Modal>
-
-        <Modal
-          visible={this.state.is_visible_choose_color}
-          modalAnimation={new SlideAnimation({
-            slideFrom: 'right',
-          })}
-        >
-          <ModalContent style={styles.modal}>
-            <View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingTop: 1, }}>
-                <TouchableOpacity onPress={() => this.setState({ is_visible_choose_color: false })} style={{ marginLeft: 10, backgroundColor: '#000' }}>
-                  <Icon
-                    name="close"
-                    size={20}
-                    type='antdesign'
-                    color="#fff"
-                  />
-                </TouchableOpacity>
-
-              </View>
-              <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 1, paddingBottom: 10 }}>
-                <Text style={styles.modal_title}>Colour? </Text>
-                <Text style={styles.modal_text}>If colour applies to your item please write the colour you want. Else click cancel </Text>
-
-
-              </View>
-              <View style={{ paddingTop: 1, paddingBottom: 10, }}>
-                <TextInput
-                  placeholder="Enter your colour"
-                  placeholderTextColor='#3E3E3E'
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.addTocart()}
-                  keyboardType='default'
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  style={styles.input}
-                  inlineImageLeft='ios-call'
-                  onChangeText={text => this.setState({ color: text })}
-                  ref={(input) => this.passwordInput = input}
-                />
-
-              </View>
-              <TouchableOpacity style={styles.proceed_btn} onPress={() => this.addTocart()} >
-
-
-                <Text style={{ color: '#fdfdfd', fontWeight: '400' }}>Proceed </Text>
-
-              </TouchableOpacity>
-            </View>
-          </ModalContent>
-        </Modal>
-
-
+        {this.state.show_quantity ? this.renderEnterQuantity() : null}
+        {this.state.show_color ? this.renderEnterColor() : null}
       </View>
+
     );
   }
 
@@ -547,7 +392,59 @@ export default class Home extends Component {
   }
 
 
+  renderEnterQuantity() {
+    return (
+      <EnterQuantity
+        onSelect={(value) => this.onQuantity(value)}
+        onClose={() => this.setState({ show_quantity: false })} />
+    )
+  }
+
+  onQuantity(value) {
+    this.setState({
+      qty: value,
+      show_quantity: false,
+      show_color: true
+    })
+  }
+
+
+  renderEnterColor() {
+    return (
+      <EnterColor
+        onSelect={(value) => this.onColor(value)}
+        onClose={() => this.setState({ show_color: false })} />
+    )
+  }
+
+  onColor(value) {
+    this.setState({
+      color: value,
+      show_color: false,
+      show_size: true
+    })
+  }
+
+
+  renderEnterColor() {
+    return (
+      <EnterSize
+        onSelect={(value) => this.onSize(value)}
+        onClose={() => this.setState({ show_size: false })} />
+    )
+  }
+
+
+  onSize(value) {
+    this.setState({
+      size: value,
+      show_size: false,
+    })
+    this.addTocart()
+  }
 }
+
+
 const styles = StyleSheet.create({
   gcontainer: {
     width: Dimensions.get('window').width,
@@ -578,7 +475,7 @@ const styles = StyleSheet.create({
   },
   urlinput: {
     height: 36,
-    
+
     padding: 6,
     flex: 1,
     backgroundColor: 'white',
@@ -589,7 +486,7 @@ const styles = StyleSheet.create({
   toolbar: {
     height: 80,
     padding: 5,
-    paddingTop:25,
+    paddingTop: 25,
     backgroundColor: '#004701',
 
     flexDirection: 'row',
