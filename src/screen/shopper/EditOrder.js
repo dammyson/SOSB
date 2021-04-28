@@ -58,10 +58,6 @@ export default class EditTransactions extends Component {
       user_id: await getUserID(),
       session_id: await getSessionID(),
       currency: await getCurrency(),
-      unitPrice: item.unitPrice,
-      prodName: item.itemName,
-      prodQty:item.quantity,
-      transID:item.cryptTID
     });
 
 
@@ -187,7 +183,7 @@ export default class EditTransactions extends Component {
       <Container style={{ backgroundColor: 'transparent' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
         <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} title="Edit Transaction" />
-        <Content padder>
+        {/* <Content padder>
           <View style={{ marginHorizontal: 20, }}>
             <Text style={styles.actionbutton}>prodName</Text>
             <View regular style={styles.item}>
@@ -477,7 +473,7 @@ export default class EditTransactions extends Component {
           
           </View>
         </Content>
-        {this.state.show_country ? this.renderSelectCountry() : null}
+        {this.state.show_country ? this.renderSelectCountry() : null} */}
       </Container>
       </ImageBackground>
     );
