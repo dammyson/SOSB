@@ -14,6 +14,7 @@ import ActivityIndicator from '../../component/View/ActivityIndicator';
 import { Icon, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import SelectCountry from '../../component/View/SelectCountry';
+import { showMessage } from 'react-native-flash-message';
 
 
 export default class EditTransactions extends Component {
@@ -30,42 +31,58 @@ export default class EditTransactions extends Component {
       show_country: false,
       country_name: 'Select Region',
 
-      transID: '',
-      prodName: '',
-      prodQty: '',
-      prodPrice: '',
-      itemColour: '',
-      priceCurrency: 'USD',
-      dscntPercent: '',
-      adminShipping: '',
-      promoCode: '',
-      weight: '',
-      bulkSize: '',
-      srcRegion: '12',
-      itemSize: '',
-      fragileyn: 'n',
-      blacklist: 'n',
-      invalid: 'n',
-      packQty: '',
-      srcShipping: '',
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { item } = this.props.route.params;
-    console.warn(item)
+    console.warn(await getUserID())
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
       currency: await getCurrency(),
+      item: item
     });
 
-
+   this.getDetails()
 
   }
 
-  componentDidMount() {
 
+  async getDetails(){
+
+    const { user_id, session_id, item, currency } = this.state
+    this.setState({ loading: true })
+    const formData = new FormData();
+
+    formData.append('code', "shopper");
+    formData.append('action', "viewSalesDetails");
+    formData.append('sid', session_id);
+    formData.append('id',item.id);
+    formData.append('curr',currency);
+    console.warn(formData);
+
+    fetch(BaseUrl(), {
+      method: 'POST', headers: {
+        Accept: 'application/json',
+      }, body: formData,
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ loading: false, })
+        console.warn(res.data);
+        if (!res.error) {
+          this.setState({
+           // cartItems: res.data
+          })
+
+        } else {
+          showMessage('error', res.message)
+        }
+      }).catch((error) => {
+        console.warn(error);
+        showMessage('error', error.message)
+      });
   }
 
   async updateTransaction() {
@@ -161,7 +178,7 @@ export default class EditTransactions extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <ActivityIndicator color={colors.primary_color} message={'Updating transaction'} />
+        <ActivityIndicator color={colors.primary_color} message={'get details'} />
       );
     }
     var left = (
