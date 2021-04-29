@@ -72,10 +72,10 @@ export default class Orders extends Component {
       .then(res => res.json())
       .then(res => {
         this.setState({ loading: false, })
-        console.warn(res.data.length);
+        console.warn(res.data);
         if (!res.error) {
           this.setState({
-            //cartItems: res.data
+            cartItems: res.data
           })
 
         } else {
@@ -139,19 +139,15 @@ export default class Orders extends Component {
           last={this.state.cartItems.length === i + 1}
           onPress={() => this.editItemPressed(item)}
         >
-          <Body style={{ paddingLeft: 10 }}>
+          <Body style={{ paddingLeft: 1 }}>
             <Text style={{ fontSize: 18 }}>
               {item.quantity > 1 ? item.quantity + "x " : null}
               {item.title}
             </Text>
-            <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>{item.itemName}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.unitPrice}</Text>
+            <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>{item.custName}</Text>
+            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.totalPrice}</Text>
+            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}><Text style={{ fontSize: 12, fontFamily: "NunitoSans-Bold", marginBottom: 2 }}>custPhone: </Text> {item.custPhone}  <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Bold", marginBottom: 2 }}>custRegion:</Text>  {item.custRegion}</Text>
           </Body>
-          <Right>
-            <Button style={{ marginLeft: -25 }} transparent onPress={() => this.editItemPressed(item)}>
-              <Icon size={20} type='antdesign' name='edit' color={'#95a5a6'} />
-            </Button>
-          </Right>
         </ListItem>
       );
     });
@@ -159,7 +155,7 @@ export default class Orders extends Component {
   }
 
   editItemPressed(item) {
-    this.props.navigation.navigate('edittransactions', { item: item })
+    this.props.navigation.navigate('editorders', { item: item })
   }
 
 
