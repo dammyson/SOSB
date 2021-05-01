@@ -92,7 +92,7 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     height: 60,
-    marginTop:Platform.OS === 'ios' ? 15 : 0,
+    marginTop: 15,
     backgroundColor: colors.primary_color,
   },
   title: {

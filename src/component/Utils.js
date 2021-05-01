@@ -3,7 +3,7 @@
 export default class Utils {
     static sanitizeUrl(url) {
         if (!/^[a-zA-Z-_]+:/.test(url)) {
-            url = 'http://' + url;
+            url = 'https://' + url;
         }
         return url.toLowerCase();
     }
