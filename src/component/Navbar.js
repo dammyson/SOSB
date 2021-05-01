@@ -45,6 +45,7 @@ export default class Navbar extends Component {
       <View style={{ backgroundColor: colors.primary_color }}>
         <View style={styles.header}>
           <View style={{
+           
             flexDirection: 'row',
             alignItems: 'center',
             marginRight: 10,

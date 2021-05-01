@@ -10,7 +10,7 @@ export default class EnterSize extends Component {
         super(props);
         this.state = {
             progress: new Animated.Value(0),
-            value: "Default",
+            value: "Regular (one size)",
 
 
         };
@@ -57,7 +57,7 @@ export default class EnterSize extends Component {
                                     </TouchableOpacity>
                                 </View>
 
-                                <Text style={{ fontSize: 14, margin: 7, flex: 1, fontFamily: 'NunitoSans-Bold', color: '#fff', textAlign: 'center', marginRight: 10 }}>Add Color</Text>
+                                <Text style={{ fontSize: 14, margin: 7, flex: 1, fontFamily: 'NunitoSans-Bold', color: '#fff', textAlign: 'center', marginRight: 10 }}>Add Size</Text>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 25 }}>
                                     <TouchableOpacity onPress={() => onClose()}>
                                         <Icon

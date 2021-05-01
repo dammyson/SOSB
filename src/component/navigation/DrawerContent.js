@@ -88,7 +88,7 @@ const renderSettingsMenu = (props, level) => {
         }}>
 
 
-            <TouchableOpacity onPress={() => props.navigation.navigate('DefaultCard')} style={styles.drawerMenuItem}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Home')} style={styles.drawerMenuItem}>
                 <View style={{}}>
                     <Icon
                         name={'home'}

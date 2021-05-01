@@ -110,7 +110,7 @@ export default class Home extends Component {
 
 
 
-    this.setState({ loading_addcart: true })
+    this.setState({ loading_addcart: true, show_size:false })
 
     const formData = new FormData();
     formData.append('user_id', user_id);
@@ -136,7 +136,7 @@ export default class Home extends Component {
         console.warn(res);
         if (res.includes("Success")) {
           this.setState({ loading_addcart: false })
-          Alert.alert('Success', 'Thank you. has been submitted, and should appear in your cart within the next 2-3 minutes', [{ text: 'Okay' }])
+          Alert.alert('Success', 'Thank you.'+ data.title+' has been submitted, and should appear in your cart within the next 2-3 minutes', [{ text: 'Okay' }])
         } else {
           Alert.alert('Action Fail', 'Please try to add your item to cart again', [{ text: 'Okay' }])
           this.setState({ loading_addcart: false })
@@ -377,6 +377,7 @@ export default class Home extends Component {
         }
         {this.state.show_quantity ? this.renderEnterQuantity() : null}
         {this.state.show_color ? this.renderEnterColor() : null}
+        {this.state.show_size ? this.renderEnterSize() : null}
       </View>
 
     );
@@ -426,7 +427,7 @@ export default class Home extends Component {
   }
 
 
-  renderEnterColor() {
+  renderEnterSize() {
     return (
       <EnterSize
         onSelect={(value) => this.onSize(value)}
