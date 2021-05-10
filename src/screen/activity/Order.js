@@ -35,7 +35,7 @@ export default class Order extends Component {
       toadd: 'yes',
       paymethod: 'bank transfer',
       shipping_method: 'Select Method',
-
+      tip:'',
       show_billing_address: false,
       show_shipping_address: false,
       show_method: false,
@@ -378,6 +378,12 @@ export default class Order extends Component {
 
 
             </View>
+
+
+            <Text style={styles.actionbutton}>Add Tip</Text>
+            <View regular style={styles.item}>
+              <Input keyboardType="numeric" placeholder='Add Tip' onChangeText={(text) => this.setState({ tip: text })} placeholderTextColor="#687373" style={styles.input} />
+            </View>
           </View>
           <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>
             {
@@ -459,7 +465,7 @@ export default class Order extends Component {
   renderSelectMethod() {
     return (
       <SelectMethod
-        address={this.state.cost_add_id}
+        address={this.state.shippadd}
         onSelect={(v) => this.onSelectMethod(v)}
         onClose={() => this.setState({ show_method: false })} />
     )

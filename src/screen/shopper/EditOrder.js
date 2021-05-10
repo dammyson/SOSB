@@ -15,6 +15,7 @@ import { Icon, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import SelectCountry from '../../component/View/SelectCountry';
 import { showMessage } from 'react-native-flash-message';
+import ShowPage from '../../component/View/ShowPage';
 
 
 export default class EditTransactions extends Component {
@@ -30,6 +31,7 @@ export default class EditTransactions extends Component {
       item: '',
       show_country: false,
       country_name: 'Select Region',
+      details_list: []
 
     };
   }
@@ -56,10 +58,8 @@ export default class EditTransactions extends Component {
 
     formData.append('code', "shopper");
     formData.append('action', "viewOrderInfo");
-    //formData.append('sid', session_id);
     formData.append('sid', item.id);
     formData.append('curr', currency);
-    console.warn(formData);
 
     fetch(BaseUrl(), {
       method: 'POST', headers: {
@@ -68,7 +68,7 @@ export default class EditTransactions extends Component {
     })
       .then(res => res.json())
       .then(res => {
-       
+        console.warn(res)
         this.setState({ loading: false, })
 
         if (!res.error) {
@@ -97,7 +97,8 @@ export default class EditTransactions extends Component {
 
     formData.append('code', "shopper");
     formData.append('action', "viewSalesDetails");
-    formData.append('id', item.id);
+    formData.append('id', details.custID);
+    formData.append('custid', details.custID);
     formData.append('sid', details.sessionID);
     formData.append('curr', currency);
     console.warn(formData);
@@ -113,7 +114,7 @@ export default class EditTransactions extends Component {
         console.warn(res)
         if (!res.error) {
           this.setState({
-           // details: res.data
+            details_list: res.data
           })
 
         } else {
@@ -127,7 +128,7 @@ export default class EditTransactions extends Component {
 
   render() {
     const { details } = this.state
-   
+
     if (this.state.loading) {
       return (
         <ActivityIndicator color={colors.primary_color} message={'Loading...'} />
@@ -144,6 +145,7 @@ export default class EditTransactions extends Component {
       </TouchableOpacity>
     );
     return (
+      <>
       <ImageBackground
         style={{
           flex: 1
@@ -156,17 +158,6 @@ export default class EditTransactions extends Component {
 
             <ScrollView >
 
-
-              <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>Billing Address</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.billingAddr}</Text>
-                </View>
-
-              </View>
-
-
-
               <View style={{ marginHorizontal: 20, }}>
                 <Text style={styles.actionbutton}>Shipping Address</Text>
                 <View regular style={styles.item}>
@@ -175,57 +166,18 @@ export default class EditTransactions extends Component {
 
               </View>
 
+          
+
+
               <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>currency</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.currency}</Text>
-                </View>
+                <Text style={styles.actionbutton}>Items</Text>
 
               </View>
 
 
-              <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>payMethod</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.payMethod}</Text>
-                </View>
-
-              </View>
+              {this.renderItems()}
 
 
-              <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>date</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.date}</Text>
-                </View>
-
-              </View>
-
-
-              <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>currency</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.currency}</Text>
-                </View>
-
-              </View>
-
-
-              <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>currency</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.currency}</Text>
-                </View>
-
-              </View>
-
-              <View style={{ marginHorizontal: 20, }}>
-                <Text style={styles.actionbutton}>currency</Text>
-                <View regular style={styles.item}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', color: colors.primary_color, fontSize: 12, marginRight: 5 },]}>{details.currency}</Text>
-                </View>
-
-              </View>
             </ScrollView>
 
             <View style={{ marginTop: 20, marginBottom: 10, flexDirection: 'row', }}>
@@ -242,10 +194,29 @@ export default class EditTransactions extends Component {
               </View>
             </View>
           </View>
-
         </Container>
       </ImageBackground>
+      </>
     );
+  }
+
+
+  renderItems() {
+    let items = [];
+    this.state.details_list.map((item, i) => {
+      items.push(
+
+        <View style={{ paddingLeft: 10, marginHorizontal: 20, borderBottomColor:'red', borderBottomWidth:1, }}>
+          <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", color: colors.primary_color, marginBottom: 2 }}>{item.itemName}</Text>
+          <View style={{  }}>
+            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", color: colors.primary_color, }}>price: {item.currency} {item.unitPrice}</Text>
+          </View>
+        </View>
+
+
+      );
+    });
+    return items;
   }
 
 
@@ -313,6 +284,9 @@ export default class EditTransactions extends Component {
         showMessage('error', error.message)
       });
   }
+
+
+
 
 }
 

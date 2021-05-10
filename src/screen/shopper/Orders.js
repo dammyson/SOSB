@@ -145,9 +145,8 @@ export default class Orders extends Component {
               {item.title}
             </Text>
             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>{item.custName}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.totalPrice}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}><Text style={{ fontSize: 12, fontFamily: "NunitoSans-Bold", marginBottom: 2 }}>custPhone: </Text> {item.custPhone}  <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Bold", marginBottom: 2 }}>custRegion:</Text>  {item.custRegion}</Text>
-          </Body>
+            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>Tip: {item.currency} {item.totalPrice}</Text>
+             </Body>
         </ListItem>
       );
     });

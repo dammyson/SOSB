@@ -13,6 +13,7 @@ import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
 import { Icon, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import ShowPage from '../../component/View/ShowPage';
 
 
 export default class Cart extends Component {
@@ -25,6 +26,8 @@ export default class Cart extends Component {
       currency: '',
       user_id: '',
       session_id: '',
+      show_page: false,
+      url:'ll'
     };
   }
 
@@ -33,34 +36,16 @@ export default class Cart extends Component {
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
-      currency: await getCurrency() 
     });
-
-
-    AsyncStorage.getItem('aut').then((value) => {
-      if (value.toString() == 'no') {
-        Alert.alert(
-          'Login Out',
-          'You are not logged in, log in to add this item to cart',
-          [
-            { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
-            { text: 'OK', onPress: () => console.wanr('') },
-          ],
-          { cancelable: false }
-        )
-        return
-      }
-      this.setState({ 'aut': value.toString() })
-      this.getCart();
-    })
+    this.getCart(await getCurrency());
 
   }
 
-  componentDidMount() {
-
+  async componentDidMount() {
+  
   }
 
-  async getCart() {
+  async getCart(curency) {
 
     const { user_id, session_id, currency } = this.state
     console.warn(await getUserID(), session_id);
@@ -71,7 +56,8 @@ export default class Cart extends Component {
     formData.append('code', "cart");
     formData.append('id', user_id);
     formData.append('sid', session_id);
-    formData.append('prf', currency);
+    formData.append('prf',curency);
+    formData.append('currency',curency);
 
 
     console.warn(formData);
@@ -100,6 +86,11 @@ export default class Cart extends Component {
       });
   }
 
+  setCurrency(curency){
+    this.setState({currency: curency}), 
+    this.getCart(curency) 
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -117,6 +108,7 @@ export default class Cart extends Component {
       </TouchableOpacity>
     );
     return (
+      <>
       <ImageBackground
       style={{
        flex:1
@@ -124,7 +116,7 @@ export default class Cart extends Component {
       source={require('../../assets/bg.png')}>
       <Container style={{ backgroundColor: 'transparent' }}>
         <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-        <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} title="MY CART" />
+        <Navbar onCurrencyChange={(text)=> this.setCurrency(text)} left={left} title="MY CART" />
         {this.state.cartItems.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Icon name="shoppingcart" type='antdesign' size={38} style={{ fontSize: 38, color: '#95a5a6', marginBottom: 7 }} />
@@ -153,6 +145,8 @@ export default class Cart extends Component {
         }
       </Container>
       </ImageBackground>
+      {this.state.show_page ? this.renderShowPage() : null}
+      </>
     );
   }
 
@@ -163,7 +157,8 @@ export default class Cart extends Component {
         <ListItem
           key={i}
           last={this.state.cartItems.length === i + 1}
-          onPress={() => this.itemClicked(item)}
+         
+          onPress={() =>  this.itemClicked(item) }
         >
           <Body style={{ paddingLeft: 10 }}>
             <Text style={{ fontSize: 18 }}>
@@ -289,8 +284,20 @@ export default class Cart extends Component {
   }
 
   itemClicked(item) {
-    // Actions.product({product: item});
+    console.warn(item);
+    this.setState({ url: item.link })
+    this.setState({ show_page: true })
+   
   }
+
+  renderShowPage() {
+    return (
+      <ShowPage
+        url={this.state.url}
+        onClose={() => this.setState({ show_page: false })} />
+    )
+  }
+
 
 }
 

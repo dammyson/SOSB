@@ -23,6 +23,11 @@ import EnterQuantity from '../../component/View/EnterQuantity';
 import EnterColor from '../../component/View/EnterColor';
 import EnterSize from '../../component/View/EnterSize';
 
+const searchEngines = {
+  'google': (uri) => `https://www.google.com/search?q=${uri}`,
+  'duckduckgo': (uri) => `https://duckduckgo.com/?q=${uri}`,
+  'bing': (uri) => `https://www.bing.com/search?q=${uri}`
+};
 
 const WEBVIEW_REF = 'webview';
 const TEXT_INPUT_REF = 'urlInput';
@@ -61,6 +66,19 @@ export default class Home extends Component {
 
   }
 
+
+  upgradeURL(uri, searchEngine = 'google') {
+    const isURL = uri.split(' ').length === 1 && uri.includes('.');
+    if (isURL) {
+        if (!uri.startsWith('http')) {
+            return 'https://www.' + uri;
+        }
+        return uri;
+    }
+    // search for the text in the search engine
+    const encodedURI = encodeURI(uri);
+    return searchEngines[searchEngine](encodedURI);
+}
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -207,14 +225,18 @@ export default class Home extends Component {
   }
 
   handleTextInputChange(event) {
-    const url = Utils.sanitizeUrl(event.nativeEvent.text);
+   // const url = Utils.sanitizeUrl(event.nativeEvent.text);
     //this.inputText = url;
+   // 
+   const url =event.nativeEvent.text
     this.setState({ urlText: url })
   }
 
   onSubmitEditing() {
     var nre = this.state.urlText;
-    this.setState({ url: nre })
+    const newURL = this.upgradeURL(nre, 'google');
+    const url = Utils.sanitizeUrl(newURL);
+    this.setState({ url: url })
   }
 
 
