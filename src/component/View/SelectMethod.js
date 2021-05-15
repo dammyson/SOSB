@@ -38,7 +38,7 @@ export default class SelectMethod extends Component {
         this.setState({
             currency: await getCurrency() 
           });
-        this._getAddress()
+        this.getAddress()
 
     }
 

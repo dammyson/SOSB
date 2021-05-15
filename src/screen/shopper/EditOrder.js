@@ -194,6 +194,15 @@ export default class EditTransactions extends Component {
               </View>
             </View>
           </View>
+          <TouchableOpacity onPress={() => this.chat()} style={styles.fabButton} >
+              <Icon
+                active
+                name="wechat"
+                type='font-awesome'
+                color='#fff'
+                size={20}
+              />
+            </TouchableOpacity>
         </Container>
       </ImageBackground>
       </>
@@ -206,7 +215,7 @@ export default class EditTransactions extends Component {
     this.state.details_list.map((item, i) => {
       items.push(
 
-        <View style={{ paddingLeft: 10, marginHorizontal: 20, borderBottomColor:'red', borderBottomWidth:1, }}>
+        <View style={{ paddingLeft: 10, paddingVertical:5, marginHorizontal: 20, borderBottomColor:'#00000030', borderBottomWidth:1, }}>
           <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", color: colors.primary_color, marginBottom: 2 }}>{item.itemName}</Text>
           <View style={{  }}>
             <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", color: colors.primary_color, }}>price: {item.currency} {item.unitPrice}</Text>
@@ -286,8 +295,14 @@ export default class EditTransactions extends Component {
   }
 
 
-
-
+  chat(){
+    const { user_id, item, currency, details } = this.state
+    let message_info={
+       user_id: user_id,
+       custorm_id:  details.custID
+    }
+   this.props.navigation.navigate('chat', { message_info: message_info } )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -351,6 +366,17 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingHorizontal: 10,
 
+  },
+  fabButton: {
+    height: 50,
+    width: 50,
+    borderRadius: 200,
+    position: 'absolute',
+    bottom: 70,
+    right: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#004701',
   },
 });
 

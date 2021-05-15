@@ -13,6 +13,7 @@ import ChangePassword from '../../screen/user/ChangePassword';
 import Transactions from '../../screen/backoffice/Transactions';
 import EditTransactions from '../../screen/backoffice/EditTransaction';
 import Intro from '../../screen/onboarding/Intro';
+import Chat from '../../screen/Tele/Chat';
 
 class AppStack extends Component {
 
@@ -39,7 +40,7 @@ class AppStack extends Component {
             <Stack.Screen name="forgetpass" component={ForgetPassword}   />
             <Stack.Screen name="changepass" component={ChangePassword}   />
             <Stack.Screen name="home" component={Home}   />
-            <Stack.Screen name="transaction_" component={Transactions} />
+            <Stack.Screen name="chat" component={Chat} />
             <Stack.Screen name="edittransactions_" component={EditTransactions}   />
 
           </Stack.Navigator>
