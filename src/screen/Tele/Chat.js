@@ -42,7 +42,7 @@ ar
         this.setState({ loading: true })
         const formData = new FormData();
 
-        formData.append('code', "cart");
+        formData.append('code', "shopper");
         formData.append('action', "viewMessages");
 
         formData.append('incomingMsgId', message_info.user_id);
@@ -99,7 +99,7 @@ ar
         this.setState({ loading: true })
         const formData = new FormData();
 
-        formData.append('code', "cart");
+        formData.append('code', "shopper");
         formData.append('action', "'AddNewMessage");
 
         formData.append('incomingMsgId', message_info.user_id);

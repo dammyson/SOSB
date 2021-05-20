@@ -6,7 +6,7 @@ import { Icon } from 'react-native-elements'
 import colors from '../color';
 import * as Animatable from 'react-native-animatable';
 import InputTextField from './CustomInputTextField'
-import { BaseUrl, getCurrency, getSessionID, showTopNotification } from '../../utilities/index';
+import { BaseUrl, getCurrency, getSessionID, showTopNotification, makeUrlStringFromObject } from '../../utilities/index';
 
 
 export default class SelectMethod extends Component {
@@ -38,7 +38,7 @@ export default class SelectMethod extends Component {
         this.setState({
             currency: await getCurrency() 
           });
-        this.getAddress()
+        this._getAddress()
 
     }
 
@@ -49,50 +49,42 @@ export default class SelectMethod extends Component {
         const { currency } = this.state;
         this.setState({ loading: true })
         console.warn(address)
-        const formData = new FormData();
-        formData.append('code', "order");
-        formData.append('action', "getShippingCost");
-        formData.append('currency', currency);
 
-        formData.append('sessionId', await getSessionID());
-        formData.append('address', address.addressLine1 + " " + address.city + " " + address.state);
-        formData.append('addressId', address.id);
-
-
-        let data = JSON.stringify({
+    
+        let data = {
             'code': "order",
             'action': "getShippingCost",
             'currency': currency,
             'sessionId': await getSessionID(),
             'addressId': address.id,
             'address': address.addressLine1 + " " + address.city + " " + address.state,
-        })
+        }
 
 
-        console.warn(formData)
+        console.warn(BaseUrl()+'?'+makeUrlStringFromObject(data))
 
-        fetch(BaseUrl(), {
-            method: 'POST', headers: {
-                Accept: 'application/json',
-            }, body: data,
-        })
-            .then(res => res.json())
-            .then(res => {
-                console.warn(res);
-                if (!res.error) {
-                    this.setState({
-                        loading: false,
-                        shippingmethod: [
-                            { id: 20, price: res.data[0], name: 'Fast Shipping ' + res.data[0] + ' ' + res.data[5] }
-                        ]
-                    })
-                } else {
-                    showTopNotification('warning', res.message)
-                    this.setState({ loading: false })
-                }
-            }).catch((error) => {
-                console.warn(error.message);
-            });
+        // fetch(BaseUrl(), {
+        //     method: 'POST', headers: {
+        //         Accept: 'application/json',
+        //     }, body: data,
+        // })
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         console.warn(res);
+        //         if (!res.error) {
+        //             this.setState({
+        //                 loading: false,
+        //                 shippingmethod: [
+        //                     { id: 20, price: res.data[0], name: 'Fast Shipping ' + res.data[0] + ' ' + res.data[5] }
+        //                 ]
+        //             })
+        //         } else {
+        //             showTopNotification('warning', res.message)
+        //             this.setState({ loading: false })
+        //         }
+        //     }).catch((error) => {
+        //         console.warn(error.message);
+        //     });
     }
 
 

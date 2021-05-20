@@ -82,3 +82,10 @@ export const makeOrderId = (length) => {
   return result;
 };
 
+export const makeUrlStringFromObject = (data) => {
+  var urlString = '';
+  Object.keys(data).forEach(function (key) { return urlString += key + "=" + data[key] + "&"; });
+  urlString = urlString.substring(0, urlString.length - 1);
+  return urlString;
+};
+
