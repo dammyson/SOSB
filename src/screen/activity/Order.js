@@ -71,9 +71,6 @@ export default class Order extends Component {
 
   componentDidMount() {
 
-
-
-
   }
 
   onLoadPaymentInfo(paymentDetails) {
@@ -91,6 +88,7 @@ export default class Order extends Component {
     formData.append('shipmethod', paymentDetails.shipmed.id);
     formData.append('shipreq', paymentDetails.shipreq);
     formData.append('paymethod', paymentDetails.paymethod);
+    formData.append('shoppertip', paymentDetails.tip);
 
 
     console.log(formData)
@@ -413,9 +411,9 @@ export default class Order extends Component {
 
 
   checkout() {
-    const { paymethod, toadd, shipreq, billadd, shippadd, shipmed } = this.state
+    const { paymethod, toadd, shipreq, billadd, shippadd, shipmed, tip } = this.state
     const shippingmethod =
-      { paymethod: paymethod, toadd: toadd, shipreq: shipreq, billadd: billadd, shippadd: shippadd, shipmed: shipmed }
+      { paymethod: paymethod, toadd: toadd, shipreq: shipreq, billadd: billadd, shippadd: shippadd, shipmed: shipmed, tip: tip }
 
     this.onLoadPaymentInfo(shippingmethod);
 

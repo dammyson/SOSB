@@ -140,10 +140,9 @@ export default class Orders extends Component {
           onPress={() => this.editItemPressed(item)}
         >
           <Body style={{ paddingLeft: 1 }}>
-        
             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>Name: {item.custName}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>Tip: {item.currency} {item.totalPrice}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>{item.StoreName}, {item.StoreAddress}</Text>
+            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>Tip: {item.currency} {item.ShopperPay}</Text>
+            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>{item.StoreName}, {item.StoreAddress}  {item.Mileage} mils</Text>
              </Body>
         </ListItem>
       );

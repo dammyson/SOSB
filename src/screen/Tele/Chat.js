@@ -5,7 +5,9 @@ import { Container, Content, Card, } from 'native-base';
 import { Icon, Avatar } from 'react-native-elements';
 import colors from '../../component/color';
 import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail } from '../../utilities';
-
+import Moment from 'moment';
+Moment.locale('en');
+const moment = require('moment');
 
 export default class Chat extends Component {
     constructor(props) {
@@ -61,7 +63,7 @@ ar
                 if (!res.error) {
                     this.setState({
                         loading: false,
-                        //messages: res.data
+                        messages: res.data.reverse()
                     })
 
                 } else {
@@ -84,7 +86,8 @@ ar
 
         temp_array = this.state.messages
         temp_array[temp_array.length] = {
-            message: message,
+            MessageChat: message,
+            MessageDate: Moment(new Date()).format('llll'),
             type: 'se',
         };
         this.setState({ messages: temp_array })
@@ -100,7 +103,7 @@ ar
         const formData = new FormData();
 
         formData.append('code', "shopper");
-        formData.append('action', "'AddNewMessage");
+        formData.append('action', "AddNewMessage");
 
         formData.append('incomingMsgId', message_info.user_id);
         formData.append('outgoingMsgId', message_info.custorm_id);
@@ -119,8 +122,10 @@ ar
                 if (!res.error) {
                     this.setState({
                         loading: false,
-                        cartItems: res.data
+                       // cartItems: res.data
                     })
+
+                    this.getMessages()
 
                 } else {
                     Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
@@ -240,12 +245,12 @@ ar
     renderItem = ({ item, }) => {
         return (
             <>
-                { item.type == 're' ?
+                { item.OutgoingMsgID == this.state.user_id ?
                     <View style={[styles.chat_re_container]}>
                         <View>
-                            <Text style={styles.re_text}>{item.message}</Text>
+                            <Text style={styles.re_text}>{item.MessageChat}</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 5 }}>
-                                <Text style={styles.re_time}>4:00 PM</Text>
+                            <Text style={styles.send_time}>{Moment(item.MessageDate).format('llll')}</Text>
                             </View>
 
                         </View>
@@ -254,9 +259,9 @@ ar
 
                     <View style={[styles.chat_send_container]}>
                         <View>
-                            <Text style={styles.send_text}>{item.message}</Text>
+                            <Text style={styles.send_text}>{item.MessageChat}</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 5 }}>
-                                <Text style={styles.send_time}>4:00 PM</Text>
+                                <Text style={styles.send_time}>{Moment(item.MessageDate).format('llll')}</Text>
                             </View>
 
                         </View>
