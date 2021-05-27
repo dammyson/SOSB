@@ -1,24 +1,84 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StatusBar, ScrollView, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StatusBar, ScrollView, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Content, Button, Left, } from 'native-base';
-import { lightTheme } from '../../theme/colors';
+import colors from '../../component/color';
 import { Icon, Avatar } from 'react-native-elements';
-import { borderRadius } from '../../constants'
-import StarRating from 'react-native-star-rating';
-import * as images from '../../assets/images'
-import Navbar from '../../components/Navbar';
-export default class Photo extends Component {
+import Navbar from '../../component/Navbar';
+import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail } from '../../utilities';
+import ActivityIndicator from '../../component/View/ActivityIndicator';
+
+export default class Messages extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user_id: '',
+            session_id: '',
+            message: '',
+            messages: [],
+            message_info: ""
         };
     }
 
-    componentWillMount() {
+    async componentDidMount() {
+        this.setState({
+            user_id: await getUserID(),
+            session_id: await getSessionID(),
+        });
+        this.getMessages()
+
 
     }
+
+
+
+    async getMessages() {
+
+        const { user_id, session_id, message_info } = this.state
+        console.warn(await getUserID(), session_id);
+        this.setState({ loading: true })
+        const formData = new FormData();
+
+        formData.append('code', "shopper");
+        formData.append('action', "viewShopperAssignedtoCustomer");
+
+        formData.append('custid', message_info.user_id);
+        console.warn(formData);
+
+        fetch(BaseUrl(), {
+            method: 'POST', headers: {
+                Accept: 'application/json',
+            }, body: formData,
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.warn(res);
+                if (!res.error) {
+                    this.setState({
+                        loading: false,
+                        messages: res.data.reverse()
+                        
+                    })
+
+                } else {
+                    Alert.alert('Operation failed', res.message, [{ text: 'Okay' }])
+                    this.setState({ loading: false })
+                }
+            }).catch((error) => {
+                console.warn(error);
+                alert(error.message);
+            });
+    }
+
+
+
     render() {
+
+        if (this.state.loading) {
+            return (
+              <ActivityIndicator color={colors.primary_color} message={'Getting Conversations'} />
+            );
+          }
 
         var left = (
             <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
@@ -26,28 +86,29 @@ export default class Photo extends Component {
                     name="arrowleft"
                     size={20}
                     type='antdesign'
-                    color={lightTheme.DEFAULT_COLOR}
+                    color={colors.white}
                 />
             </TouchableOpacity>
         )
 
         return (
-            <Container>
+            <ImageBackground
+            style={{
+                flex: 1
+            }}
+            source={require('../../assets/bg.png')}>
+            <Container style={{ backgroundColor: 'transparent' }}>
                 <Navbar left={left} title="Message History" />
-                <StatusBar barStyle="light-content" hidden={false} backgroundColor={lightTheme.PRIMARY_COLOR} />
+                <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
                 <Content scrollEnabled={false}>
                     <View style={styles.body}>
-                        <View style={{ backgroundColor: lightTheme.DEFAULT_COLOR }}>
-                            <View style={styles.header}>
-
-                            </View>
-                        </View>
+                      
                         <View style={styles.mainbody}>
                             <ScrollView style={{ flex: 1 }}>
-                                <View style={{ flex: 1, backgroundColor: lightTheme.LIGHT_PURPLE_BACKGROUND }}>
+                                <View style={{ flex: 1,}}>
                                     <View style={{ paddingTop: 20 }}>
                                         <View style={{ marginBottom: 10, marginTop: 1, }}>
-                                            {this.renderResuts(networks)}
+                                            {this.renderResuts(this.state.messages)}
                                         </View>
                                     </View>
 
@@ -58,6 +119,7 @@ export default class Photo extends Component {
                 </Content>
 
             </Container>
+            </ImageBackground>
         );
     }
 
@@ -87,31 +149,22 @@ const styles = StyleSheet.create({
     body: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
-        backgroundColor: lightTheme.LIGHT_PURPLE_BACKGROUND
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 20,
-        backgroundColor: lightTheme.PRIMARY_COLOR,
-        borderBottomLeftRadius: borderRadius.FIXED_HEADER_BORDER_RADIUS,
-        borderBottomRightRadius: borderRadius.FIXED_HEADER_BORDER_RADIUS,
+        
     },
     mainbody: {
         width: Dimensions.get('window').width,
         flex: 1,
-        backgroundColor: lightTheme.LIGHT_PURPLE_BACKGROUND,
         paddingBottom:40
     },
 
     list_container: {
-        marginLeft: 25,
-        marginRight: 25,
+        marginLeft: 15,
+        marginRight: 15,
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 10,
         paddingHorizontal: 15,
-        borderBottomColor: lightTheme.PRIMARY_TEXT_COLOR + '40',
+        borderBottomColor: colors.white + '40',
         borderBottomWidth: 0.5,
         paddingBottom: 5
     },
@@ -120,91 +173,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-SemiBold',
         flexDirection: 'row',
         marginTop: 15,
-        color: lightTheme.PRIMARY_TEXT_COLOR
+        color: colors.red
     },
     time_text: {
         fontSize: 13,
         fontFamily: 'Montserrat-Medium',
         flexDirection: 'row',
-        color: lightTheme.PRIMARY_TEXT_COLOR + '60'
-    },
-    menu_text: {
-        fontSize: 12,
-        color: lightTheme.DEFAULT_COLOR,
-        textAlign: 'center',
-        marginVertical: 15,
-        fontFamily: 'Montserrat-Medium'
-    },
-    menu: {
-        backgroundColor: lightTheme.PRIMARY_COLOR,
-        flex: 1,
-        marginHorizontal: 5,
-        borderWidth: 0.5,
-        borderColor: lightTheme.LIGHT_PINK_BACKGROUND,
-        borderRadius: borderRadius.FIXED_RATING_BODY_RADIUS,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 1,
-        elevation: 10
+        color: colors.primary_color + '60'
     },
 });
-
-const networks = [
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'voice',
-        statu: 'in'
-
-
-    },
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'video',
-        statu: 'in'
-
-
-    },
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'voice',
-        statu: 'out'
-
-
-    },
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'video',
-        statu: 'in'
-
-    },
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'voice',
-        statu: 'out'
-
-    },
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'voice',
-        statu: 'in'
-
-
-    },
-    {
-        title: 'Mr. John Nova',
-        date: '5 minutes ago',
-        type: 'video',
-        statu: 'in'
-
-
-    },
-
-];
 

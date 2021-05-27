@@ -13,7 +13,9 @@ import Navbar from '../../component/Navbar';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
 import { Icon, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import {
+  getLocation,
+} from '../../utilities/locationService';
 
 export default class Orders extends Component {
 
@@ -25,18 +27,31 @@ export default class Orders extends Component {
       currency: '',
       user_id: '',
       session_id: '',
+      latitude: 6.5244,
+      longitude: 3.3792,
     };
   }
 
   async componentWillMount() {
+
+    var cordinates = getLocation();
+    cordinates.then((result) => {
+      this.setState({
+        latitude: result.latitude,
+        longitude: result.longitude
+      });
+      console.log(result);
+    }, err => {
+      console.log(err);
+    });
+
+
     console.warn(await getEmail())
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
       currency: await getCurrency()
     });
-
-
 
     this.getCart();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -46,19 +61,25 @@ export default class Orders extends Component {
 
   }
 
-  componentDidMount() {
 
-  }
+
+
+
+  
 
   async getCart() {
 
-    const { user_id, session_id, currency } = this.state
+    const { user_id, session_id, latitude, longitude } = this.state
     console.warn(await getUserID(), session_id);
     this.setState({ loading: true })
     const formData = new FormData();
 
     formData.append('code', "shopper");
-    formData.append('action', "viewSales");
+    formData.append('action', "ViewSalesWithShopperLocation");
+
+    formData.append('lat', latitude);
+    formData.append('lng',longitude);
+    formData.append('currency', await getCurrency());
 
 
 
@@ -75,7 +96,7 @@ export default class Orders extends Component {
         console.warn(res.data);
         if (!res.error) {
           this.setState({
-            cartItems: res.data
+           // cartItems: res.data
           })
 
         } else {

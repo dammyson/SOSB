@@ -41,8 +41,8 @@ export default class Home extends Component {
     this.state = {
       data: '',
       status: '',
-      currentUrl: Utils.sanitizeUrl('https://m.ofidy.com/shopping-browser.php'),
-      url: Utils.sanitizeUrl('https://m.ofidy.com/shopping-browser.php'),
+      currentUrl: Utils.sanitizeUrl('https://ofidyshopping.azurewebsites.net/shopping-browser.php'),
+      url: Utils.sanitizeUrl('https://ofidyshopping.azurewebsites.net/shopping-browser.php'),
       backButtonEnabled: false,
       forwardButtonEnabled: false,
       homeButtonEnabled: true,

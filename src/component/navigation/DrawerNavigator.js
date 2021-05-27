@@ -7,6 +7,8 @@ import Backoffice from "./backoffice-stack";
 import Shoppers from "./shopper-stack";
 import Welcome from "../../screen/user/Welcome";
 
+import Messages from "../../screen/Tele/Messages";
+
 
 
 const Drawer = createDrawerNavigator();
@@ -19,6 +21,7 @@ const DrawerNavigator = () => {
       drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={AppNavigator} />
       <Drawer.Screen name="Welcome" component={Welcome} />
+      <Drawer.Screen name="Messages" component={Messages} />
       <Drawer.Screen name="Shoppers" component={Shoppers} />
       <Drawer.Screen name="Backoffice" component={Backoffice} />
      

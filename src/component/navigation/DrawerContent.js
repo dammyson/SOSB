@@ -118,6 +118,21 @@ const renderSettingsMenu = (props, level) => {
             </TouchableOpacity>
 
 
+            <TouchableOpacity onPress={() => props.navigation.navigate('Messages')} style={styles.drawerMenuItem}>
+                <View style={{}}>
+                    <Icon
+                        name="wechat"
+                        type='font-awesome'
+                        size={25}
+                        color={colors.primary_color}
+                    />
+                </View>
+                <View style={{ flex: 1, marginLeft: 15, justifyContent: 'center' }}>
+                    <Text style={{ color: colors.primary_color, fontSize: 15, fontFamily: 'NunitoSans-Bold', }}>Messages </Text>
+                </View>
+            </TouchableOpacity>
+
+
             <TouchableOpacity onPress={() =>  props.navigation.reset({
                             index: 0,
                             routes: [{ name: 'Welcome' }],
