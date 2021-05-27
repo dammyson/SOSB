@@ -36,8 +36,8 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="home"
-             >
+             initialRouteName="home">
+
             <Stack.Screen name="home" component={Home}   />
             <Stack.Screen name="cart" component={Cart}   />
             <Stack.Screen name="order" component={Order}   />
@@ -48,6 +48,7 @@ class AppStack extends Component {
             <Stack.Screen name="rave" component={Rave}   />
             <Stack.Screen name="paypal" component={Paypal}   />
             <Stack.Screen name="paypal2" component={PayPalTwo}   />
+            
           </Stack.Navigator>
       );
   }
