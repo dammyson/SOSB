@@ -63,28 +63,28 @@ export default class SelectMethod extends Component {
 
         console.warn(BaseUrl()+'?'+makeUrlStringFromObject(data))
 
-        // fetch(BaseUrl(), {
-        //     method: 'POST', headers: {
-        //         Accept: 'application/json',
-        //     }, body: data,
-        // })
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         console.warn(res);
-        //         if (!res.error) {
-        //             this.setState({
-        //                 loading: false,
-        //                 shippingmethod: [
-        //                     { id: 20, price: res.data[0], name: 'Fast Shipping ' + res.data[0] + ' ' + res.data[5] }
-        //                 ]
-        //             })
-        //         } else {
-        //             showTopNotification('warning', res.message)
-        //             this.setState({ loading: false })
-        //         }
-        //     }).catch((error) => {
-        //         console.warn(error.message);
-        //     });
+        fetch(BaseUrl()+'?'+makeUrlStringFromObject(data), {
+            method: 'GET', headers: {
+                Accept: 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.warn(res.data);
+                if (!res.error) {
+                    this.setState({
+                        loading: false,
+                        shippingmethod: [
+                            { id: 20, price: res.data.ShippingFee, name: 'Shiping Shipping ' + res.data.ShippingFee + ' Duration ' + res.data.DeliveryDays }
+                        ]
+                    })
+                } else {
+                    showTopNotification('warning', res.message)
+                    this.setState({ loading: false })
+                }
+            }).catch((error) => {
+                console.warn(error.message);
+            });
     }
 
 
