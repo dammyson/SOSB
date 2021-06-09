@@ -51,15 +51,13 @@ checkLogin() {
     let mail = "";
     const { email, username } = this.state
 
-    if (email == "") {
-        Alert.alert('Validation failed', 'Email field cannot be empty', [{ text: 'Okay' }])
-        return
+    if (email != "" || username != "") {
+      
+    }else{
+      Alert.alert('Validation failed', 'Email field cannot be empty', [{ text: 'Okay' }])
+      return
     }
-    if (username == "") {
-        Alert.alert('Validation failed', 'Password field cannot be empty', [{ text: 'Okay' }])
-        return
-    }
-
+  
     this.setState({ loading: true })
     const formData = new FormData();
     formData.append('code', "customer");
