@@ -9,20 +9,14 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* OfidyShoppingBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* OfidyShoppingBrowserTests.m */; };
 		022A7F99D8F7479189183293 /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBF5A62136F3443B9E2F6276 /* NunitoSans-SemiBold.ttf */; };
-		026A315536C94FB6BC8F5E58 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F34CF72F5655415196E79268 /* FontAwesome5_Brands.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		16DC0835091C4701B449F89D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C90367AB7FA64F4ABCC27A8E /* Foundation.ttf */; };
 		1904EEA99AA4418391C5AC8A /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C3612FD4C454F799AC547BA /* NunitoSans-Bold.ttf */; };
-		1E7F1CB4EC90422A841B7FB2 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7D351FED8B74186A4503FFB /* Zocial.ttf */; };
-		27BC56481BEB48EDB614F7F1 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5EE0843B7854CAEAD396B6A /* Octicons.ttf */; };
-		2CF7DD8DC14B44E78F333B18 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB962EEE31554F8091B8CAB2 /* AntDesign.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* OfidyShoppingBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* OfidyShoppingBrowserTests.m */; };
-		2EA2673A8E63492B943023AD /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA88620BCF8D40F897D05D42 /* Entypo.ttf */; };
 		4DF92E78E2EA46E9A0B607C0 /* NunitoSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9638D1CD62CD440CAB824DCC /* NunitoSans-Light.ttf */; };
 		4E77BF1AED3242DDA4AD7BCE /* NunitoSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B90EE8B471AF4DEF880E9ADB /* NunitoSans-LightItalic.ttf */; };
 		4FE43EC5C2B34854A3C57987 /* NunitoSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5637F045198435790B43BE3 /* NunitoSans-ExtraBoldItalic.ttf */; };
@@ -31,23 +25,13 @@
 		6768C5BBA5F74A028C455355 /* NunitoSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1734DFC65AB7423FB983AF17 /* NunitoSans-Italic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		869941D61D2B55EAB8EADA3C /* libPods-OfidyShoppingBrowser-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9AAA854C8B20D8BAB051B0 /* libPods-OfidyShoppingBrowser-tvOS.a */; };
-		88F03792C26C4AD3A947985F /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365EFF2C11814FBAB8E61604 /* SimpleLineIcons.ttf */; };
 		896D9980A5764D4CA11E2654 /* NunitoSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A82BD8E4BB1B45B385063224 /* NunitoSans-SemiBoldItalic.ttf */; };
 		8998F1C3493546379EFBB9E8 /* NunitoSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42F7A62E82004D54BF6A1701 /* NunitoSans-ExtraBold.ttf */; };
-		8F09DFAD3E4E4DDDBCD31FC1 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23F81C9A1EDC4E02965BD78E /* FontAwesome5_Regular.ttf */; };
 		8FC221375ECCD5D724C89659 /* libPods-OfidyShoppingBrowser-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27260335698E753848A6F3F5 /* libPods-OfidyShoppingBrowser-tvOSTests.a */; };
-		901F684524BB432BA613DAE8 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80A62A7FEC8640D2ADD6A70C /* EvilIcons.ttf */; };
-		99559D8B9CF647EE95149725 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F8999B9C832A4C8DA079B729 /* Fontisto.ttf */; };
-		9F75D8502B9B4CACA2C89E87 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6757B08F150F44A88C06E323 /* Feather.ttf */; };
-		A3028D9C7B244E8DA47307A5 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73AC05A9A6EE418C81865E9A /* MaterialCommunityIcons.ttf */; };
-		B1A4503A1E58422F94A4B3CD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C66372630344D79B8C0F8AD /* MaterialIcons.ttf */; };
 		B2F72B7BD23D42EC876C7471 /* NunitoSans-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1377E45DBC9E4E91AC1A8744 /* NunitoSans-Black.ttf */; };
 		B8F7174C29C645CD8B04D37C /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88EC278897F34E4B863A9D1E /* NunitoSans-Regular.ttf */; };
 		C8FA72A2671B466DBC8D4699 /* NunitoSans-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72CB6124E2854ACF91F3D8CD /* NunitoSans-ExtraLightItalic.ttf */; };
-		C8FE7DAAC0C44C3BA883FD5D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837366E615664A1F94152CDC /* FontAwesome5_Solid.ttf */; };
 		D134E0682C5F4DEFB0416129 /* NunitoSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C154247FDDD4496861661E4 /* NunitoSans-BoldItalic.ttf */; };
-		E131A70322EC4F61A2368F65 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAE24F633FFA443E8631D769 /* FontAwesome.ttf */; };
-		E2EF799301BF4BD6A06B602E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8FBC63B899044A4BFC258C1 /* Ionicons.ttf */; };
 		EC7A5860BF7531FB4E06F6CB /* libPods-OfidyShoppingBrowser-OfidyShoppingBrowserTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99AEF203795A2F26AD3335ED /* libPods-OfidyShoppingBrowser-OfidyShoppingBrowserTests.a */; };
 		FF2F00EC7DE74FB3B26334FD /* NunitoSans-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15562418B3474188B6EEBA35 /* NunitoSans-BlackItalic.ttf */; };
 /* End PBXBuildFile section */
@@ -74,6 +58,7 @@
 		00E356EE1AD99517003FC87E /* OfidyShoppingBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OfidyShoppingBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* OfidyShoppingBrowserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfidyShoppingBrowserTests.m; sourceTree = "<group>"; };
+		0421B7E62674EF5B009209DD /* OfidyShoppingBrowser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = OfidyShoppingBrowser.entitlements; path = OfidyShoppingBrowser/OfidyShoppingBrowser.entitlements; sourceTree = "<group>"; };
 		0C3612FD4C454F799AC547BA /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Bold.ttf"; path = "../src/assets/fonts/NunitoSans-Bold.ttf"; sourceTree = "<group>"; };
 		1377E45DBC9E4E91AC1A8744 /* NunitoSans-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Black.ttf"; path = "../src/assets/fonts/NunitoSans-Black.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* OfidyShoppingBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OfidyShoppingBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +199,7 @@
 		13B07FAE1A68108700A75B9A /* OfidyShoppingBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0421B7E62674EF5B009209DD /* OfidyShoppingBrowser.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -379,6 +365,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				1699A733AF1947A3B254E7B9 /* [CP] Copy Pods Resources */,
+				EFBE97B2371EC0D7CF4CB38E /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -441,6 +428,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = HGAZB99Y3A;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -489,22 +477,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				2CF7DD8DC14B44E78F333B18 /* AntDesign.ttf in Resources */,
-				2EA2673A8E63492B943023AD /* Entypo.ttf in Resources */,
-				901F684524BB432BA613DAE8 /* EvilIcons.ttf in Resources */,
-				9F75D8502B9B4CACA2C89E87 /* Feather.ttf in Resources */,
-				E131A70322EC4F61A2368F65 /* FontAwesome.ttf in Resources */,
-				026A315536C94FB6BC8F5E58 /* FontAwesome5_Brands.ttf in Resources */,
-				8F09DFAD3E4E4DDDBCD31FC1 /* FontAwesome5_Regular.ttf in Resources */,
-				C8FE7DAAC0C44C3BA883FD5D /* FontAwesome5_Solid.ttf in Resources */,
-				99559D8B9CF647EE95149725 /* Fontisto.ttf in Resources */,
-				16DC0835091C4701B449F89D /* Foundation.ttf in Resources */,
-				E2EF799301BF4BD6A06B602E /* Ionicons.ttf in Resources */,
-				A3028D9C7B244E8DA47307A5 /* MaterialCommunityIcons.ttf in Resources */,
-				B1A4503A1E58422F94A4B3CD /* MaterialIcons.ttf in Resources */,
-				27BC56481BEB48EDB614F7F1 /* Octicons.ttf in Resources */,
-				88F03792C26C4AD3A947985F /* SimpleLineIcons.ttf in Resources */,
-				1E7F1CB4EC90422A841B7FB2 /* Zocial.ttf in Resources */,
 				B2F72B7BD23D42EC876C7471 /* NunitoSans-Black.ttf in Resources */,
 				FF2F00EC7DE74FB3B26334FD /* NunitoSans-BlackItalic.ttf in Resources */,
 				1904EEA99AA4418391C5AC8A /* NunitoSans-Bold.ttf in Resources */,
@@ -860,6 +832,19 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OfidyShoppingBrowser-OfidyShoppingBrowserTests/Pods-OfidyShoppingBrowser-OfidyShoppingBrowserTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EFBE97B2371EC0D7CF4CB38E /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
+		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1016,7 +1001,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = OfidyShoppingBrowser/OfidyShoppingBrowser.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HGAZB99Y3A;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1024,12 +1011,13 @@
 				);
 				INFOPLIST_FILE = OfidyShoppingBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.07;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Softskan-Limited.Ofidy-Shopping-Browser";
 				PRODUCT_NAME = OfidyShoppingBrowser;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1043,19 +1031,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = OfidyShoppingBrowser/OfidyShoppingBrowser.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HGAZB99Y3A;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-paypal-gateway/ios/**",
 				);
 				INFOPLIST_FILE = OfidyShoppingBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.07;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Softskan-Limited.Ofidy-Shopping-Browser";
 				PRODUCT_NAME = OfidyShoppingBrowser;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
