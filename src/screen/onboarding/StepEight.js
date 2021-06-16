@@ -14,7 +14,7 @@ import * as images from '../../assets';
 
 
 
-export default class StepTwo extends React.Component {
+export default class StepEight extends React.Component {
 
 
   onSwipeLeft() {
@@ -22,7 +22,7 @@ export default class StepTwo extends React.Component {
   }
 
   render() {
-    const { onSkip, onSignIn, } = this.props;
+    const { onStarted, onSignIn, } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar
@@ -33,14 +33,11 @@ export default class StepTwo extends React.Component {
         <View style={{ height:height}}>
 
           <View style={styles.imageRegion}>
-            <Image source={images.two} style={styles.imageStyle} />
+            <Image source={images.eight} style={styles.imageStyle} />
           </View>
-
-
-         
           <View style={{ height: 60, alignItems: 'flex-end',  }}>
-            <TouchableOpacity onPress={() => onSkip()} style={styles.skipRegion}>
-              <Text style={styles.skipText}>Next</Text>
+            <TouchableOpacity onPress={() => onStarted()} style={styles.skipRegion}>
+              <Text style={styles.skipText}>Finish</Text>
 
             </TouchableOpacity>
           </View>
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
   },
 
   nextIconStyle: {
-    color: colors.primary_color,
+    color: "red",
     fontSize: 20,
     marginHorizontal: 8
   }

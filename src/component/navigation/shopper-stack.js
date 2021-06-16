@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Orders from '../../screen/shopper/Orders';
 import EditOrders from '../../screen/shopper/EditOrder';
+import Index from '../../screen/shopper/index';
 
 class AppStack extends Component {
 
@@ -18,8 +19,9 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="orders"
+             initialRouteName="index"
              >
+                 <Stack.Screen name="index" component={Index}   />
             <Stack.Screen name="orders" component={Orders}   />
             <Stack.Screen name="editorders" component={EditOrders}   />
           </Stack.Navigator>

@@ -14,7 +14,7 @@ import * as images from '../../assets';
 
 
 
-export default class StepTwo extends React.Component {
+export default class StepSix extends React.Component {
 
 
   onSwipeLeft() {
@@ -33,7 +33,7 @@ export default class StepTwo extends React.Component {
         <View style={{ height:height}}>
 
           <View style={styles.imageRegion}>
-            <Image source={images.two} style={styles.imageStyle} />
+            <Image source={images.six} style={styles.imageStyle} />
           </View>
 
 

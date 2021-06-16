@@ -33,27 +33,12 @@ export default class StepOne extends React.Component {
         <View style={{ height:height}}>
 
           <View style={styles.imageRegion}>
-            <Image source={images.search} style={styles.imageStyle} />
+            <Image source={images.one} style={styles.imageStyle} />
           </View>
 
 
-          <View style={styles.actionRegion}>
-            <View style={styles.dotsRegion}>
-              <View style={{ height: 10, width: 32, borderRadius: 10, marginHorizontal: 5, backgroundColor: colors.primary_color }} />
-              <View style={{ height: 10, width: 10, borderRadius: 10, backgroundColor: colors.primary_color }} />
-              <View style={{ height: 10, width: 10, borderRadius: 10, marginHorizontal: 5, backgroundColor: colors.primary_color }} />
-
-            </View>
-
-            <View style={{ marginTop: 20, marginHorizontal:20, }}>
-              <Text style={styles.titleText}> Step one  </Text>
-              <Text style={styles.bodyText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </Text>
-            </View>
-
-
-
-          </View>
-          <View style={{ height: 70, alignItems: 'flex-end' }}>
+         
+          <View style={{ height: 60, alignItems: 'flex-end',  }}>
             <TouchableOpacity onPress={() => onSkip()} style={styles.skipRegion}>
               <Text style={styles.skipText}>Next</Text>
 
@@ -77,12 +62,14 @@ const styles = StyleSheet.create({
     marginTop: 40,
     flex: 1,
     width: width,
+  
+    justifyContent: 'center',
 
   },
   imageStyle: {
     alignSelf: 'center',
     resizeMode:'contain',
-    height: height * 0.45
+    height: height * 0.9
   },
   actionRegion: {
    
@@ -108,7 +95,7 @@ const styles = StyleSheet.create({
 
   signInText: {
     fontSize: 15,
-    color: "red",
+    color: colors.primary_color,
     fontFamily: 'Montserrat-Medium'
   },
 
@@ -119,13 +106,13 @@ const styles = StyleSheet.create({
 
   skipText: {
     fontSize: 15,
-    color: "red",
+    color: colors.primary_color,
     fontFamily: 'Poppins-SemiBold',
     marginTop: 20
   },
 
   nextIconStyle: {
-    color: "red",
+    color: colors.primary_color,
     fontSize: 20,
     marginHorizontal: 8
   }

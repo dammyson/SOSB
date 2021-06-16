@@ -94,12 +94,13 @@ export default class Transactions extends Component {
       );
     }
     var left = (
-      <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+      <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
         <Icon
-                  name="menu"
-                  type='entypo'
-                  color='#fff'
-                />
+          name="arrowleft"
+          size={20}
+          type='antdesign'
+          color={colors.white}
+        />
       </TouchableOpacity>
     );
     return (

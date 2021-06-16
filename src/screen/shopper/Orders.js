@@ -112,15 +112,16 @@ export default class Orders extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <ActivityIndicator color={colors.primary_color} message={'Getting transaction'} />
+        <ActivityIndicator color={colors.primary_color} message={'completed sales..'} />
       );
     }
     var left = (
-      <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+      <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
         <Icon
-          name="menu"
-          type='entypo'
-          color='#fff'
+          name="arrowleft"
+          size={20}
+          type='antdesign'
+          color={colors.white}
         />
       </TouchableOpacity>
     );

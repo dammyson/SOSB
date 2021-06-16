@@ -5,6 +5,11 @@ import Swiper from 'react-native-swiper'
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
+import StepFour from './StepFour';
+import StepFive from './StepFive';
+import StepSix from './StepSix';
+import StepSeven from './StepSeven';
+import StepEight from './StepEight';
 
 
 export default class Intro extends Component {
@@ -39,6 +44,38 @@ export default class Intro extends Component {
         </View>
         <View style={styles.slide3}>
           <StepThree
+            onSkip={() => this.onSkip()}
+            onSignIn={() => this.onSignIn()} />
+        </View>
+
+
+        <View style={styles.slide3}>
+          <StepFour
+            onSkip={() => this.onSkip()}
+            onSignIn={() => this.onSignIn()} />
+        </View>
+
+
+        <View style={styles.slide3}>
+          <StepFive
+            onSkip={() => this.onSkip()}
+            onSignIn={() => this.onSignIn()} />
+        </View>
+
+        <View style={styles.slide3}>
+          <StepSix
+            onSkip={() => this.onSkip()}
+            onSignIn={() => this.onSignIn()} />
+        </View>
+
+        <View style={styles.slide3}>
+          <StepSeven
+            onSkip={() => this.onSkip()}
+            onSignIn={() => this.onSignIn()} />
+        </View>
+
+        <View style={styles.slide3}>
+          <StepEight
             onStarted={() => this.onStarted()}
             onSignIn={() => this.onSignIn()} />
         </View>
@@ -53,7 +90,7 @@ export default class Intro extends Component {
   }
   onSkip() {
 
-    if (this.state.index > 1) {
+    if (this.state.index > 6) {
       return
     } else {
       this.swiper.scrollBy(1, true);
@@ -64,12 +101,12 @@ export default class Intro extends Component {
 
   onSignIn() {
     AsyncStorage.setItem('first_time', "No");
-    this.props.navigation.navigate('login')
+    this.props.navigation.navigate('welcome')
   }
 
   onStarted() {
     AsyncStorage.setItem('first_time', "No");
-    this.props.navigation.navigate('login')
+    this.props.navigation.navigate('welcome')
   }
 }
 
