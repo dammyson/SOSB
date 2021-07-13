@@ -100,12 +100,10 @@ export default class Intro extends Component {
   }
 
   onSignIn() {
-    AsyncStorage.setItem('first_time', "No");
     this.props.navigation.navigate('welcome')
   }
 
   onStarted() {
-    AsyncStorage.setItem('first_time', "No");
     this.props.navigation.navigate('welcome')
   }
 }

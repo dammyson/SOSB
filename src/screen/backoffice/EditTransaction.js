@@ -53,6 +53,8 @@ export default class EditTransactions extends Component {
       invalid: 'n',
       packQty: '',
       srcShipping: '',
+      cooler:'n',
+      restricted:'n'
     };
   }
 
@@ -486,6 +488,114 @@ export default class EditTransactions extends Component {
                 </View>
 
               </View>
+
+
+
+              <Text style={styles.actionbutton}>Does Item Require a Cooler</Text>
+              <View style={{ justifyContent: 'center' }}>
+
+                <View regular style={styles.item}>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <TouchableOpacity
+                    onPress={() => this.setState({ cooler: 'y' })}
+                    style={{
+                      borderRadius: 15,
+                      width: 25,
+                      height: 25,
+                      borderColor: '#8d96a6',
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: 7,
+                      marginRight: 5,
+
+                    }}>
+                    {this.state.cooler == 'y' ?
+                      <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                      : null
+                    }
+
+
+                  </TouchableOpacity>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <TouchableOpacity
+                    onPress={() => this.setState({ cooler: 'n' })}
+                    style={{
+                      borderRadius: 15,
+                      width: 25,
+                      height: 25,
+                      borderColor: '#8d96a6',
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: 7,
+                      marginRight: 5,
+
+                    }}
+                  >
+                    {this.state.cooler == 'n' ?
+                      <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                      : null
+                    }
+                  </TouchableOpacity>
+                </View>
+
+              </View>
+
+
+
+              <Text style={styles.actionbutton}>Is the Item a restricted Item such as Alcohol or Knives</Text>
+              <View style={{ justifyContent: 'center' }}>
+
+                <View regular style={styles.item}>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <TouchableOpacity
+                    onPress={() => this.setState({ restricted: 'y' })}
+                    style={{
+                      borderRadius: 15,
+                      width: 25,
+                      height: 25,
+                      borderColor: '#8d96a6',
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: 7,
+                      marginRight: 5,
+
+                    }}>
+                    {this.state.restricted == 'y' ?
+                      <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                      : null
+                    }
+
+
+                  </TouchableOpacity>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <TouchableOpacity
+                    onPress={() => this.setState({ restricted: 'n' })}
+                    style={{
+                      borderRadius: 15,
+                      width: 25,
+                      height: 25,
+                      borderColor: '#8d96a6',
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: 7,
+                      marginRight: 5,
+
+                    }}
+                  >
+                    {this.state.restricted == 'n' ?
+                      <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                      : null
+                    }
+                  </TouchableOpacity>
+                </View>
+
+              </View>
+
+
               <Text style={styles.actionbutton}>packQty</Text>
               <View regular style={styles.item}>
                 <Input placeholder='packQty' onChangeText={(text) => this.setState({ packQty: text })} defaultValue={this.state.packQty} placeholderTextColor="#687373" style={styles.input} />
