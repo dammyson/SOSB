@@ -88,7 +88,7 @@ export default class EditTransactions extends Component {
       prodName,
       prodQty,
       prodPrice,
-      itemColour, priceCurrency, dscntPercent, adminShipping, promoCode, weight, bulkSize, srcRegion, itemSize, fragileyn, blacklist, invalid, packQty, srcShipping } = this.state
+      itemColour, priceCurrency, dscntPercent, adminShipping, promoCode, weight, bulkSize, srcRegion, itemSize, fragileyn, blacklist, invalid, packQty, srcShipping, cooler, restricted } = this.state
     console.warn(await getUserID(), session_id);
 
     const formData = new FormData();
@@ -140,6 +140,9 @@ export default class EditTransactions extends Component {
     formData.append('invalid', invalid);
     formData.append('packQty', packQty);
     formData.append('srcShipping', srcShipping);
+
+    formData.append('cooler', cooler);
+    formData.append('restrictedItem', restricted);
 
     console.warn(formData);
 

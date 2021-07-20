@@ -11,7 +11,7 @@ import Welcome from '../../screen/user/Welcome';
 import ForgetPassword from '../../screen/user/ForgetPassword';
 import ChangePassword from '../../screen/user/ChangePassword';
 import Transactions from '../../screen/backoffice/Transactions';
-import EditTransactions from '../../screen/backoffice/EditTransaction';
+import Gpay from '../../screen/activity/Gpay';
 import Intro from '../../screen/onboarding/Intro';
 import Chat from '../../screen/Tele/Chat';
 
@@ -29,7 +29,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="splash"
+             initialRouteName="gpay"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
@@ -41,7 +41,7 @@ class AppStack extends Component {
             <Stack.Screen name="changepass" component={ChangePassword}   />
             <Stack.Screen name="home" component={Home}   />
             <Stack.Screen name="chat" component={Chat} />
-            <Stack.Screen name="edittransactions_" component={EditTransactions}   />
+            <Stack.Screen name="gpay" component={Gpay}   />
 
           </Stack.Navigator>
          </NavigationContainer>
