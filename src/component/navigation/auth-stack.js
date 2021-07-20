@@ -14,7 +14,7 @@ import Transactions from '../../screen/backoffice/Transactions';
 //import Gpay from '../../screen/activity/Gpay';
 import Intro from '../../screen/onboarding/Intro';
 import Chat from '../../screen/Tele/Chat';
-//import Apay from '../../screen/activity/Apay';
+import Apay from '../../screen/activity/Apay';
 
 class AppStack extends Component {
 
