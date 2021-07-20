@@ -98,6 +98,8 @@ export default class Splash extends Component {
     }
 
   }
+
+  
   async checkPermission() {
     const enabled = await messaging().hasPermission();
     if (enabled) {
