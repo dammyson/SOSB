@@ -1,6 +1,6 @@
 // React native and others libraries imports
 import React, { Component } from 'react';
-import { Alert, TextInput, ImageBackground, View, Dimensions, TouchableOpacity, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { Alert, TextInput, ImageBackground, View, Dimensions, TouchableOpacity, Image, StyleSheet, AsyncStorage,  Clipboard, } from 'react-native';
 import { Container, Content, Text, Button, Left, } from 'native-base';
 import {
   BarIndicator,
@@ -32,7 +32,7 @@ export default class Login extends Component {
 
   }
   async componentDidMount() {
-    this.setState({ token: await getFmc() })
+    this.setState({ token: await getFmc()})
 
   }
 
@@ -176,7 +176,13 @@ export default class Login extends Component {
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('forgetpass')}>
                     <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>Forgot Password </Text>
                   </TouchableOpacity>
+
+               
                 </View>
+
+                {/* <TouchableOpacity onPress={() => Clipboard.setString(this.state.token)}>
+                    <Text style={{ color: colors.primary_color, fontWeight: '400', fontSize: 13, }}>   L  </Text>
+                  </TouchableOpacity> */}
               </View>
 
             </View>

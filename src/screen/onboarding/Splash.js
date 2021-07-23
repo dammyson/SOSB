@@ -112,9 +112,6 @@ export default class Splash extends Component {
   }
 
   async getToken() {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
-    console.warn(fcmToken);
-    if (!fcmToken) {
       fcmToken = await messaging().getToken();
       console.warn(fcmToken);
       if (fcmToken) {
@@ -122,9 +119,7 @@ export default class Splash extends Component {
         console.warn(fcmToken);
         this.setState({ token: fcmToken })
       }
-    } else {
-      this.setState({ token: fcmToken })
-    }
+    
   }
 
 

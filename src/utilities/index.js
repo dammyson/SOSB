@@ -39,7 +39,7 @@ export const getEmail = async () => {
 };
 
 export const getFmc = async () => {
-  return AsyncStorage.getItem('FBToken')
+  return AsyncStorage.getItem('fcmToken')
 };
 
 export const getPaystackKey = () => {

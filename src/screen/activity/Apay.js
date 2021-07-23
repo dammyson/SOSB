@@ -12,6 +12,10 @@ const requestData: APayRequestDataType = {
       label: 'Item label',
       amount: '100.00',
     },
+    {
+      label: 'Item label',
+      amount: '100.00',
+    },
   ],
 }
 

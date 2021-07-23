@@ -30,7 +30,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="gpay"
+             initialRouteName="splash"
              >
 
             <Stack.Screen name="splash" component={Splash}   />
