@@ -53,8 +53,8 @@ export default class EditTransactions extends Component {
       invalid: 'n',
       packQty: '',
       srcShipping: '',
-      cooler:'n',
-      restricted:'n'
+      cooler:'0',
+      restricted:'0'
     };
   }
 
@@ -500,7 +500,7 @@ export default class EditTransactions extends Component {
                 <View regular style={styles.item}>
                   <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
-                    onPress={() => this.setState({ cooler: 'y' })}
+                    onPress={() => this.setState({ cooler: '1' })}
                     style={{
                       borderRadius: 15,
                       width: 25,
@@ -513,7 +513,7 @@ export default class EditTransactions extends Component {
                       marginRight: 5,
 
                     }}>
-                    {this.state.cooler == 'y' ?
+                    {this.state.cooler == '1' ?
                       <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
                       : null
                     }
@@ -522,7 +522,7 @@ export default class EditTransactions extends Component {
                   </TouchableOpacity>
                   <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
                   <TouchableOpacity
-                    onPress={() => this.setState({ cooler: 'n' })}
+                    onPress={() => this.setState({ cooler: '0' })}
                     style={{
                       borderRadius: 15,
                       width: 25,
@@ -536,7 +536,7 @@ export default class EditTransactions extends Component {
 
                     }}
                   >
-                    {this.state.cooler == 'n' ?
+                    {this.state.cooler == '0' ?
                       <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
                       : null
                     }
@@ -553,7 +553,7 @@ export default class EditTransactions extends Component {
                 <View regular style={styles.item}>
                   <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
-                    onPress={() => this.setState({ restricted: 'y' })}
+                    onPress={() => this.setState({ restricted: '1' })}
                     style={{
                       borderRadius: 15,
                       width: 25,
@@ -566,7 +566,7 @@ export default class EditTransactions extends Component {
                       marginRight: 5,
 
                     }}>
-                    {this.state.restricted == 'y' ?
+                    {this.state.restricted == '1' ?
                       <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
                       : null
                     }
@@ -575,7 +575,7 @@ export default class EditTransactions extends Component {
                   </TouchableOpacity>
                   <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
                   <TouchableOpacity
-                    onPress={() => this.setState({ restricted: 'n' })}
+                    onPress={() => this.setState({ restricted: '0' })}
                     style={{
                       borderRadius: 15,
                       width: 25,
@@ -589,7 +589,7 @@ export default class EditTransactions extends Component {
 
                     }}
                   >
-                    {this.state.restricted == 'n' ?
+                    {this.state.restricted == '0' ?
                       <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
                       : null
                     }
