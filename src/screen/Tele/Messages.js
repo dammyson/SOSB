@@ -25,7 +25,7 @@ export default class Messages extends Component {
             user_id: await getUserID(),
             session_id: await getSessionID(),
         });
-        this.getMessages()
+        // this.getMessages()
 
 
     }
@@ -57,7 +57,7 @@ export default class Messages extends Component {
                     this.setState({
                         loading: false,
                         messages: res.data.reverse()
-                        
+
                     })
 
                 } else {
@@ -76,9 +76,9 @@ export default class Messages extends Component {
 
         if (this.state.loading) {
             return (
-              <ActivityIndicator color={colors.primary_color} message={'Getting Conversations'} />
+                <ActivityIndicator color={colors.primary_color} message={'Getting Conversations'} />
             );
-          }
+        }
 
         var left = (
             <TouchableOpacity onPress={() => this.props.navigation.goBack()} >
@@ -93,32 +93,73 @@ export default class Messages extends Component {
 
         return (
             <ImageBackground
-            style={{
-                flex: 1
-            }}
-            source={require('../../assets/bg.png')}>
-            <Container style={{ backgroundColor: 'transparent' }}>
-                <Navbar left={left} title="Message History" />
-                <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
-                <Content scrollEnabled={false}>
-                    <View style={styles.body}>
-                      
-                        <View style={styles.mainbody}>
-                            <ScrollView style={{ flex: 1 }}>
-                                <View style={{ flex: 1,}}>
-                                    <View style={{ paddingTop: 20 }}>
-                                        <View style={{ marginBottom: 10, marginTop: 1, }}>
-                                            {this.renderResuts(this.state.messages)}
-                                        </View>
+                style={{
+                    flex: 1
+                }}
+                source={require('../../assets/bg.png')}>
+                <Container style={{ backgroundColor: 'transparent' }}>
+                    <Navbar left={left} title="Message History" />
+                    <StatusBar barStyle="light-content" hidden={false} backgroundColor={colors.primary_color} />
+                    <Content scrollEnabled={false}>
+                        <View style={styles.body}>
+                            {this.state.messages.length < 1 ?
+
+                                <View style={styles.mainbody}>
+                                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+                                        <TouchableOpacity  >
+                                            <Icon
+                                                name="arrowleft"
+                                                size={20}
+                                                type='antdesign'
+                                                color={colors.primary_color}
+                                            />
+                                        </TouchableOpacity>
+
+                                        <Text style={{
+                                            fontSize: 18, fontFamily: 'Montserrat-SemiBold',
+                                            marginTop: 15, color: colors.primary_color
+                                        }}> No Conversation found</Text>
+
+
+                                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center',   marginTop: 15,  justifyContent: 'center', borderColor: colors.primary_color, borderWidth: 1, borderRadius:5 , padding: 10,}}
+                                          onPress={() => this.props.navigation.navigate('chat')}>
+                                            <Text style={{
+                                                fontSize: 18, fontFamily: 'Montserrat-SemiBold',
+                                               color: colors.primary_color
+                                            }}> Start </Text>
+                                            <Icon
+                                                name="wechat"
+                                                size={20}
+                                                type='antdesign'
+                                                color={colors.primary_color}
+                                            />
+                                        </TouchableOpacity>
                                     </View>
 
                                 </View>
-                            </ScrollView>
-                        </View>
-                    </View>
-                </Content>
 
-            </Container>
+                                :
+
+                                <View style={styles.mainbody}>
+                                    <ScrollView style={{ flex: 1 }}>
+                                        <View style={{ flex: 1, }}>
+                                            <View style={{ paddingTop: 20 }}>
+                                                <View style={{ marginBottom: 10, marginTop: 1, }}>
+                                                    {this.renderResuts(this.state.messages)}
+                                                </View>
+                                            </View>
+
+                                        </View>
+                                    </ScrollView>
+                                </View>
+
+                            }
+
+
+                        </View>
+                    </Content>
+
+                </Container>
             </ImageBackground>
         );
     }
@@ -129,14 +170,14 @@ export default class Messages extends Component {
         for (var i = 0; i < data.length; i++) {
             let id = i;
             cat.push(
-                <TouchableOpacity style={styles.list_container} onPress={()=> this.props.navigation.navigate('chat')}>
+                <TouchableOpacity style={styles.list_container} onPress={() => this.props.navigation.navigate('chat')}>
                     <View style={{ flex: 1, justifyContent: 'center', marginLeft: 10 }}>
                         <Text style={styles.list_text}>{data[i].title}</Text>
                         <View style={{ marginTop: 5, flexDirection: 'row' }}>
                             <Text style={styles.time_text}> {data[i].date}</Text>
                         </View>
                     </View>
-    
+
                 </TouchableOpacity>
             );
         }
@@ -149,12 +190,12 @@ const styles = StyleSheet.create({
     body: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
-        
+
     },
     mainbody: {
         width: Dimensions.get('window').width,
         flex: 1,
-        paddingBottom:40
+        paddingBottom: 40
     },
 
     list_container: {
