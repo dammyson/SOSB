@@ -15,6 +15,7 @@ import Transactions from '../../screen/backoffice/Transactions';
 import Intro from '../../screen/onboarding/Intro';
 import Chat from '../../screen/Tele/Chat';
 import Apay from '../../screen/activity/Apay';
+import NoReciever from '../../screen/Tele/NoReciever';
 
 class AppStack extends Component {
 
@@ -42,6 +43,7 @@ class AppStack extends Component {
             <Stack.Screen name="changepass" component={ChangePassword}   />
             <Stack.Screen name="home" component={Home}   />
             <Stack.Screen name="chat" component={Chat} />
+            <Stack.Screen name="nr" component={NoReciever} />
            <Stack.Screen name="gpay" component={Apay}   /> 
 
           </Stack.Navigator>

@@ -4,7 +4,7 @@ import { View, Text, Dimensions, StatusBar, ScrollView, ImageBackground, StyleSh
 import { Container, Content, Button, Left, } from 'native-base';
 import colors from '../../component/color';
 import { Icon, Avatar } from 'react-native-elements';
-import Navbar from '../../component/Navbar';
+import Navbar from '../../component/Nav';
 import { BaseUrl, getUserID, getSessionID, getCurrency, getEmail } from '../../utilities';
 import ActivityIndicator from '../../component/View/ActivityIndicator';
 
@@ -25,7 +25,12 @@ export default class Messages extends Component {
             user_id: await getUserID(),
             session_id: await getSessionID(),
         });
-        // this.getMessages()
+
+
+        this.getMessages()
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.getMessages()
+        });
 
 
     }
@@ -108,9 +113,9 @@ export default class Messages extends Component {
                                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
                                         <TouchableOpacity  >
                                             <Icon
-                                                name="arrowleft"
-                                                size={20}
-                                                type='antdesign'
+                                                name="trash"
+                                                size={30}
+                                                type='entypo'
                                                 color={colors.primary_color}
                                             />
                                         </TouchableOpacity>
@@ -121,8 +126,8 @@ export default class Messages extends Component {
                                         }}> No Conversation found</Text>
 
 
-                                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center',   marginTop: 15,  justifyContent: 'center', borderColor: colors.primary_color, borderWidth: 1, borderRadius:5 , padding: 10,}}
-                                          onPress={() => this.props.navigation.navigate('chat')}>
+                                        {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center',   marginTop: 15,  justifyContent: 'center', borderColor: colors.primary_color, borderWidth: 1, borderRadius:5 , padding: 10,}}
+                                          onPress={() => this.props.navigation.navigate('nr')}>
                                             <Text style={{
                                                 fontSize: 18, fontFamily: 'Montserrat-SemiBold',
                                                color: colors.primary_color
@@ -133,7 +138,7 @@ export default class Messages extends Component {
                                                 type='antdesign'
                                                 color={colors.primary_color}
                                             />
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                     </View>
 
                                 </View>
@@ -158,7 +163,15 @@ export default class Messages extends Component {
 
                         </View>
                     </Content>
-
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('nr')} style={styles.fabButton} >
+                        <Icon
+                            active
+                            name="wechat"
+                            type='antdesign'
+                            color='#fff'
+                            size={25}
+                        />
+                    </TouchableOpacity>
                 </Container>
             </ImageBackground>
         );
@@ -221,6 +234,17 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Medium',
         flexDirection: 'row',
         color: colors.primary_color + '60'
+    },
+    fabButton: {
+        height: 60,
+        width: 60,
+        borderRadius: 200,
+        position: 'absolute',
+        bottom: 55,
+        right: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#004701',
     },
 });
 
