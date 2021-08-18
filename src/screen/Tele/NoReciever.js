@@ -34,7 +34,7 @@ export default class NoReciever extends Component {
         this.setState({ loading: true })
         const formData = new FormData();
 
-        formData.append('code', "shopper");
+        formData.append('code', "customer");
         formData.append('action', "sendchatwithoutreceiver");
         formData.append('msg', message);
         formData.append('outgoingmsgid', user_id);

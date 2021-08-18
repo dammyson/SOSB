@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, AsyncStorage, StyleSheet, ImageBackground } from 'react-native';
 import { Container, Content, Text, View, Grid, Col, Left, Right, Button, Item } from 'native-base';
+import { GooglePay, RequestDataType, AllowedCardNetworkType, AllowedCardAuthMethodsType } from 'react-native-google-pay'
 
 
 // Our custom files and classes import
@@ -24,39 +25,80 @@ export default class ConfirmOrder extends Component {
       loading: false,
       user_id: '',
       session_id: '',
-      currency:''
+      currency: ''
 
 
     };
   }
 
+  directRequestData: RequestDataType =   {
+    cardPaymentMethod: {
+      tokenizationSpecification: {
+        type: 'DIRECT',
+        publicKey: 'BOdoXP+9Aq473SnGwg3JU1aiNpsd9vH2ognq4PtDtlLGa3Kj8TPf+jaQNPyDSkh3JUhiS0KyrrlWhAgNZKHYF2Y=',
+      },
+      allowedCardNetworks,
+      allowedCardAuthMethods,
+    },
+    transaction: {
+      totalPrice: '123',
+      totalPriceStatus: 'FINAL',
+      currencyCode: 'NGN',
+    },
+    merchantName: 'Example Merchant',
+  }
+
   async componentWillMount() {
     const { paymentDetails, paymentinfo } = this.props.route.params;
-   
-    console.warn( paymentDetails, paymentinfo)
+
+    console.warn(paymentDetails, paymentinfo)
     if (paymentDetails) {
       this.setState({ paymentDetails: paymentDetails, paymentinfo: paymentinfo });
       console.warn(paymentDetails.billadd.addressLine1);
     }
-   
+
 
   }
 
 
   async componentDidMount() {
+    if (Platform.OS === 'android') {
+      GooglePay.setEnvironment(GooglePay.ENVIRONMENT_TEST)
+    }
     this.setState({
       user_id: await getUserID(),
       session_id: await getSessionID(),
-      currency: await getCurrency() 
+      currency: await getCurrency()
     });
 
-}
+  }
+
+
+  payWithGooglePay = (requestData: RequestDataType) => {
+    // Check if Google Pay is available
+    console.warn("Button clicked");
+    GooglePay.isReadyToPay(allowedCardNetworks, allowedCardAuthMethods).then((ready) => {
+      if (ready) {
+        // Request payment token
+        GooglePay.requestPayment(requestData)
+          .then(this.handleSuccess)
+          .catch(this.handleError)
+      }
+    })
+  }
+
+  handleSuccess = (token: string) => {
+    // Send a token to your payment gateway
+    Alert.alert('Success', `token: ${token}`)
+  }
+
+  handleError = (error: any) => Alert.alert('Error', `${error.code}\n${error.message}`)
 
 
 
 
   getBill() {
-    const { user_id, session_id,currency, paymentDetails } = this.state
+    const { user_id, session_id, currency, paymentDetails } = this.state
 
     this.setState({ loading: true })
 
@@ -102,10 +144,10 @@ export default class ConfirmOrder extends Component {
 
   currencyFormat(n) {
     return parseFloat(n).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-}
+  }
 
 
- 
+
 
   render() {
     const { paymentDetails, paymentinfo } = this.state
@@ -136,59 +178,59 @@ export default class ConfirmOrder extends Component {
 
     return (
       <ImageBackground
-      style={{
-       flex:1
-      }}
-      source={require('../../assets/bg.png')}>
-      <Container style={{ backgroundColor: 'transparent' }}>
-      <Navbar onCurrencyChange={(text)=> this.setState({currency: text})} left={left} right={right} title="Confirm Order" />
-      <Content padder>
-        <View  style={{marginHorizontal: 10,}}>
-          <Text style={{marginTop: 15, fontSize: 14, fontFamily: 'NunitoSans-Bold',}}>Order Details </Text>
+        style={{
+          flex: 1
+        }}
+        source={require('../../assets/bg.png')}>
+        <Container style={{ backgroundColor: 'transparent' }}>
+          <Navbar onCurrencyChange={(text) => this.setState({ currency: text })} left={left} right={right} title="Confirm Order" />
+          <Content padder>
+            <View style={{ marginHorizontal: 10, }}>
+              <Text style={{ marginTop: 15, fontSize: 14, fontFamily: 'NunitoSans-Bold', }}>Order Details </Text>
 
 
 
-          <Text style={styles.actionbutton}>Billing Address:</Text>
-           <View regular style={styles.item}>             
-           <Text style={styles.actionbuttonText}>{paymentDetails.billadd.addressLine1}</Text>               
-          </View>
-          
-         
-          <Text style={styles.actionbutton}>Shipping Address: </Text>
-          <View regular style={styles.item}>             
-          <Text style={styles.actionbuttonText}>{paymentDetails.billadd.addressLine1}</Text>               
-          </View>
-
-          <Text style={styles.actionbutton}>Shipping Method: </Text>
-           <View regular style={styles.item}>           
-           <Text style={styles.actionbuttonText}>{paymentDetails.shipmed.name}</Text>               
-          </View>
-
-          <Text style={styles.actionbutton}>paymentDetails Method: </Text>
-          <View regular style={styles.item}>         
-          <Text style={styles.actionbuttonText}>{paymentDetails.paymethod}</Text>               
-          </View>
+              <Text style={styles.actionbutton}>Billing Address:</Text>
+              <View regular style={styles.item}>
+                <Text style={styles.actionbuttonText}>{paymentDetails.billadd.addressLine1}</Text>
+              </View>
 
 
-          <Text style={styles.actionbutton}>Total: </Text>
-          <View regular style={styles.item}>          
-          <Text style={styles.actionbuttonText}> {this.state.currency} { this.currencyFormat(paymentinfo.fullBill)}</Text>               
-          </View>
+              <Text style={styles.actionbutton}>Shipping Address: </Text>
+              <View regular style={styles.item}>
+                <Text style={styles.actionbuttonText}>{paymentDetails.billadd.addressLine1}</Text>
+              </View>
+
+              <Text style={styles.actionbutton}>Shipping Method: </Text>
+              <View regular style={styles.item}>
+                <Text style={styles.actionbuttonText}>{paymentDetails.shipmed.name}</Text>
+              </View>
+
+              <Text style={styles.actionbutton}>paymentDetails Method: </Text>
+              <View regular style={styles.item}>
+                <Text style={styles.actionbuttonText}>{paymentDetails.paymethod}</Text>
+              </View>
+
+
+              <Text style={styles.actionbutton}>Total: </Text>
+              <View regular style={styles.item}>
+                <Text style={styles.actionbuttonText}> {this.state.currency} {this.currencyFormat(paymentinfo.fullBill)}</Text>
+              </View>
 
 
 
-        </View>
-        <View style={{marginTop: 10, marginBottom: 10, paddingBottom: 7}}>
-        <View>
-                    <Button onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
-                      <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Place Order </Text>
-                    </Button>
-                  </View>
-        </View>
-      </Content>
-    </Container>
-    </ImageBackground>
-     
+            </View>
+            <View style={{ marginTop: 10, marginBottom: 10, paddingBottom: 7 }}>
+              <View>
+                <Button onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
+                  <Text style={{ color: '#fdfdfd', fontWeight: '600' }}>Place Order </Text>
+                </Button>
+              </View>
+            </View>
+          </Content>
+        </Container>
+      </ImageBackground>
+
     );
   }
 
@@ -199,11 +241,20 @@ export default class ConfirmOrder extends Component {
     }
     else if (paymentDetails.paymethod == 'paypal') {
       this.props.navigation.navigate('paypal', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
-    } 
+    }
     else if (paymentDetails.paymethod == 'rave') {
-      this.props.navigation.navigate('rave', { paymentinfo: paymentinfo , paymentDetails: paymentDetails});
-    }else {
-      this.props.navigation.navigate('paystack', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
+      this.props.navigation.navigate('rave', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
+    } else if (paymentDetails.paymethod == 'Google Pay') {
+      this.payWithGooglePay(directRequestData)
+      //this.props.navigation.navigate('paypal', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
+    }
+    else if (paymentDetails.paymethod == 'Apple Pay') {
+      this.payWithGooglePay(this.directRequestData)
+      //this.props.navigation.navigate('paypal', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
+    }
+    else {
+     
+      // this.props.navigation.navigate('paystack', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
     }
   }
 
@@ -266,3 +317,65 @@ const styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular'
   },
 });
+
+
+
+const allowedCardNetworks: AllowedCardNetworkType[] = ['VISA', 'MASTERCARD']
+const allowedCardAuthMethods: AllowedCardAuthMethodsType[] = ['PAN_ONLY', 'CRYPTOGRAM_3DS']
+
+const gatewayRequestData: RequestDataType = {
+  cardPaymentMethod: {
+    tokenizationSpecification: {
+      type: 'PAYMENT_GATEWAY',
+      gateway: 'example',
+      gatewayMerchantId: 'exampleGatewayMerchantId',
+    },
+    allowedCardNetworks,
+    allowedCardAuthMethods,
+  },
+  transaction: {
+    totalPrice: '123',
+    totalPriceStatus: 'FINAL',
+    currencyCode: 'NGN',
+  },
+  merchantName: 'Example Merchant',
+}
+
+const directRequestData: RequestDataType =   {
+  cardPaymentMethod: {
+    tokenizationSpecification: {
+      type: 'DIRECT',
+      publicKey: 'BOdoXP+9Aq473SnGwg3JU1aiNpsd9vH2ognq4PtDtlLGa3Kj8TPf+jaQNPyDSkh3JUhiS0KyrrlWhAgNZKHYF2Y=',
+    },
+    allowedCardNetworks,
+    allowedCardAuthMethods,
+  },
+  transaction: {
+    totalPrice: '123',
+    totalPriceStatus: 'FINAL',
+    currencyCode: 'NGN',
+  },
+  merchantName: 'Example Merchant',
+}
+
+const stripeRequestData: RequestDataType = {
+  cardPaymentMethod: {
+    tokenizationSpecification: {
+      type: 'PAYMENT_GATEWAY',
+      gateway: 'stripe',
+      gatewayMerchantId: '',
+      stripe: {
+        publishableKey: 'pk_test_51JOHB6LfHLw3qgpQ2hcpZQeCws9fauJxjEABLAQyMj733jU0oy4TNNmzZkhUo2J9tCyRVI1pjGaS97ELp3MurcE9007wvrxxCT',
+        version: '2018-11-08',
+      },
+    },
+    allowedCardNetworks,
+    allowedCardAuthMethods,
+  },
+  transaction: {
+    totalPrice: '123',
+    totalPriceStatus: 'FINAL',
+    currencyCode: 'NGN',
+  },
+  merchantName: 'Example Merchant',
+}

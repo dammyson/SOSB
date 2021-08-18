@@ -1013,7 +1013,7 @@
 				);
 				INFOPLIST_FILE = OfidyShoppingBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.07;
+				MARKETING_VERSION = 1.09;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1043,7 +1043,7 @@
 				);
 				INFOPLIST_FILE = OfidyShoppingBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.07;
+				MARKETING_VERSION = 1.09;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

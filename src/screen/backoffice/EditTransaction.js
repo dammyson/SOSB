@@ -34,7 +34,7 @@ export default class EditTransactions extends Component {
       show_page: false,
       show_bulk: false,
       country_name: 'USA',
-      bulksize_name: 'Small',
+      bulksize_name: 'small',
       transID: '',
       prodName: '',
       prodQty: '',
@@ -45,7 +45,7 @@ export default class EditTransactions extends Component {
       adminShipping: '',
       promoCode: '',
       weight: '',
-      bulkSize: '',
+      bulkSize: 'small',
       srcRegion: '12',
       itemSize: '',
       fragileyn: 'n',
@@ -325,7 +325,7 @@ export default class EditTransactions extends Component {
               <Text style={styles.actionbutton}>bulkSize</Text>
               <View regular style={styles.item}>
                 <TouchableOpacity onPress={() => this.setState({ show_bulk: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.bulksize_name == 'Select Bulk Size' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.bulksize_name}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: "#000", fontSize: 12, marginRight: 5 }]}>{this.state.bulksize_name}</Text>
                 </TouchableOpacity>
               </View>
 
@@ -334,7 +334,7 @@ export default class EditTransactions extends Component {
               <Text style={styles.actionbutton}>srcRegion</Text>
               <View regular style={styles.item}>
                 <TouchableOpacity onPress={() => this.setState({ show_country: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.country_name == 'Select Region' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.country_name}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: "#000", fontSize: 12, marginRight: 5 }, this.state.country_name == 'Select Region' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.country_name}</Text>
                 </TouchableOpacity>
               </View>
 
@@ -654,7 +654,9 @@ export default class EditTransactions extends Component {
     )
   }
   onSelectBulk(item) {
-    this.setState({ show_bulk: false, bulkSize: item.id, bulksize_name: item.name })
+    console.warn(item)
+    this.setState({ bulksize_name: item.name })
+    this.setState({ show_bulk: false, bulkSize: item.id, })
   }
 
 

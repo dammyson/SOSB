@@ -44,10 +44,10 @@ export default class Messages extends Component {
         this.setState({ loading: true })
         const formData = new FormData();
 
-        formData.append('code', "shopper");
-        formData.append('action', "viewShopperAssignedtoCustomer");
+        formData.append('code', "backoffice");
+        formData.append('action', "chat");
 
-        formData.append('custid', message_info.user_id);
+        formData.append('custid', user_id);
         console.warn(formData);
 
         fetch(BaseUrl(), {
@@ -146,7 +146,7 @@ export default class Messages extends Component {
                                 :
 
                                 <View style={styles.mainbody}>
-                                    <ScrollView style={{ flex: 1 }}>
+                                    <ScrollView style={{ flex: 1, }}>
                                         <View style={{ flex: 1, }}>
                                             <View style={{ paddingTop: 20 }}>
                                                 <View style={{ marginBottom: 10, marginTop: 1, }}>
@@ -183,11 +183,12 @@ export default class Messages extends Component {
         for (var i = 0; i < data.length; i++) {
             let id = i;
             cat.push(
-                <TouchableOpacity style={styles.list_container} onPress={() => this.props.navigation.navigate('chat')}>
+                <TouchableOpacity style={styles.list_container} onPress={() => this.props.navigation.navigate('chat', {message_info: data[id]} )}>
                     <View style={{ flex: 1, justifyContent: 'center', marginLeft: 10 }}>
-                        <Text style={styles.list_text}>{data[i].title}</Text>
+                    <Text style={styles.list_name}>{data[i].fromforename} {data[i].fromsurname}</Text>
+                        <Text style={styles.list_text}>{data[i].MessageChat}</Text>
                         <View style={{ marginTop: 5, flexDirection: 'row' }}>
-                            <Text style={styles.time_text}> {data[i].date}</Text>
+                            <Text style={styles.time_text}> {data[i].MessageDate}</Text>
                         </View>
                     </View>
 
@@ -222,16 +223,23 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         paddingBottom: 5
     },
-    list_text: {
-        fontSize: 18,
-        fontFamily: 'Montserrat-SemiBold',
+    list_name: {
+        fontSize: 13,
+        fontFamily: 'NunitoSans-Bold',
         flexDirection: 'row',
-        marginTop: 15,
-        color: colors.red
+        marginTop: 5,
+        color: colors.primary_color
+    },
+    list_text: {
+        fontSize: 13,
+        fontFamily: 'NunitoSans-Medium',
+        flexDirection: 'row',
+        marginTop: 1,
+        color: colors.primary_color
     },
     time_text: {
-        fontSize: 13,
-        fontFamily: 'Montserrat-Medium',
+        fontSize: 11,
+        fontFamily: 'NunitoSans-Medium',
         flexDirection: 'row',
         color: colors.primary_color + '60'
     },

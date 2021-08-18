@@ -62,7 +62,7 @@ export const getUser = async () => {
 };
 
 
-export const showTopNotification = (type, message, duration)=> {
+export const showTopNotification = (type, message, duration =200)=> {
   showMessage({
     message: message,
     type: type,

@@ -47,7 +47,7 @@ const stripeRequestData: RequestDataType = {
       gateway: 'stripe',
       gatewayMerchantId: '',
       stripe: {
-        publishableKey: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
+        publishableKey: 'pk_test_51JOHB6LfHLw3qgpQ2hcpZQeCws9fauJxjEABLAQyMj733jU0oy4TNNmzZkhUo2J9tCyRVI1pjGaS97ELp3MurcE9007wvrxxCT',
         version: '2018-11-08',
       },
     },

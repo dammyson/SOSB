@@ -11,7 +11,7 @@ import Welcome from '../../screen/user/Welcome';
 import ForgetPassword from '../../screen/user/ForgetPassword';
 import ChangePassword from '../../screen/user/ChangePassword';
 import Transactions from '../../screen/backoffice/Transactions';
-//import Gpay from '../../screen/activity/Gpay';
+import Gpay from '../../screen/activity/Gpay';
 import Intro from '../../screen/onboarding/Intro';
 import Chat from '../../screen/Tele/Chat';
 import Apay from '../../screen/activity/Apay';
@@ -31,9 +31,7 @@ class AppStack extends Component {
               //headerLeft: null,
               headerShown: false,
              }}
-             initialRouteName="splash"
-             >
-
+             initialRouteName="splash">
             <Stack.Screen name="splash" component={Splash}   />
             <Stack.Screen name="login" component={Login}   />
             <Stack.Screen name="reg" component={Register}   />

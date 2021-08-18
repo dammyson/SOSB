@@ -23,13 +23,13 @@ export default class Chat extends Component {
 
     async componentDidMount() {
         const { message_info } = this.props.route.params;
-        console.warn(message_info);
+        console.warn(message_info, await getUserID());
         this.setState({
             user_id: await getUserID(),
             session_id: await getSessionID(),
             message_info: message_info
         });
-        this.getMessages()
+       // this.getMessages()
 
 
     }
@@ -46,8 +46,8 @@ export default class Chat extends Component {
         formData.append('code', "shopper");
         formData.append('action', "viewMessages");
 
-        formData.append('incomingMsgId', message_info.user_id);
-        formData.append('outgoingMsgId', message_info.custorm_id);
+        formData.append('incomingMsgId', message_info.FromCustID);
+        formData.append('outgoingMsgId', message_info.ToCustID);
 
         console.warn(formData);
 
@@ -104,8 +104,8 @@ export default class Chat extends Component {
         formData.append('code', "shopper");
         formData.append('action', "AddNewMessage");
 
-        formData.append('incomingMsgId', message_info.user_id);
-        formData.append('outgoingMsgId', message_info.custorm_id);
+        formData.append('incomingMsgId', message_info.FromCustID);
+        formData.append('outgoingMsgId', message_info.ToCustID);
         formData.append('Msg', message);
 
         console.warn(formData);
@@ -248,7 +248,7 @@ export default class Chat extends Component {
                     <View style={[styles.chat_re_container]}>
                         <View>
                             <Text style={styles.re_text}>{item.MessageChat}</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 5 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 5, marginLeft:9 }}>
                             <Text style={styles.send_time}>{Moment(item.MessageDate).format('llll')}</Text>
                             </View>
 
@@ -259,7 +259,7 @@ export default class Chat extends Component {
                     <View style={[styles.chat_send_container]}>
                         <View>
                             <Text style={styles.send_text}>{item.MessageChat}</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 5 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 5, marginLeft:9 }}>
                                 <Text style={styles.send_time}>{Moment(item.MessageDate).format('llll')}</Text>
                             </View>
 
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     send_time: {
         color: colors.white,
         fontFamily: 'Montserrat-Medium',
-        fontSize: 10,
+        fontSize: 8,
         marginRight: 17,
     }
 
