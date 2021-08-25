@@ -364,7 +364,6 @@ export default class Home extends Component {
                   return res;
                 }
               }
-        
               history.pushState = wrap(history.pushState);
               history.replaceState = wrap(history.replaceState);
               window.addEventListener('popstate', function() {
@@ -416,7 +415,6 @@ export default class Home extends Component {
                   type='antdesign'
                   color='#D3D3D3'
                 />
-
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => this.home()}>
@@ -429,9 +427,6 @@ export default class Home extends Component {
 
                 />
               </TouchableOpacity>
-
-
-
               {this.state.loading ?
                 <View style={{ marginLeft: 30 }}>
                   <ActivityIndicator size="small" color="#fff" />
@@ -443,14 +438,9 @@ export default class Home extends Component {
                     type='material-community'
                     color='#fff'
                   />
-
                 </TouchableOpacity>
               }
-
-
             </View>
-
-
             <View style={{ alignSelf: "center", marginRight: 10 }}>
               <TouchableOpacity onPress={() => this.goForward()}>
 
@@ -463,8 +453,6 @@ export default class Home extends Component {
               </TouchableOpacity>
             </View>
           </View>
-
-
         </View>
 
         {

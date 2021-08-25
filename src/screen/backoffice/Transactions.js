@@ -141,12 +141,10 @@ export default class Transactions extends Component {
           onPress={() => this.editItemPressed(item)}
         >
           <Body style={{ paddingLeft: 10 }}>
-            <Text style={{ fontSize: 18 }}>
-              {item.quantity > 1 ? item.quantity + "x " : null}
-              {item.title}
-            </Text>
+
             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>{item.itemName}</Text>
             <Text style={{ fontSize: 13, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.unitPrice}</Text>
+            <Text numberOfLines={2} style={{ fontSize: 10, fontFamily: "NunitoSans-Regular", }}>url: {item.url}</Text>
           </Body>
           <Right>
             <Button style={{ marginLeft: -25 }} transparent onPress={() => this.editItemPressed(item)}>
