@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     backgroundColor: colors.grey,
     fontFamily: 'NunitoSans-Regular',
-    fontSize: 12,
+    fontSize: 13,
   },
   actionbutton: {
     marginTop: 7,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   actionbuttonText: {
     opacity: 0.9,
-    fontSize: 12,
+    fontSize: 13,
     marginBottom: -5,
     color: '#000',
     textAlign: 'left',

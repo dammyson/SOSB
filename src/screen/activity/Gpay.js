@@ -5,74 +5,76 @@ import { GooglePay, RequestDataType, AllowedCardNetworkType, AllowedCardAuthMeth
 const allowedCardNetworks: AllowedCardNetworkType[] = ['VISA', 'MASTERCARD']
 const allowedCardAuthMethods: AllowedCardAuthMethodsType[] = ['PAN_ONLY', 'CRYPTOGRAM_3DS']
 
-const gatewayRequestData: RequestDataType = {
-  cardPaymentMethod: {
-    tokenizationSpecification: {
-      type: 'PAYMENT_GATEWAY',
-      gateway: 'example',
-      gatewayMerchantId: 'exampleGatewayMerchantId',
-    },
-    allowedCardNetworks,
-    allowedCardAuthMethods,
-  },
-  transaction: {
-    totalPrice: '123',
-    totalPriceStatus: 'FINAL',
-    currencyCode: 'NGN',
-  },
-  merchantName: 'Example Merchant',
-}
 
-const directRequestData: RequestDataType = {
-  cardPaymentMethod: {
-    tokenizationSpecification: {
-      type: 'DIRECT',
-      publicKey: 'BOdoXP+9Aq473SnGwg3JU1aiNpsd9vH2ognq4PtDtlLGa3Kj8TPf+jaQNPyDSkh3JUhiS0KyrrlWhAgNZKHYF2Y=',
-    },
-    allowedCardNetworks,
-    allowedCardAuthMethods,
-  },
-  transaction: {
-    totalPrice: '123',
-    totalPriceStatus: 'FINAL',
-    currencyCode: 'NGN',
-  },
-  merchantName: 'Example Merchant',
-}
+
+
+// const gatewayRequestData: RequestDataType = {
+//   cardPaymentMethod: {
+//     tokenizationSpecification: {
+//       type: 'PAYMENT_GATEWAY',
+//       gateway: 'example',
+//       gatewayMerchantId: 'exampleGatewayMerchantId',
+//     },
+//     allowedCardNetworks,
+//     allowedCardAuthMethods,
+//   },
+//   transaction: {
+//     totalPrice: '123',
+//     totalPriceStatus: 'FINAL',
+//     currencyCode: 'NGN',
+//   },
+//   merchantName: 'Example Merchant',
+// }
+
+// const directRequestData: RequestDataType = {
+//   cardPaymentMethod: {
+//     tokenizationSpecification: {
+//       type: 'DIRECT',
+//       publicKey: 'BOdoXP+9Aq473SnGwg3JU1aiNpsd9vH2ognq4PtDtlLGa3Kj8TPf+jaQNPyDSkh3JUhiS0KyrrlWhAgNZKHYF2Y=',
+//     },
+//     allowedCardNetworks,
+//     allowedCardAuthMethods,
+//   },
+//   transaction: {
+//     totalPrice: '123',
+//     totalPriceStatus: 'FINAL',
+//     currencyCode: 'NGN',
+//   },
+//   merchantName: 'Example Merchant',
+// }
 
 const stripeRequestData: RequestDataType = {
   cardPaymentMethod: {
     tokenizationSpecification: {
       type: 'PAYMENT_GATEWAY',
       gateway: 'stripe',
-      gatewayMerchantId: '',
+      gatewayMerchantId: 'BCR2DN6TZ6V4ZRA3',
       stripe: {
-        publishableKey: 'pk_test_51JOHB6LfHLw3qgpQ2hcpZQeCws9fauJxjEABLAQyMj733jU0oy4TNNmzZkhUo2J9tCyRVI1pjGaS97ELp3MurcE9007wvrxxCT',
-        version: '2018-11-08',
+        publishableKey: 'pk_live_51JFfSQAs9RBN07fbRUENN33RKXQrT8kbAYc2mjNNsQMjoo6bLRjAzOtjtGFI6NUrR8eWBhGkTLNaWakA5N9MqG8K00HYvzMhec',
+        version: '2020-08-27',
       },
     },
     allowedCardNetworks,
     allowedCardAuthMethods,
   },
   transaction: {
-    totalPrice: '123',
+    totalPrice: '1.00',
     totalPriceStatus: 'FINAL',
     currencyCode: 'NGN',
   },
-  merchantName: 'Example Merchant',
+  merchantName: 'SoftSkan Technologies LLC',
 }
 
 export default class App extends Component {
   componentDidMount() {
     // Set the environment before the payment request
     if (Platform.OS === 'android') {
-      GooglePay.setEnvironment(GooglePay.ENVIRONMENT_TEST)
+      GooglePay.setEnvironment(GooglePay.ENVIRONMENT_PRODUCTION)
     }
   }
 
   payWithGooglePay = (requestData: RequestDataType) => {
     // Check if Google Pay is available
-    console.warn("Button clicked");
     GooglePay.isReadyToPay(allowedCardNetworks, allowedCardAuthMethods).then((ready) => {
       if (ready) {
         // Request payment token
@@ -88,7 +90,10 @@ export default class App extends Component {
     Alert.alert('Success', `token: ${token}`)
   }
 
-  handleError = (error: any) => Alert.alert('Error', `${error.code}\n${error.message}`)
+  handleError = (error: any) => {
+    console.warn(`${error}\n${error.message}`)
+    Alert.alert('Error', `${error.code}\n${error.message}`)
+  }
 
   render() {
     return (

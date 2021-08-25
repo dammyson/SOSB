@@ -215,7 +215,7 @@ export default class Chat extends Component {
                                         autoCorrect={false}
                                         inlineImageLeft='ios-call'
                                         onSubmitEditing={()=>this.processSendMessage()}
-                                        style={{ marginLeft: 10, flex: 1, color: colors.primary_color, fontFamily: 'Montserrat-Medium', fontSize: 12 }}
+                                        style={{ marginLeft: 10, flex: 1, color: colors.primary_color, fontFamily: 'Montserrat-Medium', fontSize: 13 }}
                                         onChangeText={text => this.setState({ message: text })}
 
                                     />

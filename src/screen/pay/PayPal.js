@@ -56,6 +56,20 @@ export default class Paypal extends Component {
             "&bn=PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" +
             "&custom=" + paymentinfo.invoiceid + "|" + address + "|" + address + paymentinfo.shipBill + "&Z3JncnB0=#/checkout/openButton";
 
+
+            // var postData3 = "cmd=_xclick" +
+            // "&business=" + (await getCurrency() == "USD" ? "93KXD9JD8JVZA" : "DGMYBJ9GE6ZVA") +
+            // "&lc=GB" +
+            // "&item_name\" value=\"All items in cart\">\n" +
+            // "&amount=" + 1.00 +
+            // "&currency_code=" + await getCurrency() +
+            // "&button_subtype=services" +
+            // "&no_note=1" +
+            // "&no_shipping=1" +
+            // "&shipping=" + "1652 seven pines" +
+            // "&bn=PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" +
+            // "&custom=" + "1234" + "|" + "1652 seven pines"  + "|" + "1652 seven pines"  + "1.00"+ "&Z3JncnB0=#/checkout/openButton";
+
         var url = "https://www.paypal.com/cgi-bin/webscr?";
         console.warn(url + postData);
          this.setState({url: url+postData})
@@ -77,10 +91,9 @@ export default class Paypal extends Component {
     _onNavigationStateChange(navState) {
         console.warn(navState)
         let instant_array = []
-        if (navState.url.includes('https://www.paypal.com/webapps/hermes?token=')) {
-           
+        if (navState.url.includes('https://www.paypal.com/webapps/hermes?token=' || navState.url.includes('http://www.ofidy.com/payment-complete.php'))) {
+            console.warn("Well", navState.url)
                 this.processPostPayment()
-          
           } else {
             
           }
@@ -127,18 +140,13 @@ export default class Paypal extends Component {
           });
         }
     
-
-
-
     render() {
-
 
         if (this.state.loading) {
             return (
                 <ActivityIndicator color={colors.primary_color} message={'Processing payment'} />
             );
         }
-
 
         var left = (
             <TouchableOpacity onPress={() => this.props.navigation.goBack()} >

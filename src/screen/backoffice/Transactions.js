@@ -146,7 +146,7 @@ export default class Transactions extends Component {
               {item.title}
             </Text>
             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>{item.itemName}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.unitPrice}</Text>
+            <Text style={{ fontSize: 13, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.unitPrice}</Text>
           </Body>
           <Right>
             <Button style={{ marginLeft: -25 }} transparent onPress={() => this.editItemPressed(item)}>

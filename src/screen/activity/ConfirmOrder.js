@@ -94,9 +94,6 @@ export default class ConfirmOrder extends Component {
 
   handleError = (error: any) => Alert.alert('Error', `${error.code}\n${error.message}`)
 
-
-
-
   getBill() {
     const { user_id, session_id, currency, paymentDetails } = this.state
 
@@ -244,9 +241,8 @@ export default class ConfirmOrder extends Component {
     }
     else if (paymentDetails.paymethod == 'rave') {
       this.props.navigation.navigate('rave', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
-    } else if (paymentDetails.paymethod == 'Google Pay') {
-      this.payWithGooglePay(directRequestData)
-      //this.props.navigation.navigate('paypal', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
+    } else if (paymentDetails.paymethod == 'Stripe Pay') {
+      this.props.navigation.navigate('stripe', { paymentinfo: paymentinfo, paymentDetails: paymentDetails });
     }
     else if (paymentDetails.paymethod == 'Apple Pay') {
       this.payWithGooglePay(this.directRequestData)

@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     },
 
     nameList: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         flex: 1,
         marginLeft: 15,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Proxima-nova-Regular',
     },
     numberList: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         flex: 1,
         marginLeft: 15,

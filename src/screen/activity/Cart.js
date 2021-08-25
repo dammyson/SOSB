@@ -131,12 +131,12 @@ export default class Cart extends Component {
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => this.checkout()} style={styles.buttonContainer} block iconLeft>
                   <Icon name="shoppingcart" color={colors.white} size={15} type='antdesign' />
-                  <Text style={{ fontFamily: "NunitoSans-SemiBold", textAlign: 'center', fontSize: 12, color: '#fdfdfd', flex: 1 }}>Checkout</Text>
+                  <Text style={{ fontFamily: "NunitoSans-SemiBold", textAlign: 'center', fontSize: 13, color: '#fdfdfd', flex: 1 }}>Checkout</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => this.removeAllPressed()} style={styles.buttonBortherContainer} block iconRight transparent>
-                  <Text style={{ color: colors.primary_color, fontFamily: "NunitoSans-SemiBold", flex: 1, textAlign: 'center', fontSize: 12, }}>Emtpy Cart</Text>
+                  <Text style={{ color: colors.primary_color, fontFamily: "NunitoSans-SemiBold", flex: 1, textAlign: 'center', fontSize: 13, }}>Emtpy Cart</Text>
                   <Icon color={colors.primary_color} size={15} type='antdesign' name='delete' />
                 </TouchableOpacity>
               </View>
@@ -166,7 +166,7 @@ export default class Cart extends Component {
               {item.title}
             </Text>
             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-SemiBold", marginBottom: 2 }}>{item.name}</Text>
-            <Text style={{ fontSize: 12, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.unitPrice}</Text>
+            <Text style={{ fontSize: 13, fontFamily: "NunitoSans-Regular", }}>price: {item.currency} {item.unitPrice}</Text>
           </Body>
           <Right>
             <Button style={{ marginLeft: -25 }} transparent onPress={() => this.removeItemPressed(item)}>

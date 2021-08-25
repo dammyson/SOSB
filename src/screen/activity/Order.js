@@ -28,6 +28,7 @@ export default class Order extends Component {
     this.state = {
       loading: false,
       aut: '',
+      miles: '',
       user_id: '',
       session_id: '',
       shipping_address: 'Select address',
@@ -75,7 +76,7 @@ export default class Order extends Component {
 
   onLoadPaymentInfo(paymentDetails) {
 
-    const { session_id, currency } = this.state
+    const { session_id, currency, miles } = this.state
     console.warn(paymentDetails)
     this.setState({ loading: true })
     const formData = new FormData();
@@ -83,6 +84,7 @@ export default class Order extends Component {
     formData.append('action', "paymentInfo");
     formData.append('sid', session_id);
     formData.append('prf', currency);
+    formData.append('mileage', miles);
     formData.append('bill_addr', paymentDetails.billadd.id);
     formData.append('ship_addr', paymentDetails.shippadd.id);
     formData.append('shipmethod', paymentDetails.shipmed.id);
@@ -162,11 +164,11 @@ export default class Order extends Component {
 
                 <View style={{ flex: 1 }}>
                   <TouchableOpacity onPress={() => this.setState({ show_billing_address: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                    <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.billing_address == 'Select address' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.billing_address}</Text>
+                    <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 13, marginRight: 5 }, this.state.billing_address == 'Select address' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.billing_address}</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => this.setState({ show_address: true })}>
-                  <Icon name='addfile' type='antdesign' size={20} />
+                <TouchableOpacity style={{ backgroundColor: colors.primary_color, justifyContent: 'center', height: 30, width: 30, }} onPress={() => this.setState({ show_address: true })}>
+                  <Icon name='plus' color={"#fff"} type='antdesign' size={20} />
                 </TouchableOpacity>
               </View>
 
@@ -177,8 +179,8 @@ export default class Order extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, marginLeft: 7, }}>Deliver to my address</Text>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 13, marginLeft: 7, }}>Deliver to my address</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
                     onPress={() => this.setToadd('yes')}
                     style={{
@@ -200,7 +202,7 @@ export default class Order extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                   <TouchableOpacity
                     onPress={() => this.setToadd('no')}
                     style={{
@@ -229,16 +231,16 @@ export default class Order extends Component {
 
 
 
-              <Text style={styles.actionbutton}>SHIPPING INFORMATION</Text>
+              <Text style={styles.actionbutton}>DELIVERY ADDRESS</Text>
 
               <View regular style={styles.item}>
                 <View style={{ flex: 1 }}>
                   <TouchableOpacity onPress={() => this.setState({ show_shipping_address: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                    <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.shipping_address == 'Select address' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.shipping_address}</Text>
+                    <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 13, marginRight: 5 }, this.state.shipping_address == 'Select address' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.shipping_address}</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => this.setState({ show_address: true })}>
-                  <Icon name='addfile' type='antdesign' size={20} />
+                <TouchableOpacity style={{ backgroundColor: colors.primary_color, justifyContent: 'center', height: 30, width: 30, }} onPress={() => this.setState({ show_address: true })}>
+                  <Icon name='plus' color={"#fff"} type='antdesign' size={20} />
                 </TouchableOpacity>
               </View>
 
@@ -250,7 +252,7 @@ export default class Order extends Component {
 
                 <View style={{ flex: 1 }}>
                   <TouchableOpacity onPress={() => this.setState({ show_method: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                    <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.shipping_method == 'Select Method' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.shipping_method}</Text>
+                    <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 13, marginRight: 5 }, this.state.shipping_method == 'Select Method' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.shipping_method}</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -289,7 +291,7 @@ export default class Order extends Component {
                           : null
                         }
                       </TouchableOpacity>
-                      <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Bank Transfer</Text>
+                      <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>Bank Transfer</Text>
                     </View>
 
 
@@ -317,7 +319,7 @@ export default class Order extends Component {
                         : null
                       }
                     </TouchableOpacity>
-                    <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>Card (Paystack) - Naira</Text>
+                    <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>Card (Paystack) - Naira</Text>
                   </View>
 
                 */}
@@ -349,36 +351,61 @@ export default class Order extends Component {
 
                   :
 
+                  <>
+                    <View regular style={styles.itemtwo}>
+                      <TouchableOpacity
+                        onPress={() => this.setPaymethod('paypal')}
+                        style={{
+                          borderRadius: 15,
+                          width: 25,
+                          height: 25,
+                          borderColor: '#8d96a6',
+                          borderWidth: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginLeft: 7,
+                          marginRight: 5,
 
-                  <View regular style={styles.itemtwo}>
-                    <TouchableOpacity
-                      onPress={() => this.setPaymethod('paypal')}
-                      style={{
-                        borderRadius: 15,
-                        width: 25,
-                        height: 25,
-                        borderColor: '#8d96a6',
-                        borderWidth: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginLeft: 7,
-                        marginRight: 5,
+                        }}
+                      >
+                        {this.state.paymethod == 'paypal' ?
+                          <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                          : null
+                        }
+                      </TouchableOpacity>
+                      <Text style={{ fontSize: 15 }}>PayPal USD</Text>
+                    </View>
 
-                      }}
-                    >
-                      {this.state.paymethod == 'paypal' ?
-                        <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
-                        : null
-                      }
-                    </TouchableOpacity>
-                    <Text style={{ fontSize: 15 }}>PayPal USD</Text>
-                  </View>
 
+                    <View regular style={styles.itemtwo}>
+                      <TouchableOpacity
+                        onPress={() => this.setPaymethod('Stripe Pay')}
+                        style={{
+                          borderRadius: 15,
+                          width: 25,
+                          height: 25,
+                          borderColor: '#8d96a6',
+                          borderWidth: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginLeft: 7,
+                          marginRight: 5,
+
+                        }}
+                      >
+                        {this.state.paymethod == 'Stripe Pay' ?
+                          <View style={{ width: 15, borderRadius: 15, height: 15, backgroundColor: colors.primary_color, }} />
+                          : null
+                        }
+                      </TouchableOpacity>
+                      <Text style={{ fontSize: 15 }}>Stripe Pay USD</Text>
+                    </View>
+                  </>
                 }
 
 
 
-                {Platform.OS === 'android' ?
+                {/* {Platform.OS === 'android' ?
                   <View regular style={styles.itemtwo}>
                     <TouchableOpacity
                       onPress={() => this.setPaymethod('Google Pay')}
@@ -403,7 +430,7 @@ export default class Order extends Component {
                     <Text style={{ fontSize: 15 }}>Google Pay</Text>
                   </View>
                   :
-                  null}
+                  null} */}
 
 
               </View>
@@ -462,6 +489,7 @@ export default class Order extends Component {
   renderSelectBillingAddress() {
     return (
       <SelectAddress
+        addT={"Billing"}
         onSelect={(v) => this.onSelectBillingAddress(v)}
         onClose={() => this.setState({ show_billing_address: false })} />
     )
@@ -477,6 +505,7 @@ export default class Order extends Component {
   renderSelectShippingAddress() {
     return (
       <SelectAddress
+        addT={"Delivery"}
         onSelect={(v) => this.onSelectShippingAddress(v)}
         onClose={() => this.setState({ show_shipping_address: false })} />
     )
@@ -496,11 +525,15 @@ export default class Order extends Component {
       <SelectMethod
         address={this.state.shippadd}
         onSelect={(v) => this.onSelectMethod(v)}
+        onMileage={(v) => this.onSelectMill(v)}
         onClose={() => this.setState({ show_method: false })} />
     )
   }
 
-
+  onSelectMill(item) {
+    console.warn(item)
+    this.setState({ miles: item })
+  }
   onSelectMethod(item) {
     this.setState({ shipping_method: item.name + " " + item.price, shipmed: item, show_method: false })
   }
@@ -525,7 +558,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     backgroundColor: colors.grey,
     fontFamily: 'NunitoSans-Regular',
-    fontSize: 12,
+    fontSize: 13,
   },
   actionbutton: {
     marginTop: 7,

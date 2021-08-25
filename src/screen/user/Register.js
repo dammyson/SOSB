@@ -289,7 +289,7 @@ export default class Registration extends Component {
           onChangeText={text => this.setState({ lname: text })}
           ref={(input) => this.lastname = input}
         />
-        <TextInput
+        {/* <TextInput
           placeholder="Address"
           placeholderTextColor='#3E3E3E'
           returnKeyType="next"
@@ -307,7 +307,7 @@ export default class Registration extends Component {
         />
         <View style={{ backgroundColor: '#fff' }}>
           {this.renderPrediction(this.state.locationPredictions)}
-        </View>
+        </View> */}
         <TextInput
           placeholder="Password"
           placeholderTextColor='#3E3E3E'

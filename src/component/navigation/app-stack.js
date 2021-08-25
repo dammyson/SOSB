@@ -22,6 +22,7 @@ import PayPalTwo from '../../screen/pay/PayPalTwo';
 import Transactions from '../../screen/backoffice/Transactions';
 import EditTransactions from '../../screen/backoffice/EditTransaction';
 import Orders from '../../screen/shopper/Orders';
+import StripePay from '../../screen/pay/StripePay';
 
 class AppStack extends Component {
 
@@ -47,7 +48,7 @@ class AppStack extends Component {
             <Stack.Screen name="paystack" component={Paystack}   />
             <Stack.Screen name="rave" component={Rave}   />
             <Stack.Screen name="paypal" component={Paypal}   />
-            <Stack.Screen name="paypal2" component={PayPalTwo}   />
+            <Stack.Screen name="stripe" component={StripePay}   />
             
           </Stack.Navigator>
       );

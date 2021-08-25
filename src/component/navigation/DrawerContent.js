@@ -103,7 +103,7 @@ const renderSettingsMenu = (props, level) => {
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={() =>console.warn('k')} style={styles.drawerMenuItem}>
+            {/* <TouchableOpacity onPress={() =>console.warn('k')} style={styles.drawerMenuItem}>
                 <View style={{}}>
                     <Icon
                         name={'user'}
@@ -115,7 +115,7 @@ const renderSettingsMenu = (props, level) => {
                 <View style={{ flex: 1, marginLeft: 15, justifyContent: 'center' }}>
                     <Text style={{ color: colors.primary_color, fontSize: 15, fontFamily: 'NunitoSans-Bold', }}>Account </Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
 
             <TouchableOpacity onPress={() => props.navigation.navigate('Messages')} style={styles.drawerMenuItem}>

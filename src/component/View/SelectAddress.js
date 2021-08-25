@@ -90,7 +90,7 @@ export default class SelectAddress extends Component {
     };
 
     render() {
-        const { name, message, onPress, onClose } = this.props;
+        const { name, message, onPress, onClose, addT } = this.props;
         return (
             <>
                 <View
@@ -122,7 +122,7 @@ export default class SelectAddress extends Component {
                                 </TouchableOpacity>
                             </View>
 
-                            <Text style={{ fontSize: 14, margin: 7, flex: 1, fontFamily: 'Proxima-nova-Light', fontStyle: 'italic', color: '#fff', textAlign: 'center', marginRight: 10 }}>Select Bank</Text>
+                            <Text style={{ fontSize: 14, margin: 7, flex: 1, fontFamily: 'Proxima-nova-Light', fontStyle: 'italic', color: '#fff', textAlign: 'center', marginRight: 10 }}>Select {addT} Address</Text>
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 25 }}>
                                 <TouchableOpacity onPress={() => onClose()}>
                                     <Icon
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     },
 
     nameList: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         flex: 1,
         marginLeft: 15,
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Proxima-nova-Regular',
     },
     numberList: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         flex: 1,
         marginLeft: 15,

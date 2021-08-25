@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         flex: 1,
         textAlignVertical: 'top',
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Montserrat-Regular',
     }
 

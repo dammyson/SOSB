@@ -72,7 +72,6 @@ export default class EnterSize extends Component {
                             </View>
                             <View style={styles.body}>
                                 <View style={{ marginTop: 30, marginLeft: 30, marginRight: 30 }}>
-
                                 </View>
 
                                 <View style={{ paddingTop: 1, flexDirection: 'row', alignItems: 'center', }}>
@@ -87,21 +86,12 @@ export default class EnterSize extends Component {
                                             keyboardType='numeric'
                                             style={styles.input}
                                             onChangeText={text => this.setState({ gty: text })}
-
                                         />
-
                                     </View>
-
-                                   
                                 </View>
                                 <TouchableOpacity onPress={() => this._handleCategorySelect()} style={styles.proceed_btn}    >
-
-
                                     <Text style={{ color: '#fdfdfd', fontWeight: '400' }}>Proceed </Text>
-
                                 </TouchableOpacity>
-
-
                             </View>
                         </View>
                     </Animatable.View>

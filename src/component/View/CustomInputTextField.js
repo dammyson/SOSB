@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         flex: 1,
         fontWeight: '600',
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         fontFamily: 'Proxima-nova-Regular',
         fontStyle: 'italic',

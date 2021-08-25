@@ -16,7 +16,7 @@ import SelectAddressType from './SelectAddressType';
 import SelectCountry from './SelectCountry';
 import SelectState from './SelectState';
 import ActivityIndicator from './ActivityIndicator';
-import { BaseUrl, getUserID, getSessionID, showTopNotification } from '../../utilities';
+import { BaseUrl, getUserID, getSessionID, showTopNotification, getCountryDetails } from '../../utilities';
 import {
   getLocation,
   geocodeLocationByName,
@@ -31,8 +31,6 @@ export default class AddAddress extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      states: [],
-      regions: [],
       addType: [],
       type: [],
       addressone: '',
@@ -49,7 +47,7 @@ export default class AddAddress extends Component {
       is_delivery_add: true,
       is_collection_add: true,
       show_address_type: false,
-      region:'44',
+      region:'13',
       address_type: 'Address Type',
       country_name: 'Select Country',
       state_name: 'Select State',
@@ -121,8 +119,22 @@ export default class AddAddress extends Component {
 
   onAddressSelected = (location) => {
     console.warn(location)
-    console.warn(" sels")
-    this.setState({ locationPredictions: [], address: location, venue: location.description, addressone: location.description })
+    console.warn(location.terms[0].value +" "+ location.terms[2].value)
+
+
+    this.setState({ 
+      locationPredictions: [], 
+      address: location, 
+      venue: location.description, 
+      addressone: location.description,
+      state_name:location.terms[location.terms.length - 2].value, 
+      state:location.terms[location.terms.length - 2].value, 
+      city:location.terms[location.terms.length - 3].value, 
+    
+    })
+
+    this.onSelectCountry(getCountryDetails(location.terms[location.terms.length - 1].value))
+
     geocodeLocationByName(location.structured_formatting.main_text).then((result) => {
       console.warn(result)
       this.setState({
@@ -135,6 +147,13 @@ export default class AddAddress extends Component {
     });
   }
 
+
+  onSelectCountry(item){
+    console.warn(item)
+    this.setState({
+      region: item.id,  country: item.id, country_name:  item.name})
+  } 
+  
 
   getRealDirection(lat, log){
     console.warn(lat, log)
@@ -156,7 +175,7 @@ export default class AddAddress extends Component {
             <Text style={{fontFamily: 'NunitoSans-Bold', fontSize: 13,}}>
               {predictions[i].structured_formatting.main_text}
             </Text>
-            <Text style={{fontFamily: 'NunitoSans-Bold', fontSize: 12, color:"#00000070"}}>
+            <Text style={{fontFamily: 'NunitoSans-Bold', fontSize: 13, color:"#00000070"}}>
               {predictions[i].description}
             </Text>
           </View>
@@ -168,11 +187,13 @@ export default class AddAddress extends Component {
 
   addAddress() {
     const { onClose, } = this.props;
-    const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, addtype, type, is_delivery_add, is_collection_add, latitude,longitude } = this.state
+    const { user_id, addressone, addresstwo, addressthree, addressdesc, city, state, country, postcode, address_type, type, is_delivery_add, is_collection_add, latitude,longitude } = this.state
     if (is_collection_add) { var deladd = 'Y'; } else { var deladd = 'N'; }
     if (is_delivery_add) { var colladd = 'Y'; } else { var colladd = 'N'; }
 
-    if (addressone == "" || city == "" || state == 0 || country == 0 || postcode == "" || addtype == 0 || type == 0) {
+    console.warn(addressone, city, state, country, postcode, type)
+
+    if (addressone == "" || city == "" || state == 0 || country == 0 || postcode == "" || type == 0) {
       Alert.alert('Validation failed', 'field(s) with * cannot be empty', [{ text: 'Okay' }])
       return
     }
@@ -180,7 +201,7 @@ export default class AddAddress extends Component {
     
     this.setState({ loading: true })
     const formData = new FormData();
-    formData.append('feature', "user");
+    formData.append('code', "customer");
     formData.append('action', "addAddress");
 
     formData.append('id', user_id);
@@ -191,7 +212,7 @@ export default class AddAddress extends Component {
     formData.append('deladdr', deladd);
     formData.append('coraddr', colladd);
     formData.append('city', city);
-    formData.append('state', 44);
+    formData.append('state', state);
     formData.append('country', country);
     formData.append('addrtype', 1);
     formData.append('postcode', postcode);
@@ -206,16 +227,14 @@ export default class AddAddress extends Component {
         Accept: 'application/json',
       }, body: formData,
     })
-      .then(res => res.json())
+      .then(res => res.text())
       .then(res => {
         console.warn(res);
         showTopNotification("success", "Address Added")
         if (!res.error) {
           this.setState({
             loading: false,
-            cartItems: res.data
           })
-
           onClose();
 
         } else {
@@ -235,9 +254,13 @@ export default class AddAddress extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <View style={{ flex: 1,  alignItems: 'center', justifyContent: 'center', position: "absolute", top: 0, left: 0,bottom: 0,right: 0, }}>
+        <ImageBackground
+        style={{
+          flex: 1, position: "absolute", top: 0, left: 0,bottom: 0,right: 0,
+        }}
+        source={require('../../assets/bg.png')}>
           <ActivityIndicator  color={colors.primary_color} message={'Adding Address'}  />
-        </View>
+        </ImageBackground>
       );
     }
 
@@ -281,23 +304,20 @@ export default class AddAddress extends Component {
                 {this.renderPrediction(this.state.locationPredictions)}
               </View>
 
-            <View regular style={styles.item}>
+            {/* <View regular style={styles.item}>
               <Input placeholder='Address 2'  onChangeText={(text) => this.setState({ addresstwo: text })} placeholderTextColor="#687373" style={styles.input} />
             </View>
 
-            <View regular style={styles.item}>
-              <Input placeholder='Address 3' onChangeText={(text) => this.setState({ addressthree: text })} placeholderTextColor="#687373" style={styles.input} />
-            </View>
 
             <View regular style={styles.item}>
               <Text style={{ paddingLeft: 5, marginLeft: 0 }}>*</Text>
               <Input placeholder='Address Description' onChangeText={(text) => this.setState({ addressdesc: text })} placeholderTextColor="#687373" style={styles.input} />
-            </View>
+            </View> */}
 
 
             <View regular style={styles.item}>
-                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, marginLeft: 7, }}>Delivery Address</Text>
-                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 13, marginLeft: 7, }}>Delivery Address</Text>
+                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                 <TouchableOpacity
                   onPress={() => this.setIsDeliveryAdd(true)}
                   style={{
@@ -319,7 +339,7 @@ export default class AddAddress extends Component {
 
 
                 </TouchableOpacity>
-                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                 <TouchableOpacity
                   onPress={() => this.setIsDeliveryAdd(false)}
                   style={{
@@ -344,9 +364,9 @@ export default class AddAddress extends Component {
 
 
 
-              <View regular style={styles.item}>
-                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, marginLeft: 7, }}>Collection Address</Text>
-                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+              {/* <View regular style={styles.item}>
+                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 13, marginLeft: 7, }}>Collection Address</Text>
+                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                 <TouchableOpacity
                   onPress={() => this.setIsCollectionAdd(true)}
                   style={{
@@ -368,7 +388,7 @@ export default class AddAddress extends Component {
 
 
                 </TouchableOpacity>
-                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                 <TouchableOpacity
                   onPress={() => this.setIsCollectionAdd(false)}
                   style={{
@@ -389,14 +409,14 @@ export default class AddAddress extends Component {
                     : null
                   }
                 </TouchableOpacity>
-              </View>
+              </View> */}
           
 
             <View regular style={styles.item}>
             <Text style={{ paddingLeft: 5, marginLeft: 0 }}>*</Text>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => this.setState({ show_country: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.country_name == 'Select Country' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.country_name}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 13, marginRight: 5 }, this.state.country_name == 'Select Country' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.country_name}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -406,7 +426,7 @@ export default class AddAddress extends Component {
             <Text style={{ paddingLeft: 5, marginLeft: 0 }}>*</Text>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => this.setState({ show_state: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.state_name == 'Select State' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.state_name}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 13, marginRight: 5 }, this.state.state_name == 'Select State' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.state_name}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -417,20 +437,20 @@ export default class AddAddress extends Component {
 
             <View regular style={styles.item}>
               <Text style={{ paddingLeft: 5, marginLeft: 0 }}>*</Text>
-              <Input placeholder='City' onChangeText={(text) => this.setState({ city: text })} placeholderTextColor="#687373" style={styles.input} />
+              <Input placeholder='City' onChangeText={(text) => this.setState({ city: text })} defaultValue={this.state.city} placeholderTextColor="#687373" style={styles.input} />
             </View>
 
 
 
             <View regular style={styles.item}>
               <Text style={{ paddingLeft: 5, marginLeft: 0 }}>*</Text>
-              <Input placeholder='Postcode' maxLength={6} keyboardType='numeric'style={styles.input}  onChangeText={(text) => this.setState({ postcode: text })} placeholderTextColor="#687373" />
+              <Input placeholder='Zip/Post Code' maxLength={6} keyboardType='numeric'style={styles.input}  onChangeText={(text) => this.setState({ postcode: text })} placeholderTextColor="#687373" />
             </View>
 
             <View regular style={styles.item}>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => this.setState({ show_address_type: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 12, marginRight: 5 }, this.state.address_type == 'Address Type' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.address_type}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: colors.secondary_color, fontSize: 13, marginRight: 5 }, this.state.address_type == 'Address Type' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.address_type}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -447,8 +467,8 @@ export default class AddAddress extends Component {
           </View>
         </Content>
         {this.state.show_address_type ? this.renderSelectAddressType() : null}
-        {this.state.show_country ? this.renerSelectCountry() : null}
-        {this.state.show_state ? this.renerSelectState() : null}
+        {/* {this.state.show_country ? this.renerSelectCountry() : null}
+        {this.state.show_state ? this.renerSelectState() : null} */}
       </Container>
       </ImageBackground>
     );
@@ -470,7 +490,11 @@ export default class AddAddress extends Component {
     )
   }
   onSelectAddressType(item){
-    this.setState({show_address_type: false, address_type: item.name , type:item.id,})
+    this.setState({show_address_type: false, 
+      address_type: item.name , 
+      type:item.id,
+  
+    })
   } 
 
 
@@ -478,29 +502,29 @@ export default class AddAddress extends Component {
 
 
 
-  renerSelectCountry() {
-    return(
-      <SelectCountry
-      onSelect={(v) => this.onSelectCountry(v)}
-      onClose={()=> this.setState({show_country: false})} />
-    )
-  }
-  onSelectCountry(item){
-    this.setState({show_country: false, region: item.id, country_name:  item.name})
-  } 
+  // renerSelectCountry() {
+  //   return(
+  //     <SelectCountry
+  //     onSelect={(v) => this.onSelectCountry(v)}
+  //     onClose={()=> this.setState({show_country: false})} />
+  //   )
+  // }
+  // onSelectCountry(item){
+  //   this.setState({show_country: false, region: item.id, country_name:  item.name})
+  // } 
   
 
-  renerSelectState() {
-    return(
-      <SelectState
-      region={"11"}
-      onSelect={(v) => this.onSelectState(v)}
-      onClose={()=> this.setState({show_country: false})} />
-    )
-  }
-  onSelectState(item){
-    this.setState({show_state: false, state: item.id, state_name:  item.name})
-  } 
+  // renerSelectState() {
+  //   return(
+  //     <SelectState
+  //     region={"11"}
+  //     onSelect={(v) => this.onSelectState(v)}
+  //     onClose={()=> this.setState({show_country: false})} />
+  //   )
+  // }
+  // onSelectState(item){
+  //   this.setState({show_state: false, state: item.id, state_name:  item.name})
+  // } 
 
 
 
@@ -551,13 +575,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     backgroundColor: colors.grey,
     fontFamily: 'NunitoSans-Regular',
-    fontSize: 12,
+    fontSize: 13,
   },
   actionbutton: {
     marginTop: 7,
     marginBottom: 2,
     opacity: 0.5,
-    fontSize: 10,
+    fontSize: 13,
     color: '#0F0E43',
     textAlign: 'left',
     fontFamily: 'NunitoSans-Regular'
@@ -598,5 +622,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#bdc3c7'
   }
 });
-
-

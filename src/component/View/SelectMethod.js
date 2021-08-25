@@ -7,7 +7,9 @@ import colors from '../color';
 import * as Animatable from 'react-native-animatable';
 import InputTextField from './CustomInputTextField'
 import { BaseUrl, getCurrency, getSessionID, showTopNotification, makeUrlStringFromObject } from '../../utilities/index';
-
+import Moment from 'moment';
+Moment.locale('en');
+const moment = require('moment');
 
 export default class SelectMethod extends Component {
     constructor(props) {
@@ -25,6 +27,7 @@ export default class SelectMethod extends Component {
             selected_category: 0,
             search: '',
             currency: '',
+            total_mileage:0
         };
         this.arrayholder = [];
     }
@@ -60,6 +63,13 @@ export default class SelectMethod extends Component {
             'address': address.addressLine1 + " " + address.city + " " + address.state,
         }
 
+        var m = moment(new Date());
+        m.add(60, 'minutes').minutes();
+        const start = Moment(m).format('LT')
+        var n = moment(new Date());
+        n.add(90, 'minutes').minutes();
+        const end = Moment(n).format('LT')
+        console.warn(start, end)
 
         console.warn(BaseUrl()+'?'+makeUrlStringFromObject(data))
 
@@ -70,12 +80,13 @@ export default class SelectMethod extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                console.warn(res.data);
+                console.warn(res);
                 if (!res.error) {
                     this.setState({
                         loading: false,
+                        total_mileage:res.data.totalMileage,
                         shippingmethod: [
-                            { id: 20, price: res.data.ShippingFee, name: 'Shiping Shipping ' + res.data.ShippingFee + ' Duration ' + res.data.DeliveryDays }
+                            { id: 20, price: res.data.ShippingFee, name: 'Delivery charge: ' + this.getSymbol(currency)+ res.data.ShippingFee + '\nEstimated Delivery Time ' + start + " - "+  end}
                         ]
                     })
                 } else {
@@ -232,10 +243,23 @@ export default class SelectMethod extends Component {
 
 
 
+    getSymbol(currency){
+        if(currency == "NGN"){
+            return " ₦"
+        }
+        else  if(currency == "USD"){
+            return "$"
+        }
+        else  if(currency == "GBP"){
+            return "£"
+        }
+    }
+
     _handleCategorySelect = (index) => {
         console.warn(index)
-        const { onSelect, } = this.props;
+        const { onSelect, onMileage } = this.props;
         onSelect(index);
+        onMileage(this.state.total_mileage);
     }
     renderItem = ({ item, }) => {
         return (
@@ -251,6 +275,8 @@ export default class SelectMethod extends Component {
             </TouchableOpacity>
 
         )
+
+
 
     }
 
@@ -321,19 +347,19 @@ const styles = StyleSheet.create({
     },
 
     nameList: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         flex: 1,
-        marginLeft: 15,
+        marginLeft: 10,
         marginBottom: 10,
-        fontFamily: 'Proxima-nova-Regular',
+        fontFamily: 'NunitoSans-Bold',
     },
     numberList: {
-        fontSize: 12,
+        fontSize: 13,
         color: '#272065',
         flex: 1,
         marginLeft: 15,
-        fontFamily: 'Proxima-nova-Regular',
+        fontFamily: 'NunitoSans-Regular',
     },
     modal: {
         width: Dimensions.get('window').width,
@@ -356,4 +382,5 @@ const styles = StyleSheet.create({
 
     },
 });
+
 

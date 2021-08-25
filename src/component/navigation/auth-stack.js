@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Splash from '../../screen/onboarding/Splash';
-
 import Login from '../../screen/user/Login';
 import Register from '../../screen/user/Register';
 import Home from './DrawerNavigator';
@@ -16,6 +15,7 @@ import Intro from '../../screen/onboarding/Intro';
 import Chat from '../../screen/Tele/Chat';
 import Apay from '../../screen/activity/Apay';
 import NoReciever from '../../screen/Tele/NoReciever';
+import StripePay from '../../screen/pay/StripePay';
 
 class AppStack extends Component {
 
@@ -43,6 +43,7 @@ class AppStack extends Component {
             <Stack.Screen name="chat" component={Chat} />
             <Stack.Screen name="nr" component={NoReciever} />
            <Stack.Screen name="gpay" component={Apay}   /> 
+           <Stack.Screen name="stre" component={StripePay}   /> 
 
           </Stack.Navigator>
          </NavigationContainer>

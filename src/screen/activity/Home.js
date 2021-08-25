@@ -31,6 +31,15 @@ const searchEngines = {
 
 const WEBVIEW_REF = 'webview';
 const TEXT_INPUT_REF = 'urlInput';
+
+
+const injectedJavaScript = `
+      window.ReactNativeWebView.postMessage('injected javascript works!');
+      true; // note: this is required, or you'll sometimes get silent failures   
+`;
+
+
+
 export default class Home extends Component {
 
   constructor(props) {
@@ -60,25 +69,65 @@ export default class Home extends Component {
       can_goBack: false,
       show_quantity: false,
       show_color: false,
-      show_sizeL: true
+      show_sizeL: true,
+      config: {
+        detectorTypes: 'all',
+        allowStorage: true,
+        allowJavascript: true,
+        allowCookies: true,
+        allowLocation: true,
+        allowCaching: true,
+        defaultSearchEngine: 'google'
+      }
     };
     this.inputText = '';
 
-  }
 
+
+  }
+  get config() {
+    const { incognito, config } = this.state;
+    if (incognito) {
+      return {
+        ...config,
+        allowStorage: false,
+        allowCookies: false,
+        allowLocation: false,
+        allowCaching: false,
+      }
+    }
+    return config;
+  }
 
   upgradeURL(uri, searchEngine = 'google') {
     const isURL = uri.split(' ').length === 1 && uri.includes('.');
     if (isURL) {
-        if (!uri.startsWith('http')) {
-            return 'https://www.' + uri;
-        }
-        return uri;
+      console.warn(uri.slice(4))
+      if (uri.startsWith('www.')) {
+        return 'https://' + uri.slice(4);
+      }
+      if (!uri.startsWith('http')) {
+        return 'https://www.' + uri;
+      }
+      return uri;
     }
     // search for the text in the search engine
     const encodedURI = encodeURI(uri);
     return searchEngines[searchEngine](encodedURI);
-}
+  }
+
+
+  onSubmitEditing() {
+    var nre = this.state.urlText;
+    const newURL = this.upgradeURL(nre, 'google');
+    //console.warn(newURL);
+
+
+    const url = Utils.sanitizeUrl(newURL);
+    this.setState({ url: url })
+  }
+
+
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -122,13 +171,16 @@ export default class Home extends Component {
       this.setState({ progress: false })
     }, 9000);
   }
+
+
+
   addTocart() {
     const { data, aut, user_id, session_id, qty, color, size, } = this.state
     this.setState({ is_visible_choose_color: false, })
 
 
 
-    this.setState({ loading_addcart: true, show_size:false })
+    this.setState({ loading_addcart: true, show_size: false })
 
     const formData = new FormData();
     formData.append('user_id', user_id);
@@ -154,7 +206,7 @@ export default class Home extends Component {
         console.warn(res);
         if (res.includes("Success")) {
           this.setState({ loading_addcart: false })
-          Alert.alert('Success', 'Thank you.'+ data.title+' has been submitted, and should appear in your cart within the next 2-3 minutes', [{ text: 'Okay' }])
+          Alert.alert('Success', 'Thank you.' + data.title + ' has been submitted, and should appear in your cart within the next 2-3 minutes', [{ text: 'Okay' }])
         } else {
           Alert.alert('Action Fail', 'Please try to add your item to cart again', [{ text: 'Okay' }])
           this.setState({ loading_addcart: false })
@@ -202,11 +254,12 @@ export default class Home extends Component {
 
 
   _onNavigationStateChange(navState) {
-    console.warn(navState.canGoBack)
+    console.warn(navState)
     this.setState({
       backButtonEnabled: navState.canGoBack,
       forwardButtonEnabled: navState.canGoForward,
-      // currentUrl: navState.url,
+      currentUrl: navState.url,
+      url: navState.url,
       status: navState.title,
       loading: navState.loading,
       scalesPageToFit: true,
@@ -225,23 +278,17 @@ export default class Home extends Component {
   }
 
   handleTextInputChange(event) {
-   // const url = Utils.sanitizeUrl(event.nativeEvent.text);
+    // const url = Utils.sanitizeUrl(event.nativeEvent.text);
     //this.inputText = url;
-   // 
-   const url =event.nativeEvent.text
+    // 
+    const url = event.nativeEvent.text
     this.setState({ urlText: url })
-  }
-
-  onSubmitEditing() {
-    var nre = this.state.urlText;
-    const newURL = this.upgradeURL(nre, 'google');
-    const url = Utils.sanitizeUrl(newURL);
-    this.setState({ url: url })
   }
 
 
 
   render() {
+    const { config, state } = this;
     return (
       <View style={{ flex: 1 }}>
 
@@ -262,7 +309,7 @@ export default class Home extends Component {
 
 
             <TextInput
-              selectTextOnFocus
+              // selectTextOnFocus
               ref={TEXT_INPUT_REF}
               underlineColorAndroid='rgba(0,0,0,0)'
               autoCapitalize='none'
@@ -271,7 +318,7 @@ export default class Home extends Component {
               defaultValue={this.state.currentUrl}
               onSubmitEditing={this.onSubmitEditing}
               onChange={this.handleTextInputChange}
-              clearButtonMode="while-editing"
+            //clearButtonMode="while-editing"
             />
             <View style={{ height: 36, width: 30, justifyContent: 'center', alignItems: 'center' }}>
               {this.state.loading ?
@@ -292,6 +339,7 @@ export default class Home extends Component {
           </View>
           <WebView
             ref={WEBVIEW_REF}
+            javaScriptCanOpenWindowsAutomatically={true}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
             source={{ uri: this.state.url }}
@@ -299,14 +347,56 @@ export default class Home extends Component {
             domStorageEnabled={true}
             decelerationRate="normal"
             onNavigationStateChange={this._onNavigationStateChange.bind(this)}
-            // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+            onLoadStart={(navState) =>
+              this.setState({ url: navState.nativeEvent.url })
+            }
             startInLoadingState={true}
             scalesPageToFit={this.state.scalesPageToFit}
+
+            cacheEnabled={config.allowCaching}
+
+            injectedJavaScript={`
+            (function() {
+              function wrap(fn) {
+                return function wrapper() {
+                  var res = fn.apply(this, arguments);
+                  window.ReactNativeWebView.postMessage('navigationStateChange');
+                  return res;
+                }
+              }
+        
+              history.pushState = wrap(history.pushState);
+              history.replaceState = wrap(history.replaceState);
+              window.addEventListener('popstate', function() {
+                window.ReactNativeWebView.postMessage('navigationStateChange');
+              });
+            })();
+        
+            true;
+          `}
+            onMessage={({ nativeEvent: state }) => {
+              console.warn(state)
+              if (state.url.includes('shopping-cart.php?user_id=')) {
+                this.setState({
+                  currentUrl: 'https://www.ofidy.com/',
+                  url: 'https://www.ofidy.com/',
+                  data: state,
+                });
+              } else {
+                this.setState({
+                  data: state,
+                  currentUrl: state.url,
+                  url: state.url
+                });
+              }
+              if (state.data === 'navigationStateChange') {
+
+              }
+            }}
+
           />
 
           <View style={{ backgroundColor: '#004701', flexDirection: 'row', height: 45 }}>
-
-
             <View style={{ alignSelf: "center", marginLeft: 10 }}>
               <TouchableOpacity onPress={() => this.gBack()}>
                 <Icon
@@ -315,9 +405,7 @@ export default class Home extends Component {
                   type='antdesign'
                   color='#D3D3D3'
                 />
-
               </TouchableOpacity>
-
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: "center", }}>
@@ -464,6 +552,10 @@ export default class Home extends Component {
       show_size: false,
     })
     this.addTocart()
+  }
+
+  _onMessage() {
+
   }
 }
 

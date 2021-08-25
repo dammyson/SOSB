@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import countries from './Countries';
 
 
 const stage = 'test';
@@ -89,3 +90,14 @@ export const makeUrlStringFromObject = (data) => {
   return urlString;
 };
 
+
+
+export const getCountryDetails =(cty)=> {
+  var country = {};
+ for (var i = 0; i < countries.length; i++) {
+   if(countries[i].symbol == cty){
+     country = countries[i];
+   }
+ }
+ return  country
+}

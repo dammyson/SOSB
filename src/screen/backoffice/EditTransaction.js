@@ -44,7 +44,7 @@ export default class EditTransactions extends Component {
       dscntPercent: '',
       adminShipping: '',
       promoCode: '',
-      weight: '',
+      weight: '0.5',
       bulkSize: 'small',
       srcRegion: '12',
       itemSize: '',
@@ -238,7 +238,7 @@ export default class EditTransactions extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>USD</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>USD</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ priceCurrency: 'USD' })}
                     style={{
@@ -260,7 +260,7 @@ export default class EditTransactions extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>GBP</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>GBP</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ priceCurrency: 'GBP' })}
                     style={{
@@ -281,7 +281,7 @@ export default class EditTransactions extends Component {
                       : null
                     }
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>NGN</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>NGN</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ priceCurrency: 'NGN' })}
                     style={{
@@ -325,7 +325,7 @@ export default class EditTransactions extends Component {
               <Text style={styles.actionbutton}>bulkSize</Text>
               <View regular style={styles.item}>
                 <TouchableOpacity onPress={() => this.setState({ show_bulk: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: "#000", fontSize: 12, marginRight: 5 }]}>{this.state.bulksize_name}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: "#000", fontSize: 13, marginRight: 5 }]}>{this.state.bulksize_name}</Text>
                 </TouchableOpacity>
               </View>
 
@@ -334,7 +334,7 @@ export default class EditTransactions extends Component {
               <Text style={styles.actionbutton}>srcRegion</Text>
               <View regular style={styles.item}>
                 <TouchableOpacity onPress={() => this.setState({ show_country: true })} style={{ marginLeft: 5, alignItems: 'center', flex: 1, justifyContent: 'flex-start', flexDirection: "row" }}>
-                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: "#000", fontSize: 12, marginRight: 5 }, this.state.country_name == 'Select Region' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.country_name}</Text>
+                  <Text style={[{ fontFamily: 'NunitoSans-Regular', fontStyle: 'italic', color: "#000", fontSize: 13, marginRight: 5 }, this.state.country_name == 'Select Region' ? { color: colors.text_inputplace_holder } : {}]}>{this.state.country_name}</Text>
                 </TouchableOpacity>
               </View>
 
@@ -343,7 +343,7 @@ export default class EditTransactions extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ fragileyn: 'y' })}
                     style={{
@@ -365,7 +365,7 @@ export default class EditTransactions extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ fragileyn: 'n' })}
                     style={{
@@ -395,7 +395,7 @@ export default class EditTransactions extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ blacklist: 'y' })}
                     style={{
@@ -417,7 +417,7 @@ export default class EditTransactions extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ blacklist: 'n' })}
                     style={{
@@ -445,7 +445,7 @@ export default class EditTransactions extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ invalid: 'y' })}
                     style={{
@@ -467,7 +467,7 @@ export default class EditTransactions extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ invalid: 'n' })}
                     style={{
@@ -498,7 +498,7 @@ export default class EditTransactions extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ cooler: '1' })}
                     style={{
@@ -520,7 +520,7 @@ export default class EditTransactions extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ cooler: '0' })}
                     style={{
@@ -551,7 +551,7 @@ export default class EditTransactions extends Component {
               <View style={{ justifyContent: 'center' }}>
 
                 <View regular style={styles.item}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, marginLeft: 17, }}>Yes</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, marginLeft: 17, }}>Yes</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ restricted: '1' })}
                     style={{
@@ -573,7 +573,7 @@ export default class EditTransactions extends Component {
 
 
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 12, }}>No</Text>
+                  <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 13, }}>No</Text>
                   <TouchableOpacity
                     onPress={() => this.setState({ restricted: '0' })}
                     style={{
@@ -710,13 +710,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     backgroundColor: colors.grey,
     fontFamily: 'NunitoSans-Regular',
-    fontSize: 12,
+    fontSize: 13,
   },
   actionbutton: {
     marginTop: 7,
     marginBottom: 2,
     opacity: 0.7,
-    fontSize: 12,
+    fontSize: 13,
     color: '#0F0E43',
     textAlign: 'left',
     fontFamily: 'NunitoSans-Bold'
